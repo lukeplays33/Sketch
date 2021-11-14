@@ -79,16 +79,20 @@ p{
   
       <script id="rendered-js" >
 document.title = "Sketch";
+   let oldLink = document.querySelectorAll('[rel="shortcut icon"]')[0];
+    if (oldLink) {
+        document.head.removeChild(oldLink);
+    }
+    let link = document.createElement('link');
+    link.id = 'favicon';
+    link.rel = 'shortcut icon';
+    link.href = "https://media.discordapp.net/attachments/898978597996466189/900743720905900032/60d473a38f959300118b9c10.png";
+    document.head.appendChild(link);
+
 window.setTimeout (function() {
 document.getElementById("div").style.display = "none";
 document.getElementById("text").style.display = "none";
 }, 5000 );
-
-var link = document.querySelector("link[rel*='icon']") || document.createElement('link');
-    link.type = 'image/x-icon';
-    link.rel = 'shortcut icon';
-    link.href = 'https://media.discordapp.net/attachments/898978597996466189/900743720905900032/60d473a38f959300118b9c10.png';
-    document.getElementsByTagName('head')[0].appendChild(link);
     </script>
 
   
