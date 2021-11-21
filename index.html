@@ -4,8 +4,6 @@
 
 <head>
 
-<meta name="google-site-verification" content="3YpzZmQGfAWLdmWTVwuIodvcCQe7ZRlzQmbOl2zcPUM" />
-
   <meta charset="UTF-8">
   
 <link rel="apple-touch-icon" type="image/png" href="https://cpwebassets.codepen.io/assets/favicon/apple-touch-icon-5ae1a0698dcc2402e9712f7d01ed509a57814f994c660df9f7a952f3060705ee.png" />
@@ -22,13 +20,19 @@
   
   
 <style>
+html {
+  height: 100%;
+}
+
 .logo {
   width: 100%;
   height: 100vh;
-    display:flex; flex-direction:column; justify-content:center;
-  min-height:100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100vh;
   max-width: max-content;
-margin: auto;
+  margin: auto;
 }
 
 .loader {
@@ -44,22 +48,215 @@ margin: auto;
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 body {
   margin: 0px;
+  height: 100%;
+  box-sizing: border-box;
+    background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 img {
   object-fit: contain;
 }
 
-p{
+p {
   color: #008dcd;
   text-align: center;
-  font-size: 18px;
+  font-size: 20px;
+  font-family: Sans-serif;
+}
+
+.header {
+  background-color: #008dcd;
+  hieght: 45px;
+  width: 100%;
+}
+
+.home {
+  width: 100%;
+  hieght: 100%;
+  padding: 8px;
+  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+  -moz-box-sizing: border-box; /* Firefox, other Gecko */
+  box-sizing: border-box;
+}
+
+input {
+  width: 100%;
+  background: rgba(155, 155, 155, 0.5);
+  color: white;
+  padding: 5px;
+  border-style: solid;
+  border-color: TRANSPARENT;
+  border-radius: 5px;
+  font-size: 17px;
+  font-family: Sans-serif;
+
+  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+
+  -moz-box-sizing: border-box; /* Firefox, other Gecko */
+
+  box-sizing: border-box;
+}
+
+::placeholder {
+  color: white;
+}
+
+.create {
+  width: 58px;
+  height: 58px;
+  background-color: #008dcd;
+  border-radius: 50%;
+  font-size: 50px;
+  color: white;
+  text-align: center;
+  background-image: url("https://media.discordapp.net/attachments/898978597996466189/909431017272651816/round_add_white_24dp.png");
+  background-repeat: no-repeat;
+  background-size: 40px;
+  background-position: center;
+
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+
+  -moz-box-sizing: border-box; /* Firefox, other Gecko */
+
+  box-sizing: border-box;
+}
+
+.goHome {
+  width: 58px;
+  height: 58px;
+  background-color: #008dcd;
+  border-radius: 50%;
+  font-size: 50px;
+  color: white;
+  text-align: center;
+  background-image: url("https://media.discordapp.net/attachments/898978597996466189/911302759175823380/round_home_white_24dp.png");
+  background-repeat: no-repeat;
+  background-size: 40px;
+  background-position: center;
+
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+
+  -moz-box-sizing: border-box; /* Firefox, other Gecko */
+
+  box-sizing: border-box;
+}
+
+.settings {
+  width: 58px;
+  height: 58px;
+  background-color: #008dcd;
+  border-radius: 50%;
+  font-size: 50px;
+  color: white;
+  text-align: center;
+  background-image: url("https://media.discordapp.net/attachments/898978597996466189/910234994893549588/61818b07d54ef50010e42587.png");
+  background-repeat: no-repeat;
+  background-size: 40px;
+  background-position: center;
+
+  position: fixed;
+  right: 16px;
+  bottom: 88px;
+  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+
+  -moz-box-sizing: border-box; /* Firefox, other Gecko */
+
+  box-sizing: border-box;
+}
+
+.projectsList {
+  width: 100%;
+  hiegth: 80px;
+  padding: 0px;
+  background: rgba(155, 155, 155, 0.5);
+  border-radius: 5px;
+  margin-bottom: 8px;
+}
+
+.list-title {
+  color: white;
+  font-size: 20px;
+  margin-bottom: 8px;
+  font-family: Sans-serif;
+  width: 100%;
+  text-align: left;
+  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+
+  -moz-box-sizing: border-box; /* Firefox, other Gecko */
+
+  box-sizing: border-box;
+}
+
+.list-des {
+  color: white;
+  font-size: 17px;
+  margin-top: 0px;
+  font-family: Sans-serif;
+  width: 100%;
+  text-align: left;
+  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+
+  -moz-box-sizing: border-box; /* Firefox, other Gecko */
+
+  box-sizing: border-box;
+}
+
+.details {
+  display: inline-block;
+  vertical-align: middle;
+  width: 255px;
+}
+
+.photo {
+  display: inline-block;
+  vertical-align: middle;
+  width: 80px;
+  height: 80px;
+}
+
+button {
+  background-color: #008dcd;
+  width: 100%;
+  color: white;
+  border-radius: 10px;
+  font-size: 16px;
+  border-width: 0px;
+  padding: 8px;
+  margin-bottom: 8px;
+    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+
+  -moz-box-sizing: border-box; /* Firefox, other Gecko */
+
+  box-sizing: border-box;
+}
+
+.Settings {
+  width: 100%;
+  height: 100%;
+  padding: 8px;
+    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+
+  -moz-box-sizing: border-box; /* Firefox, other Gecko */
+
+  box-sizing: border-box;
 }
 </style>
 
@@ -71,30 +268,339 @@ p{
 </head>
 
 <body translate="no" >
-  <div class="logo" id="div">
-<img src="https://media.discordapp.net/attachments/898978597996466189/909471139921793044/Untitled183_20210624211409.png" width="300" height="80">
-  <div class="loader"></div>
+  <meta name="google-site-verification" content="3YpzZmQGfAWLdmWTVwuIodvcCQe7ZRlzQmbOl2zcPUM" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<div class="logo" id="div">
+  <img src="https://media.discordapp.net/attachments/898978597996466189/909471139921793044/Untitled183_20210624211409.png" id="logo" width="300" height="80">
+  <div class="loader" id="loading"></div>
 </div>
 
-<p id="text" >I am a paragraph, oh yes I am.</p>
+<p id="challange">Well hello there, If you've found this then congratulations there is more to see than you think, Just giving you a hint ;).</p>
+<!-- MatPat ;) --->
+
+<div class="header" id="header">
+  <img src="https://media.discordapp.net/attachments/898978597996466189/909470829736243230/60e321eb15ed9d037ae8fa13_1.png" width="100%" height="45">
+</div>
+
+<div class="home" id="home">
+  <input type="text" id="search" placeholder="Search Projects..."><br><br>
+  <div class="projectsList" id="Projects-list">
+    <img src="https://media.discordapp.net/attachments/898978597996466189/900743720905900032/60d473a38f959300118b9c10.png" id="icon" class="photo" width="80px" hieght="80px">
+    <div id="title-and-des" class="details">
+      <p id="Title" class="list-title">Title</p>
+      <p id="Description" class="list-des">Description</p>
+    </div>
+  </div>
+  <div class="create" id="add"></div>
+  <div class="settings" id="settings"></div>
+</div>
+
+<div class="Settings" id="Settings">
+  <p id="siteSettings">Site Settings</p>
+  <button id="BGImage">Select Background Image </button>
+  <button id="theme">Dark Theme: Off </button>
+  <div class="goHome" id="goHome"></div>
+</div>
   
   
       <script id="rendered-js" >
-document.title = "Sketch";
-   let oldLink = document.querySelectorAll('[rel="shortcut icon"]')[0];
-    if (oldLink) {
-        document.head.removeChild(oldLink);
-    }
-    let link = document.createElement('link');
-    link.id = 'favicon';
-    link.rel = 'shortcut icon';
-    link.href = "https://media.discordapp.net/attachments/898978597996466189/900743720905900032/60d473a38f959300118b9c10.png";
-    document.head.appendChild(link);
+//variables
+var projects = [];
 
-window.setTimeout (function() {
-document.getElementById("div").style.display = "none";
-document.getElementById("text").style.display = "none";
-}, 5000 );
+const reader = new FileReader();
+
+var days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+var monthNames = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec"
+];
+var currentdate = new Date();
+var oneJan = new Date(currentdate.getFullYear(), 0, 1);
+var numberOfDays = Math.floor((currentdate - oneJan) / (24 * 60 * 60 * 1000));
+var dd = new Date();
+
+// start site
+function start() {
+  document.getElementById("Settings").style.display = "none";
+  document.getElementById("header").style.display = "none";
+  document.getElementById("Projects-list").style.display = "none";
+  document.getElementById("home").style.display = "none";
+  document.title = "Sketch";
+  let oldLink = document.querySelectorAll('[rel="shortcut icon"]')[0];
+  if (oldLink) {
+    document.head.removeChild(oldLink);
+  }
+  let link = document.createElement("link");
+  link.id = "favicon";
+  link.rel = "shortcut icon";
+  link.href =
+    "https://media.discordapp.net/attachments/898978597996466189/900743720905900032/60d473a38f959300118b9c10.png";
+  document.head.appendChild(link);
+
+  window.setTimeout(function () {
+    document.getElementById("div").style.display = "none";
+    document.getElementById("challange").style.display = "none";
+    document.getElementById("header").style.display = "block";
+    document.getElementById("home").style.display = "block";
+    if (!window.localStorage.getItem("projects") == "") {
+      projects = JSON.parse(window.localStorage.getItem("projects"));
+      for (var i of projects) {
+        var neww_list_item = document.getElementById("Projects-list");
+        var itemm = neww_list_item.cloneNode(true);
+        neww_list_item.id = i;
+        neww_list_item.style.display = "block";
+        const select = neww_list_item.querySelector("#Title");
+        select.id = "Title" + i;
+        document.getElementById("Title" + i).innerHTML = i;
+
+        const select2 = neww_list_item.querySelector("#Description");
+        select2.id = "Description" + i;
+        document.getElementById(
+          "Description" + i
+        ).innerHTML = window.localStorage.getItem("created" + i);
+
+        const select3 = neww_list_item.querySelector("#icon");
+        select3.id = "icon" + i;
+        document.getElementById("icon" + i).src = window.localStorage.getItem(
+          "icon" + i
+        );
+        document.getElementById("home").appendChild(itemm);
+      }
+    }
+  }, 6000);
+}
+start();
+
+//create new project
+function new_projectt() {
+  var add = document.getElementById("add");
+  add.onclick = function () {
+    var new_project = prompt("New Project Name");
+    if (new_project === `` || new_project == null) {
+    } else {
+      var new_list_item = document.getElementById("Projects-list");
+      var item = new_list_item.cloneNode(true);
+      new_list_item.id = new_project;
+      new_list_item.style.display = "block";
+      const select = new_list_item.querySelector("#Title");
+      select.id = "Title" + new_project;
+      document.getElementById("Title" + new_project).innerHTML = new_project;
+
+      const select2 = new_list_item.querySelector("#Description");
+      select2.id = "Description" + new_project;
+      var date = new Date();
+      document.getElementById("Description" + new_project).innerHTML =
+        "Created: " +
+        [
+          days[dd.getDay()],
+          " / ",
+          monthNames[dd.getMonth()],
+          " / ",
+          dd.getFullYear(),
+          " / ",
+          dd.getHours(),
+          ":",
+          dd.getMinutes()
+        ].join("");
+      projects.push(new_project);
+      window.localStorage.setItem("projects", JSON.stringify(projects));
+      window.localStorage.setItem(
+        "created" + new_project,
+        document.getElementById("Description" + new_project).innerHTML
+      );
+
+      const select3 = new_list_item.querySelector("#icon");
+      select3.id = "icon" + new_project;
+
+      window.localStorage.setItem(
+        "icon" + new_project,
+        document.getElementById("icon" + new_project).src
+      );
+      document.getElementById("home").appendChild(item);
+    }
+  };
+}
+new_projectt();
+
+// add search projects option
+function search() {
+  document.getElementById("search").addEventListener("input", updateValue);
+
+  function updateValue(e) {}
+}
+search();
+
+// add settings page
+function settings() {
+  var BGImage = document
+    .getElementById("BGImage");
+  BGImage.onclick = 
+  function () {
+      let input = document.createElement("input");
+      input.type = "file";
+      input.onchange = (_) => {
+        input.accept = "image/*";
+        // you can use this method to get file and perform respective operations
+        var files = Array.from(input.files);
+        console.log(files);
+        for (let i = 0; i < files.length; i++) {
+          reader.addEventListener(
+            "load",
+            function () {
+              document.body.style.backgroundImage = "url(" + reader.result;
+              +")";
+              window.localStorage.setItem("BGImage", reader.result);
+            },
+            false
+          );
+          reader.readAsDataURL(files[i]);
+        }
+      };
+      input.click();
+  }
+
+  var theme = document.getElementById("theme");
+  theme. onclick = 
+  function () {
+    if (window.localStorage.getItem("DarkMode") == "") {
+      window.localStorage.setItem("DarkMode", true);
+      document.body.style.backgroundColor = "black";
+      document.getElementById("header").style.backgroundColor = "#424242";
+      document.getElementById("goHome").style.backgroundColor = "#424242";
+
+      document.getElementById("add").style.backgroundColor = "#424242";
+
+      document.getElementById("settings").style.backgroundColor = "#424242";
+      
+      document.getElementById("BGImage").style.backgroundColor = "#424242";
+      
+      document.getElementById("theme").style.backgroundColor = "#424242";
+
+      document.getElementById("theme").innerHTML = "Dark Theme: On";
+      
+      document.getElementById("siteSettings").style.color = "white";
+      
+      document.getElementById("challange").style.color = "white";
+      
+      document.getElementById("loading").style.borderTop = "8px solid #424242";
+
+      document.getElementById("logo").src =
+        "https://media.discordapp.net/attachments/898978597996466189/911561074178949150/Untitled116.png";
+    } else {
+      window.localStorage.setItem("DarkMode", "");
+      document.body.style.backgroundColor = "white";
+      document.getElementById("header").style.backgroundColor = "#008dcd";
+
+      document.getElementById("goHome").style.backgroundColor = "#008dcd";
+
+      document.getElementById("add").style.backgroundColor = "#008dcd";
+      
+       document.getElementById("BGImage").style.backgroundColor = "#008dcd";
+      
+      document.getElementById("theme").style.backgroundColor = "#008dcd";
+
+      document.getElementById("theme").innerHTML = "Dark Theme: Off";
+
+      document.getElementById("siteSettings").style.color = "#008dcd";
+      
+      document.getElementById("challange").style.color = "#008dcd";
+      document.getElementById("settings").style.backgroundColor = "#008dcd";
+      document.getElementById("logo").src =
+        "https://media.discordapp.net/attachments/898978597996466189/909471139921793044/Untitled183_20210624211409.png";
+      
+      document.getElementById("loading").style.borderTop = "8px solid #008dcd";
+    }
+  }
+
+  var settings = document.getElementById("settings");
+
+  settings.onclick = function () {
+    document.getElementById("home").style.display = "none";
+    document.getElementById("Settings").style.display = "block";
+  };
+
+  var goHome = document.getElementById("goHome");
+
+  goHome.onclick = function () {
+    document.getElementById("home").style.display = "block";
+    document.getElementById("Settings").style.display = "none";
+  };
+}
+settings();
+
+function setBGImage() {
+  if (window.localStorage.getItem("BGImage") == "") {
+  } else {
+    document.body.style.backgroundImage =
+      "url(" + window.localStorage.getItem("BGImage") + ")";
+  }
+}
+
+setBGImage();
+
+  function Dtheme () {
+    if (window.localStorage.getItem("DarkMode") == "") {
+      window.localStorage.setItem("DarkMode", true);
+      document.body.style.backgroundColor = "black";
+      document.getElementById("header").style.backgroundColor = "#424242";
+      document.getElementById("goHome").style.backgroundColor = "#424242";
+
+      document.getElementById("add").style.backgroundColor = "#424242";
+
+      document.getElementById("settings").style.backgroundColor = "#424242";
+      
+      document.getElementById("BGImage").style.backgroundColor = "#424242";
+      
+      document.getElementById("theme").style.backgroundColor = "#424242";
+
+      document.getElementById("theme").innerHTML = "Dark Theme: On";
+      
+      document.getElementById("siteSettings").style.color = "white";
+      
+      document.getElementById("challange").style.color = "white";
+      
+      document.getElementById("loading").style.borderTop = "8px solid #424242";
+
+      document.getElementById("logo").src =
+        "https://media.discordapp.net/attachments/898978597996466189/911561074178949150/Untitled116.png";
+    } else {
+      window.localStorage.setItem("DarkMode", "");
+      document.body.style.backgroundColor = "white";
+      document.getElementById("header").style.backgroundColor = "#008dcd";
+
+      document.getElementById("goHome").style.backgroundColor = "#008dcd";
+
+      document.getElementById("add").style.backgroundColor = "#008dcd";
+      
+       document.getElementById("BGImage").style.backgroundColor = "#008dcd";
+      
+      document.getElementById("theme").style.backgroundColor = "#008dcd";
+
+      document.getElementById("theme").innerHTML = "Dark Theme: Off";
+
+      document.getElementById("siteSettings").style.color = "#008dcd";
+      
+      document.getElementById("challange").style.color = "#008dcd";
+      document.getElementById("settings").style.backgroundColor = "#008dcd";
+      document.getElementById("logo").src =
+        "https://media.discordapp.net/attachments/898978597996466189/909471139921793044/Untitled183_20210624211409.png";
+      
+      document.getElementById("loading").style.borderTop = "8px solid #008dcd";
+    }
+  }
+Dtheme();
     </script>
 
   
@@ -103,3 +609,4 @@ document.getElementById("text").style.display = "none";
 
 </html>
  
+
