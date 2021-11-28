@@ -63,6 +63,7 @@ body {
     background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+
 }
 
 img {
@@ -98,9 +99,10 @@ input {
   padding: 5px;
   border-style: solid;
   border-color: TRANSPARENT;
-  border-radius: 5px;
+  border-radius: 10px;
   font-size: 17px;
   font-family: Sans-serif;
+  margin: 0px;
 
   -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
 
@@ -182,12 +184,35 @@ input {
   box-sizing: border-box;
 }
 
+.reset {
+  width: 58px;
+  height: 58px;
+  background-color: #008dcd;
+  border-radius: 50%;
+  font-size: 50px;
+  color: white;
+  text-align: center;
+  background-image: url("https://media.discordapp.net/attachments/898978597996466189/912745952664776714/round_restart_alt_white_24dp.png");
+  background-repeat: no-repeat;
+  background-size: 40px;
+  background-position: center;
+
+  position: fixed;
+  right: 16px;
+  bottom: 88px;
+  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+
+  -moz-box-sizing: border-box; /* Firefox, other Gecko */
+
+  box-sizing: border-box;
+}
+
 .projectsList {
   width: 100%;
   hiegth: 80px;
   padding: 0px;
   background: rgba(155, 155, 155, 0.5);
-  border-radius: 5px;
+  border-radius: 10px;
   margin-bottom: 8px;
 }
 
@@ -225,11 +250,22 @@ input {
   width: 255px;
 }
 
+.Details {
+  display: inline-block;
+  vertical-align: middle;
+  width: 855px;
+}
+
 .photo {
   display: inline-block;
   vertical-align: middle;
   width: 80px;
   height: 80px;
+}
+
+.Photo {
+  display: inline-block;
+  vertical-align: middle;
 }
 
 button {
@@ -258,6 +294,38 @@ button {
 
   box-sizing: border-box;
 }
+
+#blocklyContainer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+    z-index:
+  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+
+  -moz-box-sizing: border-box; /* Firefox, other Gecko */
+
+  box-sizing: border-box;
+}
+#blocklyDiv {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.blocklySvg {
+  background-color: TRANSPARENT !important;
+}
+div#blocklyDiv .blocklyTreeRow {
+  border-radius: 5px;
+  padding: 3px;
+  margin-bottom: 5px;
+}
+div#blocklyDiv .blocklyToolboxDiv {
+  background: TRANSPARENT;
+  padding: 5px;
+}
 </style>
 
   
@@ -268,7 +336,19 @@ button {
 </head>
 
 <body translate="no" >
-  <meta name="google-site-verification" content="3YpzZmQGfAWLdmWTVwuIodvcCQe7ZRlzQmbOl2zcPUM" />
+  <script src="https://unpkg.com/blockly/blockly.min.js"></script>
+
+<script src="https://unpkg.com/@blockly/disable-top-blocks"></script>
+
+<script src="https://unpkg.com/@blockly/plugin-scroll-options"></script>
+
+
+<script src="blockly_compressed.js"></script>
+<script src="blocks_compressed.js"></script>
+
+<script src="msg/js/en.js"></script>
+
+<meta name="google-site-verification" content="3YpzZmQGfAWLdmWTVwuIodvcCQe7ZRlzQmbOl2zcPUM" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -299,15 +379,72 @@ button {
 
 <div class="Settings" id="Settings">
   <p id="siteSettings">Site Settings</p>
-  <button id="BGImage">Select Background Image </button>
+    <input type="text" id="BGImageURL" placeholder="Background Image URL"><br><br>
+  <button id="BGImage">Select Background Image</button>
+  <button id="bgimage">Custom Background Image: Off</button>
   <button id="theme">Dark Theme: Off </button>
+  <p id="refrence">Refrence</p>
+  <button id='share'>Share Sketch</button>
   <div class="goHome" id="goHome"></div>
+  <div class="reset" id="reset"></div>
 </div>
+
+<xml xmlns="https://developers.google.com/blockly/xml" id="toolbox" style="display: none">
+  <block type="colour_random"></block>
+</xml>
+
+<section id="blocklyContainer">
+    <div id="blocklyDiv">
+        <div style="position: absolute; z-index: 1;
+                    width: 58px;
+  height: 58px;
+  background-color: #008dcd;
+  border-radius: 50%;
+  font-size: 50px;
+  color: white;
+  text-align: center;
+  background-image: url(`https://media.discordapp.net/attachments/898978597996466189/913429347262677062/round_mode_edit_white_24dp.png`);
+  background-repeat: no-repeat;
+  background-size: 40px;
+  background-position: center;
+
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+
+  -moz-box-sizing: border-box; /* Firefox, other Gecko */
+
+  box-sizing: border-box;" id="GoHome2"></div>
+    </div>
+</section>
   
   
       <script id="rendered-js" >
+//There are more than 3,905 million women in this world, yet i still fell in love with the most beatifull fictional character.
+
 //variables
 var projects = [];
+
+var projects = "";
+
+var widgets = [
+  "Button",
+  "Paragraph",
+  "Toggle",
+  "Checkbox",
+  "Radio Button",
+  "DropDown List",
+  "List Box",
+  "DropDown Button",
+  "Text Field",
+  "Time Picker",
+  "Date Picker",
+  "Image",
+  "Image Carousel",
+  "ProgressBar",
+  "Slider"
+];
 
 const reader = new FileReader();
 
@@ -331,8 +468,92 @@ var oneJan = new Date(currentdate.getFullYear(), 0, 1);
 var numberOfDays = Math.floor((currentdate - oneJan) / (24 * 60 * 60 * 1000));
 var dd = new Date();
 
+// Inject Blockly.
+
+const workspace = Blockly.inject("blocklyDiv", {
+  trashcan: false,
+
+  renderer: "zelos",
+
+  toolbox: document.getElementById("toolbox"),
+  theme: {
+    startHats: true
+  },
+
+  plugins: {
+    // These are both required.
+
+    blockDragger: ScrollBlockDragger,
+
+    metricsManager: ScrollMetricsManager
+  },
+
+  move: {
+    scrollbars: {
+      horizontal: true,
+
+      vertical: true
+    },
+
+    drag: true,
+
+    wheel: true
+  },
+
+  zoom: {
+    controls: false,
+
+    wheel: false,
+
+    startScale: 0.7,
+
+    maxScale: 3,
+
+    minScale: 0.3,
+
+    scaleSpeed: 1.2,
+
+    pinch: false
+  },
+  horizontalLayout: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+    navigator.userAgent
+  ),
+
+  toolboxPosition: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+    navigator.userAgent
+  )
+    ? "end"
+    : "start"
+});
+
+//change hue
+Blockly.HSV_SATURATION = 0.72;
+Blockly.HSV_VALUE = 0.95;
+
+// Initialize scroll plugin.
+
+const scrollOptionsPlugin = new ScrollOptions(workspace);
+
+scrollOptionsPlugin.init({ enableWheelScroll: true, enableEdgeScroll: true });
+
+// Add the disableOrphans event handler. This is not done automatically by
+// the plugin and should be handled by your application.
+workspace.addChangeListener(Blockly.Events.disableOrphans);
+
+// The plugin must be initialized before it has any effect.
+const disableTopBlocksPlugin = new DisableTopBlocks();
+disableTopBlocksPlugin.init();
+
+//initilize menu
+workspace.configureContextMenu = configureContextMenu;
+
+document.getElementById("blocklyContainer").style.display = "none";
+
 // start site
 function start() {
+  document.getElementById("GoHome2").style.backgroundImage =
+    "url(https://media.discordapp.net/attachments/898978597996466189/911302759175823380/round_home_white_24dp.png)";
+
   document.getElementById("Settings").style.display = "none";
   document.getElementById("header").style.display = "none";
   document.getElementById("Projects-list").style.display = "none";
@@ -361,21 +582,41 @@ function start() {
         var itemm = neww_list_item.cloneNode(true);
         neww_list_item.id = i;
         neww_list_item.style.display = "block";
+        neww_list_item.onclick = function () {
+          document.getElementById("home").style.display = "none";
+          document.getElementById("blocklyContainer").style.display = "block";
+          project = document.getElementById("Title" + i).innerHTML;
+        };
         const select = neww_list_item.querySelector("#Title");
         select.id = "Title" + i;
         document.getElementById("Title" + i).innerHTML = i;
+        select.onclick = function () {
+          document.getElementById("home").style.display = "none";
+          document.getElementById("blocklyContainer").style.display = "block";
+          project = document.getElementById("Title" + i).innerHTML;
+        };
 
         const select2 = neww_list_item.querySelector("#Description");
         select2.id = "Description" + i;
         document.getElementById(
           "Description" + i
         ).innerHTML = window.localStorage.getItem("created" + i);
+        select2.onclick = function () {
+          document.getElementById("home").style.display = "none";
+          document.getElementById("blocklyContainer").style.display = "block";
+          project = document.getElementById("Title" + i).innerHTML;
+        };
 
         const select3 = neww_list_item.querySelector("#icon");
         select3.id = "icon" + i;
         document.getElementById("icon" + i).src = window.localStorage.getItem(
           "icon" + i
         );
+        select3.onclick = function () {
+          document.getElementById("home").style.display = "none";
+          document.getElementById("blocklyContainer").style.display = "block";
+          project = document.getElementById("Title" + i).innerHTML;
+        };
         document.getElementById("home").appendChild(itemm);
       }
     }
@@ -394,9 +635,19 @@ function new_projectt() {
       var item = new_list_item.cloneNode(true);
       new_list_item.id = new_project;
       new_list_item.style.display = "block";
+      new_list_item.onclick = function () {
+        document.getElementById("home").style.display = "none";
+        document.getElementById("blocklyContainer").style.display = "block";
+        project = document.getElementById("Title" + i).innerHTML;
+      };
       const select = new_list_item.querySelector("#Title");
       select.id = "Title" + new_project;
       document.getElementById("Title" + new_project).innerHTML = new_project;
+      select.onclick = function () {
+        document.getElementById("home").style.display = "none";
+        document.getElementById("blocklyContainer").style.display = "block";
+        project = document.getElementById("Title" + i).innerHTML;
+      };
 
       const select2 = new_list_item.querySelector("#Description");
       select2.id = "Description" + new_project;
@@ -420,6 +671,11 @@ function new_projectt() {
         "created" + new_project,
         document.getElementById("Description" + new_project).innerHTML
       );
+      select2.onclick = function () {
+        document.getElementById("home").style.display = "none";
+        document.getElementById("blocklyContainer").style.display = "block";
+        project = document.getElementById("Title" + i).innerHTML;
+      };
 
       const select3 = new_list_item.querySelector("#icon");
       select3.id = "icon" + new_project;
@@ -428,6 +684,11 @@ function new_projectt() {
         "icon" + new_project,
         document.getElementById("icon" + new_project).src
       );
+      select3.onclick = function () {
+        document.getElementById("home").style.display = "none";
+        document.getElementById("blocklyContainer").style.display = "block";
+        project = document.getElementById("Title" + i).innerHTML;
+      };
       document.getElementById("home").appendChild(item);
     }
   };
@@ -438,62 +699,100 @@ new_projectt();
 function search() {
   document.getElementById("search").addEventListener("input", updateValue);
 
-  function updateValue(e) {}
+  function updateValue(e) {
+    for (var i of projects) {
+      document.getElementById(i).style.display = "none";
+    }
+    if (document.getElementById("search").value == "") {
+      for (var i of projects) {
+        document.getElementById(i).style.display = "block";
+      }
+    } else {
+      for (var i of projects) {
+        if (
+          document
+            .getElementById("Title" + i)
+            .innerHTML.includes(document.getElementById("search").value)
+        ) {
+          document.getElementById(i).style.display = "block";
+        }
+      }
+    }
+  }
 }
 search();
 
 // add settings page
 function settings() {
-  var BGImage = document
-    .getElementById("BGImage");
-  BGImage.onclick = 
-  function () {
-      let input = document.createElement("input");
-      input.type = "file";
-      input.onchange = (_) => {
-        input.accept = "image/*";
-        // you can use this method to get file and perform respective operations
-        var files = Array.from(input.files);
-        console.log(files);
-        for (let i = 0; i < files.length; i++) {
-          reader.addEventListener(
-            "load",
-            function () {
-              document.body.style.backgroundImage = "url(" + reader.result;
-              +")";
-              window.localStorage.setItem("BGImage", reader.result);
-            },
-            false
-          );
-          reader.readAsDataURL(files[i]);
-        }
-      };
-      input.click();
-  }
+  var bgimage = document.getElementById("bgimage");
+  bgimage.onclick = function () {
+    if (!window.localStorage.getItem("BGImage") == "") {
+      document.getElementById("bgimage").innerHTML =
+        "Custom Background Image: Off";
+      window.localStorage.setItem("BGImage", "");
+      document.body.style.backgroundImage = "url(``)";
+    } else {
+      document.getElementById("BGImage").click();
+    }
+  };
+
+  var BGImage = document.getElementById("BGImage");
+  BGImage.onclick = function () {
+    let input = document.createElement("input");
+    input.type = "file";
+    input.onchange = (_) => {
+      input.accept = "image/*";
+      // you can use this method to get file and perform respective operations
+      var files = Array.from(input.files);
+      console.log(files);
+      for (let i = 0; i < files.length; i++) {
+        reader.addEventListener(
+          "load",
+          function () {
+            document.body.style.backgroundImage = "url(" + reader.result;
+            +")";
+            window.localStorage.setItem("BGImage", reader.result);
+            document.getElementById("bgimage").innerHTML =
+              "Custom Background Image: On";
+          },
+          false
+        );
+        reader.readAsDataURL(files[i]);
+      }
+    };
+    input.click();
+  };
 
   var theme = document.getElementById("theme");
-  theme. onclick = 
-  function () {
+  theme.onclick = function () {
     if (window.localStorage.getItem("DarkMode") == "") {
       window.localStorage.setItem("DarkMode", true);
       document.body.style.backgroundColor = "black";
       document.getElementById("header").style.backgroundColor = "#424242";
       document.getElementById("goHome").style.backgroundColor = "#424242";
 
+      document.getElementById("GoHome2").style.backgroundColor = "#424242";
+
       document.getElementById("add").style.backgroundColor = "#424242";
 
       document.getElementById("settings").style.backgroundColor = "#424242";
-      
+
+      document.getElementById("share").style.backgroundColor = "#424242";
+
+      document.getElementById("reset").style.backgroundColor = "#424242";
+
       document.getElementById("BGImage").style.backgroundColor = "#424242";
-      
+
+      document.getElementById("bgimage").style.backgroundColor = "#424242";
       document.getElementById("theme").style.backgroundColor = "#424242";
 
       document.getElementById("theme").innerHTML = "Dark Theme: On";
-      
+
       document.getElementById("siteSettings").style.color = "white";
-      
+
       document.getElementById("challange").style.color = "white";
-      
+
+      document.getElementById("refrence").style.color = "white";
       document.getElementById("loading").style.borderTop = "8px solid #424242";
 
       document.getElementById("logo").src =
@@ -505,24 +804,31 @@ function settings() {
 
       document.getElementById("goHome").style.backgroundColor = "#008dcd";
 
+      document.getElementById("GoHome2").style.backgroundColor = "#008dcd";
+
       document.getElementById("add").style.backgroundColor = "#008dcd";
-      
-       document.getElementById("BGImage").style.backgroundColor = "#008dcd";
-      
+
+      document.getElementById("BGImage").style.backgroundColor = "#008dcd";
+
+      document.getElementById("share").style.backgroundColor = "#008dcd";
+      document.getElementById("bgimage").style.backgroundColor = "#008dcd";
       document.getElementById("theme").style.backgroundColor = "#008dcd";
 
       document.getElementById("theme").innerHTML = "Dark Theme: Off";
 
       document.getElementById("siteSettings").style.color = "#008dcd";
-      
+
       document.getElementById("challange").style.color = "#008dcd";
+
+      document.getElementById("refrence").style.color = "#008dcd";
       document.getElementById("settings").style.backgroundColor = "#008dcd";
+      document.getElementById("reset").style.backgroundColor = "#008dcd";
       document.getElementById("logo").src =
         "https://media.discordapp.net/attachments/898978597996466189/909471139921793044/Untitled183_20210624211409.png";
-      
+
       document.getElementById("loading").style.borderTop = "8px solid #008dcd";
     }
-  }
+  };
 
   var settings = document.getElementById("settings");
 
@@ -537,6 +843,22 @@ function settings() {
     document.getElementById("home").style.display = "block";
     document.getElementById("Settings").style.display = "none";
   };
+
+  var reset = (document.getElementById("reset").onclick = function () {
+    if (confirm("WARNING: If you continue all data will be reset.")) {
+      window.localStorage.clear();
+      window.location.href = "https://lukeplays33.github.io/Sketch/";
+    } else {
+    }
+  });
+  var share = document.getElementById("share");
+  share.onclick = function () {
+    navigator.share({
+      title: "Sketch",
+      text: "Create fantastic Games and Websites using Sketch!",
+      url: "https://lukeplays33.github.io/Sketch/"
+    });
+  };
 }
 settings();
 
@@ -545,62 +867,254 @@ function setBGImage() {
   } else {
     document.body.style.backgroundImage =
       "url(" + window.localStorage.getItem("BGImage") + ")";
+    document.getElementById("bgimage").innerHTML =
+      "Custom Background Image: On";
   }
 }
 
 setBGImage();
 
-  function Dtheme () {
-    if (window.localStorage.getItem("DarkMode") == "") {
-      window.localStorage.setItem("DarkMode", true);
-      document.body.style.backgroundColor = "black";
-      document.getElementById("header").style.backgroundColor = "#424242";
-      document.getElementById("goHome").style.backgroundColor = "#424242";
+function Dtheme() {
+  if (window.localStorage.getItem("DarkMode") == "true") {
+    document.body.style.backgroundColor = "black";
+    document.getElementById("header").style.backgroundColor = "#424242";
+    document.getElementById("goHome").style.backgroundColor = "#424242";
 
-      document.getElementById("add").style.backgroundColor = "#424242";
+    document.getElementById("GoHome2").style.backgroundColor = "#424242";
 
-      document.getElementById("settings").style.backgroundColor = "#424242";
-      
-      document.getElementById("BGImage").style.backgroundColor = "#424242";
-      
-      document.getElementById("theme").style.backgroundColor = "#424242";
+    document.getElementById("add").style.backgroundColor = "#424242";
 
-      document.getElementById("theme").innerHTML = "Dark Theme: On";
-      
-      document.getElementById("siteSettings").style.color = "white";
-      
-      document.getElementById("challange").style.color = "white";
-      
-      document.getElementById("loading").style.borderTop = "8px solid #424242";
+    document.getElementById("settings").style.backgroundColor = "#424242";
 
-      document.getElementById("logo").src =
-        "https://media.discordapp.net/attachments/898978597996466189/911561074178949150/Untitled116.png";
-    } else {
-      window.localStorage.setItem("DarkMode", "");
-      document.body.style.backgroundColor = "white";
-      document.getElementById("header").style.backgroundColor = "#008dcd";
+    document.getElementById("BGImage").style.backgroundColor = "#424242";
 
-      document.getElementById("goHome").style.backgroundColor = "#008dcd";
+    document.getElementById("bgimage").style.backgroundColor = "#424242";
 
-      document.getElementById("add").style.backgroundColor = "#008dcd";
-      
-       document.getElementById("BGImage").style.backgroundColor = "#008dcd";
-      
-      document.getElementById("theme").style.backgroundColor = "#008dcd";
+    document.getElementById("theme").style.backgroundColor = "#424242";
 
-      document.getElementById("theme").innerHTML = "Dark Theme: Off";
+    document.getElementById("share").style.backgroundColor = "#424242";
 
-      document.getElementById("siteSettings").style.color = "#008dcd";
-      
-      document.getElementById("challange").style.color = "#008dcd";
-      document.getElementById("settings").style.backgroundColor = "#008dcd";
-      document.getElementById("logo").src =
-        "https://media.discordapp.net/attachments/898978597996466189/909471139921793044/Untitled183_20210624211409.png";
-      
-      document.getElementById("loading").style.borderTop = "8px solid #008dcd";
-    }
+    document.getElementById("theme").innerHTML = "Dark Theme: On";
+
+    document.getElementById("siteSettings").style.color = "white";
+
+    document.getElementById("refrence").style.color = "white";
+    document.getElementById("challange").style.color = "white";
+
+    document.getElementById("loading").style.borderTop = "8px solid #424242";
+
+    document.getElementById("logo").src =
+      "https://media.discordapp.net/attachments/898978597996466189/911561074178949150/Untitled116.png";
+
+    document.getElementById("reset").style.backgroundColor = "#424242";
+  } else {
   }
+}
 Dtheme();
+
+//BGImage from URL
+function BGIfURL() {
+  document.getElementById("BGImageURL").addEventListener("input", updateValue);
+  function updateValue(e) {
+    document.body.style.backgroundImage =
+      "url(" + document.getElementById("BGImageURL").value + ")";
+    window.localStorage.setItem(
+      "BGImage",
+      document.getElementById("BGImageURL").value
+    );
+    document.getElementById("bgimage").innerHTML =
+      "Custom Background Image: On";
+  }
+}
+BGIfURL();
+
+function editor() {}
+var goHome = document.getElementById("GoHome2");
+goHome.onclick = function () {
+  document.getElementById("home").style.display = "block";
+  document.getElementById("blocklyContainer").style.display = "none";
+};
+editor();
+
+//context menu
+function configureContextMenu(menuOptions) {
+  var screenshotOption = {
+    text: "Download Workspace As PNG Image",
+    enabled: workspace.getTopBlocks().length,
+    callback: function () {
+      Blockly.downloadScreenshot(workspace);
+    }
+  };
+  menuOptions.push(screenshotOption);
+}
+
+// create download png function
+/**
+ * @license
+ * Copyright 2019 Google LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/**
+ * @fileoverview Download screenshot.
+ * @author samelh@google.com (Sam El-Husseini)
+ */
+("use strict");
+
+/**
+ * Convert an SVG datauri into a PNG datauri.
+ * @param {string} data SVG datauri.
+ * @param {number} width Image width.
+ * @param {number} height Image height.
+ * @param {!Function} callback Callback.
+ */
+function svgToPng_(data, width, height, callback) {
+  var canvas = document.createElement("canvas");
+  var context = canvas.getContext("2d");
+  var img = new Image();
+
+  var pixelDensity = 10;
+  canvas.width = width * pixelDensity;
+  canvas.height = height * pixelDensity;
+  img.onload = function () {
+    context.drawImage(
+      img,
+      0,
+      0,
+      width,
+      height,
+      0,
+      0,
+      canvas.width,
+      canvas.height
+    );
+    try {
+      var dataUri = canvas.toDataURL("image/png");
+      callback(dataUri);
+    } catch (err) {
+      console.warn("Error converting the workspace svg to a png");
+      callback("");
+    }
+  };
+  img.src = data;
+}
+
+/**
+ * Create an SVG of the blocks on the workspace.
+ * @param {!Blockly.WorkspaceSvg} workspace The workspace.
+ * @param {!Function} callback Callback.
+ */
+function workspaceToSvg_(workspace, callback, customCss) {
+  // Go through all text areas and set their value.
+  var textAreas = document.getElementsByTagName("textarea");
+  for (var i = 0; i < textAreas.length; i++) {
+    textAreas[i].innerHTML = textAreas[i].value;
+  }
+
+  var bBox = workspace.getBlocksBoundingBox();
+  var x = bBox.x || bBox.left;
+  var y = bBox.y || bBox.top;
+  var width = bBox.width || bBox.right - x;
+  var height = bBox.height || bBox.bottom - y;
+
+  var blockCanvas = workspace.getCanvas();
+  var clone = blockCanvas.cloneNode(true);
+  clone.removeAttribute("transform");
+
+  var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  svg.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+  svg.appendChild(clone);
+  svg.setAttribute("viewBox", x + " " + y + " " + width + " " + height);
+
+  svg.setAttribute(
+    "class",
+    "blocklySvg " +
+      (workspace.options.renderer || "geras") +
+      "-renderer " +
+      (workspace.getTheme ? workspace.getTheme().name + "-theme" : "")
+  );
+  svg.setAttribute("width", width);
+  svg.setAttribute("height", height);
+  svg.setAttribute("style", "background-color: transparent");
+
+  var css = [].slice
+    .call(document.head.querySelectorAll("style"))
+    .filter(function (el) {
+      return (
+        /\.blocklySvg/.test(el.innerText) || el.id.indexOf("blockly-") === 0
+      );
+    })
+    .map(function (el) {
+      return el.innerText;
+    })
+    .join("\n");
+  var style = document.createElement("style");
+  style.innerHTML = css + "\n" + customCss;
+  svg.insertBefore(style, svg.firstChild);
+
+  var svgAsXML = new XMLSerializer().serializeToString(svg);
+  svgAsXML = svgAsXML.replace(/&nbsp/g, "&#160");
+  var data = "data:image/svg+xml," + encodeURIComponent(svgAsXML);
+
+  svgToPng_(data, width, height, callback);
+}
+
+/**
+ * Download a screenshot of the blocks on a Blockly workspace.
+ * @param {!Blockly.WorkspaceSvg} workspace The Blockly workspace.
+ */
+Blockly.downloadScreenshot = function (workspace) {
+  workspaceToSvg_(workspace, function (datauri) {
+    var a = document.createElement("a");
+    a.download = "screenshot.png";
+    a.target = "_self";
+    a.href = datauri;
+    document.body.appendChild(a);
+    a.click();
+    a.parentNode.removeChild(a);
+  });
+};
+
+// create get var for any input block
+function registerFirstContextMenuOptions() {
+  const workspaceItem = {
+    displayText: "Hello World",
+    preconditionFn: function (scope) {
+      return "enabled";
+    },
+    callback: function (scope) {},
+    scopeType: Blockly.ContextMenuRegistry.ScopeType.WORKSPACE,
+    id: "hello_world",
+    weight: 100
+  };
+}
+
+function blocks() {
+  Blockly.Blocks["events"] = {
+    init: function () {
+      this.appendDummyInput().appendField(
+        new Blockly.FieldDropdown([["PageFinishedLoading", "pfl"]]),
+        "NAME"
+      );
+      this.appendStatementInput("NAME").setCheck(null);
+      this.setColour(30);
+      this.setTooltip("fires when a specific event fires");
+      this.setHelpUrl("");
+    }
+  };
+}
+blocks();
     </script>
 
   
@@ -609,4 +1123,5 @@ Dtheme();
 
 </html>
  
+
 
