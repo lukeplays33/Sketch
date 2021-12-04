@@ -299,13 +299,14 @@ button {
   position: relative;
   width: 100%;
   height: 100%;
-    z-index:
+    
   -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
 
   -moz-box-sizing: border-box; /* Firefox, other Gecko */
 
   box-sizing: border-box;
 }
+
 #blocklyDiv {
   position: absolute;
   top: 0;
@@ -323,7 +324,7 @@ div#blocklyDiv .blocklyTreeRow {
   margin-bottom: 5px;
 }
 div#blocklyDiv .blocklyToolboxDiv {
-  background: TRANSPARENT;
+  background: rgba(155, 155, 155, 0.5);
   padding: 5px;
 }
 </style>
@@ -341,7 +342,6 @@ div#blocklyDiv .blocklyToolboxDiv {
 <script src="https://unpkg.com/@blockly/disable-top-blocks"></script>
 
 <script src="https://unpkg.com/@blockly/plugin-scroll-options"></script>
-
 
 <script src="blockly_compressed.js"></script>
 <script src="blocks_compressed.js"></script>
@@ -385,17 +385,15 @@ div#blocklyDiv .blocklyToolboxDiv {
   <button id="theme">Dark Theme: Off </button>
   <p id="refrence">Refrence</p>
   <button id='share'>Share Sketch</button>
+  <p id="e">Editor</p>
+  <button id="open">Open editor after new project has been created: Off</button>
   <div class="goHome" id="goHome"></div>
   <div class="reset" id="reset"></div>
 </div>
 
-<xml xmlns="https://developers.google.com/blockly/xml" id="toolbox" style="display: none">
-  <block type="colour_random"></block>
-</xml>
-
 <section id="blocklyContainer">
     <div id="blocklyDiv">
-        <div style="position: absolute; z-index: 1;
+        <div style="position: absolute; z-index: 50;
                     width: 58px;
   height: 58px;
   background-color: #008dcd;
@@ -416,35 +414,513 @@ div#blocklyDiv .blocklyToolboxDiv {
   -moz-box-sizing: border-box; /* Firefox, other Gecko */
 
   box-sizing: border-box;" id="GoHome2"></div>
+      
+      <div style="position: absolute; z-index: 50;
+                    width: 58px;
+  height: 58px;
+  background-color: #008dcd;
+  border-radius: 50%;
+  font-size: 50px;
+  color: white;
+  text-align: center;
+  background-image: url(`https://media.discordapp.net/attachments/898978597996466189/913429347262677062/round_mode_edit_white_24dp.png`);
+  background-repeat: no-repeat;
+  background-size: 40px;
+  background-position: center;
+
+  position: fixed;
+  right: 16px;
+  bottom: 88px;
+  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+
+  -moz-box-sizing: border-box; /* Firefox, other Gecko */
+
+  box-sizing: border-box;" id="Test"></div>
+      
+            <div style="position: absolute; z-index: 50;
+                    width: 58px;
+  height: 58px;
+  background-color: #008dcd;
+  border-radius: 50%;
+  font-size: 50px;
+  color: white;
+  text-align: center;
+  background-image: url(`https://media.discordapp.net/attachments/898978597996466189/913429347262677062/round_mode_edit_white_24dp.png`);
+  background-repeat: no-repeat;
+  background-size: 40px;
+  background-position: center;
+
+  position: fixed;
+  right: 16px;
+  bottom: 158px;
+  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+
+  -moz-box-sizing: border-box; /* Firefox, other Gecko */
+
+  box-sizing: border-box;" id="download"></div>
+
     </div>
 </section>
+
+<xml xmlns="https://developers.google.com/blockly/xml" id="toolbox" style="display: none">
+  <category name="Events" colour="#a5745b">
+    <block type="events">
+      <field name="NAME">load</field>
+    </block>
+    <block type="events">
+      <field name="NAME">error</field>
+    </block>
+    <block type="events">
+      <field name="NAME">scroll</field>
+    </block>
+    <block type="events">
+      <field name="NAME">resize</field>
+    </block>
+    <block type="events">
+      <field name="NAME">gamepadconnected</field>
+    </block>
+    <block type="events">
+      <field name="NAME">gamepaddisconnected</field>
+    </block>
+    <block type="events">
+      <field name="NAME">keydown</field>
+    </block>
+    <block type="events">
+      <field name="NAME">keyup</field>
+    </block>
+    <block type="events">
+      <field name="NAME">keypress</field>
+    </block>
+    <block type="events">
+      <field name="NAME">mouseup</field>
+    </block>
+    <block type="events">
+      <field name="NAME">mousedown</field>
+    </block>
+    <block type="events">
+      <field name="NAME">mousemove</field>
+    </block>
+    <block type="events">
+      <field name="NAME">click</field>
+    </block>
+  </category>
+  <sep></sep>
+  <category name="Logic" colour="#5b80a5">
+    <block type="controls_if"></block>
+    <block type="logic_compare">
+      <field name="OP">EQ</field>
+    </block>
+    <block type="logic_operation">
+      <field name="OP">AND</field>
+    </block>
+    <block type="logic_negate"></block>
+    <block type="logic_boolean">
+      <field name="BOOL">TRUE</field>
+    </block>
+    <block type="logic_null"></block>
+    <block type="logic_ternary"></block>
+  </category>
+  <category name="Loops" colour="#5ba55b">
+    <block type="controls_repeat_ext">
+      <value name="TIMES">
+        <shadow type="math_number">
+          <field name="NUM">10</field>
+        </shadow>
+      </value>
+    </block>
+    <block type="controls_whileUntil">
+      <field name="MODE">WHILE</field>
+    </block>
+    <block type="controls_for">
+      <field name="VAR" id="SoomMMm*=N7c:?gB}xYa">i</field>
+      <value name="FROM">
+        <shadow type="math_number">
+          <field name="NUM">1</field>
+        </shadow>
+      </value>
+      <value name="TO">
+        <shadow type="math_number">
+          <field name="NUM">10</field>
+        </shadow>
+      </value>
+      <value name="BY">
+        <shadow type="math_number">
+          <field name="NUM">1</field>
+        </shadow>
+      </value>
+    </block>
+    <block type="controls_forEach">
+      <field name="VAR" id="X$cY4@@mMmy#rgIi3E=?">j</field>
+    </block>
+    <block type="controls_flow_statements">
+      <field name="FLOW">BREAK</field>
+    </block>
+  </category>
+  <category name="Math" colour="#5b67a5">
+    <block type="math_number">
+      <field name="NUM">0</field>
+    </block>
+    <block type="math_arithmetic">
+      <field name="OP">ADD</field>
+      <value name="A">
+        <shadow type="math_number">
+          <field name="NUM">1</field>
+        </shadow>
+      </value>
+      <value name="B">
+        <shadow type="math_number">
+          <field name="NUM">1</field>
+        </shadow>
+      </value>
+    </block>
+    <block type="math_single">
+      <field name="OP">ROOT</field>
+      <value name="NUM">
+        <shadow type="math_number">
+          <field name="NUM">9</field>
+        </shadow>
+      </value>
+    </block>
+    <block type="math_trig">
+      <field name="OP">SIN</field>
+      <value name="NUM">
+        <shadow type="math_number">
+          <field name="NUM">45</field>
+        </shadow>
+      </value>
+    </block>
+    <block type="math_constant">
+      <field name="CONSTANT">PI</field>
+    </block>
+    <block type="math_number_property">
+      <mutation divisor_input="false"></mutation>
+      <field name="PROPERTY">EVEN</field>
+      <value name="NUMBER_TO_CHECK">
+        <shadow type="math_number">
+          <field name="NUM">0</field>
+        </shadow>
+      </value>
+    </block>
+    <block type="math_round">
+      <field name="OP">ROUND</field>
+      <value name="NUM">
+        <shadow type="math_number">
+          <field name="NUM">3.1</field>
+        </shadow>
+      </value>
+    </block>
+    <block type="math_on_list">
+      <mutation op="SUM"></mutation>
+      <field name="OP">SUM</field>
+    </block>
+    <block type="math_modulo">
+      <value name="DIVIDEND">
+        <shadow type="math_number">
+          <field name="NUM">64</field>
+        </shadow>
+      </value>
+      <value name="DIVISOR">
+        <shadow type="math_number">
+          <field name="NUM">10</field>
+        </shadow>
+      </value>
+    </block>
+    <block type="math_constrain">
+      <value name="VALUE">
+        <shadow type="math_number">
+          <field name="NUM">50</field>
+        </shadow>
+      </value>
+      <value name="LOW">
+        <shadow type="math_number">
+          <field name="NUM">1</field>
+        </shadow>
+      </value>
+      <value name="HIGH">
+        <shadow type="math_number">
+          <field name="NUM">100</field>
+        </shadow>
+      </value>
+    </block>
+    <block type="math_random_int">
+      <value name="FROM">
+        <shadow type="math_number">
+          <field name="NUM">1</field>
+        </shadow>
+      </value>
+      <value name="TO">
+        <shadow type="math_number">
+          <field name="NUM">100</field>
+        </shadow>
+      </value>
+    </block>
+    <block type="math_random_float"></block>
+  </category>
+  <category name="Text" colour="#5ba58c">
+    <block type="text">
+      <field name="TEXT"></field>
+    </block>
+    <block type="text_join">
+      <mutation items="2"></mutation>
+    </block>
+    <block type="text_append">
+      <field name="VAR" id="UqF;{Iap*+t`,.z-bK~U">item</field>
+      <value name="TEXT">
+        <shadow type="text">
+          <field name="TEXT"></field>
+        </shadow>
+      </value>
+    </block>
+    <block type="text_length">
+      <value name="VALUE">
+        <shadow type="text">
+          <field name="TEXT">abc</field>
+        </shadow>
+      </value>
+    </block>
+    <block type="text_isEmpty">
+      <value name="VALUE">
+        <shadow type="text">
+          <field name="TEXT"></field>
+        </shadow>
+      </value>
+    </block>
+    <block type="text_indexOf">
+      <field name="END">FIRST</field>
+      <value name="VALUE">
+        <block type="variables_get">
+          <field name="VAR" id="[-@RX6)D50_4;c~y~{o~">text</field>
+        </block>
+      </value>
+      <value name="FIND">
+        <shadow type="text">
+          <field name="TEXT">abc</field>
+        </shadow>
+      </value>
+    </block>
+    <block type="text_charAt">
+      <mutation at="true"></mutation>
+      <field name="WHERE">FROM_START</field>
+      <value name="VALUE">
+        <block type="variables_get">
+          <field name="VAR" id="[-@RX6)D50_4;c~y~{o~">text</field>
+        </block>
+      </value>
+    </block>
+    <block type="text_getSubstring">
+      <mutation at1="true" at2="true"></mutation>
+      <field name="WHERE1">FROM_START</field>
+      <field name="WHERE2">FROM_START</field>
+      <value name="STRING">
+        <block type="variables_get">
+          <field name="VAR" id="[-@RX6)D50_4;c~y~{o~">text</field>
+        </block>
+      </value>
+    </block>
+    <block type="text_changeCase">
+      <field name="CASE">UPPERCASE</field>
+      <value name="TEXT">
+        <shadow type="text">
+          <field name="TEXT">abc</field>
+        </shadow>
+      </value>
+    </block>
+    <block type="text_trim">
+      <field name="MODE">BOTH</field>
+      <value name="TEXT">
+        <shadow type="text">
+          <field name="TEXT">abc</field>
+        </shadow>
+      </value>
+    </block>
+    <block type="text_print">
+      <value name="TEXT">
+        <shadow type="text">
+          <field name="TEXT">abc</field>
+        </shadow>
+      </value>
+    </block>
+    <block type="text_prompt_ext">
+      <mutation type="TEXT"></mutation>
+      <field name="TYPE">TEXT</field>
+      <value name="TEXT">
+        <shadow type="text">
+          <field name="TEXT">abc</field>
+        </shadow>
+      </value>
+    </block>
+  </category>
+  <category name="Lists" colour="#745ba5">
+    <block type="lists_create_with">
+      <mutation items="0"></mutation>
+    </block>
+    <block type="lists_create_with">
+      <mutation items="3"></mutation>
+    </block>
+    <block type="lists_repeat">
+      <value name="NUM">
+        <shadow type="math_number">
+          <field name="NUM">5</field>
+        </shadow>
+      </value>
+    </block>
+    <block type="lists_length"></block>
+    <block type="lists_isEmpty"></block>
+    <block type="lists_indexOf">
+      <field name="END">FIRST</field>
+      <value name="VALUE">
+        <block type="variables_get">
+          <field name="VAR" id="/:oQzfG1yX;TuV,RedO+">list</field>
+        </block>
+      </value>
+    </block>
+    <block type="lists_getIndex">
+      <mutation statement="false" at="true"></mutation>
+      <field name="MODE">GET</field>
+      <field name="WHERE">FROM_START</field>
+      <value name="VALUE">
+        <block type="variables_get">
+          <field name="VAR" id="/:oQzfG1yX;TuV,RedO+">list</field>
+        </block>
+      </value>
+    </block>
+    <block type="lists_setIndex">
+      <mutation at="true"></mutation>
+      <field name="MODE">SET</field>
+      <field name="WHERE">FROM_START</field>
+      <value name="LIST">
+        <block type="variables_get">
+          <field name="VAR" id="/:oQzfG1yX;TuV,RedO+">list</field>
+        </block>
+      </value>
+    </block>
+    <block type="lists_getSublist">
+      <mutation at1="true" at2="true"></mutation>
+      <field name="WHERE1">FROM_START</field>
+      <field name="WHERE2">FROM_START</field>
+      <value name="LIST">
+        <block type="variables_get">
+          <field name="VAR" id="/:oQzfG1yX;TuV,RedO+">list</field>
+        </block>
+      </value>
+    </block>
+    <block type="lists_split">
+      <mutation mode="SPLIT"></mutation>
+      <field name="MODE">SPLIT</field>
+      <value name="DELIM">
+        <shadow type="text">
+          <field name="TEXT">,</field>
+        </shadow>
+      </value>
+    </block>
+    <block type="lists_sort">
+      <field name="TYPE">NUMERIC</field>
+      <field name="DIRECTION">1</field>
+    </block>
+  </category>
+  <category name="Colour" colour="#a5745b">
+    <block type="colour_picker">
+      <field name="COLOUR">#ff0000</field>
+    </block>
+    <block type="colour_random"></block>
+    <block type="colour_rgb">
+      <value name="RED">
+        <shadow type="math_number">
+          <field name="NUM">100</field>
+        </shadow>
+      </value>
+      <value name="GREEN">
+        <shadow type="math_number">
+          <field name="NUM">50</field>
+        </shadow>
+      </value>
+      <value name="BLUE">
+        <shadow type="math_number">
+          <field name="NUM">0</field>
+        </shadow>
+      </value>
+    </block>
+    <block type="colour_blend">
+      <value name="COLOUR1">
+        <shadow type="colour_picker">
+          <field name="COLOUR">#ff0000</field>
+        </shadow>
+      </value>
+      <value name="COLOUR2">
+        <shadow type="colour_picker">
+          <field name="COLOUR">#3333ff</field>
+        </shadow>
+      </value>
+      <value name="RATIO">
+        <shadow type="math_number">
+          <field name="NUM">0.5</field>
+        </shadow>
+      </value>
+    </block>
+  </category>
+  <sep></sep>
+  <category name="Variables" colour="#a55b80" custom="VARIABLE"></category>
+  <category name="Functions" colour="#995ba5" custom="PROCEDURE"></category>
+</xml>
   
   
-      <script id="rendered-js" >
-//There are more than 3,905 million women in this world, yet i still fell in love with the most beatifull fictional character.
+      <script id="rendered-js" type="module">
+import * as LexicalVariables from 'https://cdn.skypack.dev/@mit-app-inventor/blockly-block-lexical-variables';
+
+//define generators
+function generate () {
+  function gen_events () {
+Blockly.JavaScript['events'] = function(block) {
+  var dropdown_name = block.getFieldValue('NAME');
+  var statements_name = Blockly.JavaScript.statementToCode(block, 'NAME');
+  // TODO: Assemble JavaScript into code variable.
+    var code = `window.addEventListener("` + dropdown_name + `", function (event) {` + statements_name + `})\n`;
+  return code;
+};
+  }
+  gen_events();
+}
+
+generate();
+
+// define blocks
+function define_blocks () {
+  function events() {
+Blockly.Blocks['events'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("when")
+        .appendField(new Blockly.FieldDropdown([["PageFinishedLoading","load"], ["ErrorOccured","error"], ["PageScroll","scroll"], ["PageResized","resize"], ["GamePadConnected","gamepadconnected"], ["GamePadDisconnected","gamepaddisconnected"], ["KeyboardKeyPressedDown","keydown"], ["KeyboardKeyPressedUp","keyup"], ["AnyKeyboardKeyPressed","keypress"], ["MouseUp","mouseup"], ["MouseDown","mousedown"], ["MouseMove","mousemove"], ["MouseClick","click"]]), "NAME");
+    this.appendStatementInput("NAME")
+        .setCheck(null)
+        .appendField("do");
+    this.setColour(20);
+ this.setTooltip("");
+ this.setHelpUrl("");
+  }
+};
+  }
+  events();
+}
+
+define_blocks();
 
 //variables
 var projects = [];
 
-var projects = "";
+var project = "";
 
-var widgets = [
-  "Button",
-  "Paragraph",
-  "Toggle",
-  "Checkbox",
-  "Radio Button",
-  "DropDown List",
-  "List Box",
-  "DropDown Button",
-  "Text Field",
-  "Time Picker",
-  "Date Picker",
-  "Image",
-  "Image Carousel",
-  "ProgressBar",
-  "Slider"
-];
+function html () {
+  var gen = `<!DOCTYPE html>
+<title>`+ project + `<\/title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="shortcut icon" type="image/jpg" href="` + window.localStorage.getItem("icon" + project) + `"\/>
+<body>
+<\/body>
+<script type="module">
+`
+  return gen
+}
 
 const reader = new FileReader();
 
@@ -468,17 +944,15 @@ var oneJan = new Date(currentdate.getFullYear(), 0, 1);
 var numberOfDays = Math.floor((currentdate - oneJan) / (24 * 60 * 60 * 1000));
 var dd = new Date();
 
+var x = ""
+var y = ""
+
 // Inject Blockly.
 
 const workspace = Blockly.inject("blocklyDiv", {
   trashcan: false,
 
-  renderer: "zelos",
-
   toolbox: document.getElementById("toolbox"),
-  theme: {
-    startHats: true
-  },
 
   plugins: {
     // These are both required.
@@ -505,7 +979,7 @@ const workspace = Blockly.inject("blocklyDiv", {
 
     wheel: false,
 
-    startScale: 0.7,
+    startScale: 0.9,
 
     maxScale: 3,
 
@@ -526,9 +1000,7 @@ const workspace = Blockly.inject("blocklyDiv", {
     : "start"
 });
 
-//change hue
-Blockly.HSV_SATURATION = 0.72;
-Blockly.HSV_VALUE = 0.95;
+LexicalVariables.init(workspace);
 
 // Initialize scroll plugin.
 
@@ -551,8 +1023,14 @@ document.getElementById("blocklyContainer").style.display = "none";
 
 // start site
 function start() {
+  
   document.getElementById("GoHome2").style.backgroundImage =
     "url(https://media.discordapp.net/attachments/898978597996466189/911302759175823380/round_home_white_24dp.png)";
+  document.getElementById("Test").style.backgroundImage =
+    "url(https://media.discordapp.net/attachments/898978597996466189/914946147783688192/round_play_arrow_white_24dp.png)";
+  
+  document.getElementById("download").style.backgroundImage =
+    "url(https://media.discordapp.net/attachments/898978597996466189/915973527935533056/round_file_download_white_24dp.png)";
 
   document.getElementById("Settings").style.display = "none";
   document.getElementById("header").style.display = "none";
@@ -582,41 +1060,22 @@ function start() {
         var itemm = neww_list_item.cloneNode(true);
         neww_list_item.id = i;
         neww_list_item.style.display = "block";
-        neww_list_item.onclick = function () {
-          document.getElementById("home").style.display = "none";
-          document.getElementById("blocklyContainer").style.display = "block";
-          project = document.getElementById("Title" + i).innerHTML;
-        };
+        neww_list_item.onclick = lClick;
         const select = neww_list_item.querySelector("#Title");
         select.id = "Title" + i;
-        document.getElementById("Title" + i).innerHTML = i;
-        select.onclick = function () {
-          document.getElementById("home").style.display = "none";
-          document.getElementById("blocklyContainer").style.display = "block";
-          project = document.getElementById("Title" + i).innerHTML;
-        };
+        document.getElementById("Title" + i).innerHTML = i
 
         const select2 = neww_list_item.querySelector("#Description");
         select2.id = "Description" + i;
         document.getElementById(
           "Description" + i
         ).innerHTML = window.localStorage.getItem("created" + i);
-        select2.onclick = function () {
-          document.getElementById("home").style.display = "none";
-          document.getElementById("blocklyContainer").style.display = "block";
-          project = document.getElementById("Title" + i).innerHTML;
-        };
 
         const select3 = neww_list_item.querySelector("#icon");
         select3.id = "icon" + i;
         document.getElementById("icon" + i).src = window.localStorage.getItem(
           "icon" + i
         );
-        select3.onclick = function () {
-          document.getElementById("home").style.display = "none";
-          document.getElementById("blocklyContainer").style.display = "block";
-          project = document.getElementById("Title" + i).innerHTML;
-        };
         document.getElementById("home").appendChild(itemm);
       }
     }
@@ -635,19 +1094,10 @@ function new_projectt() {
       var item = new_list_item.cloneNode(true);
       new_list_item.id = new_project;
       new_list_item.style.display = "block";
-      new_list_item.onclick = function () {
-        document.getElementById("home").style.display = "none";
-        document.getElementById("blocklyContainer").style.display = "block";
-        project = document.getElementById("Title" + i).innerHTML;
-      };
+ new_list_item.onclick = lClick;
       const select = new_list_item.querySelector("#Title");
       select.id = "Title" + new_project;
       document.getElementById("Title" + new_project).innerHTML = new_project;
-      select.onclick = function () {
-        document.getElementById("home").style.display = "none";
-        document.getElementById("blocklyContainer").style.display = "block";
-        project = document.getElementById("Title" + i).innerHTML;
-      };
 
       const select2 = new_list_item.querySelector("#Description");
       select2.id = "Description" + new_project;
@@ -671,11 +1121,6 @@ function new_projectt() {
         "created" + new_project,
         document.getElementById("Description" + new_project).innerHTML
       );
-      select2.onclick = function () {
-        document.getElementById("home").style.display = "none";
-        document.getElementById("blocklyContainer").style.display = "block";
-        project = document.getElementById("Title" + i).innerHTML;
-      };
 
       const select3 = new_list_item.querySelector("#icon");
       select3.id = "icon" + new_project;
@@ -684,12 +1129,15 @@ function new_projectt() {
         "icon" + new_project,
         document.getElementById("icon" + new_project).src
       );
-      select3.onclick = function () {
-        document.getElementById("home").style.display = "none";
-        document.getElementById("blocklyContainer").style.display = "block";
-        project = document.getElementById("Title" + i).innerHTML;
-      };
       document.getElementById("home").appendChild(item);
+      
+        if (window.localStorage.getItem("open") == "") {
+    
+  } else {
+       document.getElementById("home").style.display = "none";
+          document.getElementById("blocklyContainer").style.display = "block";
+          project = new_project
+  }
     }
   };
 }
@@ -768,11 +1216,17 @@ function settings() {
     if (window.localStorage.getItem("DarkMode") == "") {
       window.localStorage.setItem("DarkMode", true);
       document.body.style.backgroundColor = "black";
+      document.getElementById("blocklyDiv").style.color = `#ffffff`
       document.getElementById("header").style.backgroundColor = "#424242";
+      
+      document.getElementById("Test").style.backgroundColor = "#424242";
       document.getElementById("goHome").style.backgroundColor = "#424242";
 
       document.getElementById("GoHome2").style.backgroundColor = "#424242";
 
+      document.getElementById("open").style.backgroundColor = "#424242";
+    
+    document.getElementById("e").style.color = "white";
       document.getElementById("add").style.backgroundColor = "#424242";
 
       document.getElementById("settings").style.backgroundColor = "#424242";
@@ -785,6 +1239,8 @@ function settings() {
 
       document.getElementById("bgimage").style.backgroundColor = "#424242";
       document.getElementById("theme").style.backgroundColor = "#424242";
+      
+      document.getElementById("download").style.backgroundColor = "#424242";
 
       document.getElementById("theme").innerHTML = "Dark Theme: On";
 
@@ -800,8 +1256,14 @@ function settings() {
     } else {
       window.localStorage.setItem("DarkMode", "");
       document.body.style.backgroundColor = "white";
+      
+      document.getElementById("open").style.backgroundColor = "#008dcd";
+    
+    document.getElementById("e").style.color = "#008dcd";
+      document.getElementById("blocklyDiv").style.color = `#000000`
       document.getElementById("header").style.backgroundColor = "#008dcd";
 
+      document.getElementById("Test").style.backgroundColor = "#008dcd";
       document.getElementById("goHome").style.backgroundColor = "#008dcd";
 
       document.getElementById("GoHome2").style.backgroundColor = "#008dcd";
@@ -811,6 +1273,8 @@ function settings() {
       document.getElementById("BGImage").style.backgroundColor = "#008dcd";
 
       document.getElementById("share").style.backgroundColor = "#008dcd";
+      
+      document.getElementById("download").style.backgroundColor = "#008dcd";
       document.getElementById("bgimage").style.backgroundColor = "#008dcd";
       document.getElementById("theme").style.backgroundColor = "#008dcd";
 
@@ -859,6 +1323,19 @@ function settings() {
       url: "https://lukeplays33.github.io/Sketch/"
     });
   };
+  
+  var open = document.getElementById("open");
+  open.onclick = function () {
+    if (window.localStorage.getItem("open") == "") {
+      document.getElementById("open").innerHTML =
+      "Open editor after new project has been created: On";
+      window.localStorage.setItem("open", true);
+    } else {
+      document.getElementById("open").innerHTML =
+      "Open editor after new project has been created: Off";
+      window.localStorage.setItem("open", "");
+    }
+  }
 }
 settings();
 
@@ -876,8 +1353,13 @@ setBGImage();
 
 function Dtheme() {
   if (window.localStorage.getItem("DarkMode") == "true") {
+    document.getElementById("blocklyDiv").style.color = `#ffffff`
     document.body.style.backgroundColor = "black";
     document.getElementById("header").style.backgroundColor = "#424242";
+    
+    document.getElementById("download").style.backgroundColor = "#424242";
+    
+    document.getElementById("Test").style.backgroundColor = "#424242";
     document.getElementById("goHome").style.backgroundColor = "#424242";
 
     document.getElementById("GoHome2").style.backgroundColor = "#424242";
@@ -885,6 +1367,10 @@ function Dtheme() {
     document.getElementById("add").style.backgroundColor = "#424242";
 
     document.getElementById("settings").style.backgroundColor = "#424242";
+    
+    document.getElementById("open").style.backgroundColor = "#424242";
+    
+    document.getElementById("e").style.color = "white";
 
     document.getElementById("BGImage").style.backgroundColor = "#424242";
 
@@ -928,12 +1414,25 @@ function BGIfURL() {
 }
 BGIfURL();
 
-function editor() {}
-var goHome = document.getElementById("GoHome2");
+function editor() {
+  var goHome = document.getElementById("GoHome2");
 goHome.onclick = function () {
   document.getElementById("home").style.display = "block";
   document.getElementById("blocklyContainer").style.display = "none";
+  project = "";
 };
+  var test = document.getElementById("Test");
+  test.onclick = function () {
+    var w = window.open();
+w.document.open();
+    w.document.write(html() + Blockly.JavaScript.workspaceToCode(workspace) + "<\/script>");
+    w.document.close();
+  }
+  var d = document.getElementById("download");
+  d.onclick = function () {
+    downloadHTML();
+  }
+}
 editor();
 
 //context menu
@@ -1100,21 +1599,44 @@ function registerFirstContextMenuOptions() {
   };
 }
 
-function blocks() {
-  Blockly.Blocks["events"] = {
-    init: function () {
-      this.appendDummyInput().appendField(
-        new Blockly.FieldDropdown([["PageFinishedLoading", "pfl"]]),
-        "NAME"
-      );
-      this.appendStatementInput("NAME").setCheck(null);
-      this.setColour(30);
-      this.setTooltip("fires when a specific event fires");
-      this.setHelpUrl("");
-    }
-  };
+window.onmousemove = function (e) {
+  x = e.x;
+  y = e.y;
 }
-blocks();
+
+const lClick = function () {
+   document.getElementById("home").style.display = "none";
+          document.getElementById("blocklyContainer").style.display = "block";
+          project = this.id
+}
+
+function download(filename, text) {
+  var element = document.createElement('a');
+  element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+  element.setAttribute('download', filename);
+
+  element.style.display = 'none';
+  document.body.appendChild(element);
+
+  element.click();
+
+  document.body.removeChild(element);
+}
+
+function downloadHTML () {
+download(project + ".html", html() + Blockly.JavaScript.workspaceToCode(workspace) + "<\/script>");
+}
+
+function open () {
+  if (!window.localStorage.getItem("open") == "") {
+      document.getElementById("open").innerHTML =
+      "Open editor after new project has been created: On";
+    } else {
+      document.getElementById("open").innerHTML =
+      "Open editor after new project has been created: Off";
+    }
+  }
+open();
     </script>
 
   
@@ -1123,5 +1645,4 @@ blocks();
 
 </html>
  
-
 
