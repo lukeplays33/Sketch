@@ -1,0 +1,310 @@
+html {
+  height: 100%;
+}
+
+.logo {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100vh;
+  max-width: max-content;
+  margin: auto;
+}
+
+.loader {
+  border: 8px solid #f3f3f3; /* Light grey */
+  border-top: 8px solid #008dcd; /* Blue */
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1.5s linear infinite;
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 8px;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+body {
+  margin: 0px;
+  height: 100%;
+  box-sizing: border-box;
+    background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+}
+
+img {
+  object-fit: contain;
+}
+
+p {
+  color: #008dcd;
+  text-align: center;
+  font-size: 20px;
+  font-family: Sans-serif;
+}
+
+.header {
+  background-color: #008dcd;
+  hieght: 45px;
+  width: 100%;
+}
+
+.home {
+  width: 100%;
+  hieght: 100%;
+  padding: 8px;
+  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+  -moz-box-sizing: border-box; /* Firefox, other Gecko */
+  box-sizing: border-box;
+}
+
+input {
+  width: 100%;
+  background: rgba(155, 155, 155, 0.5);
+  color: white;
+  padding: 5px;
+  border-style: solid;
+  border-color: TRANSPARENT;
+  border-radius: 10px;
+  font-size: 17px;
+  font-family: Sans-serif;
+  margin: 0px;
+
+  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+
+  -moz-box-sizing: border-box; /* Firefox, other Gecko */
+
+  box-sizing: border-box;
+}
+
+::placeholder {
+  color: white;
+}
+
+.create {
+  width: 58px;
+  height: 58px;
+  background-color: #008dcd;
+  border-radius: 50%;
+  font-size: 50px;
+  color: white;
+  text-align: center;
+  background-image: url("https://media.discordapp.net/attachments/898978597996466189/909431017272651816/round_add_white_24dp.png");
+  background-repeat: no-repeat;
+  background-size: 40px;
+  background-position: center;
+
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+
+  -moz-box-sizing: border-box; /* Firefox, other Gecko */
+
+  box-sizing: border-box;
+}
+
+.goHome {
+  width: 58px;
+  height: 58px;
+  background-color: #008dcd;
+  border-radius: 50%;
+  font-size: 50px;
+  color: white;
+  text-align: center;
+  background-image: url("https://media.discordapp.net/attachments/898978597996466189/911302759175823380/round_home_white_24dp.png");
+  background-repeat: no-repeat;
+  background-size: 40px;
+  background-position: center;
+
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+
+  -moz-box-sizing: border-box; /* Firefox, other Gecko */
+
+  box-sizing: border-box;
+}
+
+.settings {
+  width: 58px;
+  height: 58px;
+  background-color: #008dcd;
+  border-radius: 50%;
+  font-size: 50px;
+  color: white;
+  text-align: center;
+  background-image: url("https://media.discordapp.net/attachments/898978597996466189/910234994893549588/61818b07d54ef50010e42587.png");
+  background-repeat: no-repeat;
+  background-size: 40px;
+  background-position: center;
+
+  position: fixed;
+  right: 16px;
+  bottom: 88px;
+  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+
+  -moz-box-sizing: border-box; /* Firefox, other Gecko */
+
+  box-sizing: border-box;
+}
+
+.reset {
+  width: 58px;
+  height: 58px;
+  background-color: #008dcd;
+  border-radius: 50%;
+  font-size: 50px;
+  color: white;
+  text-align: center;
+  background-image: url("https://media.discordapp.net/attachments/898978597996466189/912745952664776714/round_restart_alt_white_24dp.png");
+  background-repeat: no-repeat;
+  background-size: 40px;
+  background-position: center;
+
+  position: fixed;
+  right: 16px;
+  bottom: 88px;
+  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+
+  -moz-box-sizing: border-box; /* Firefox, other Gecko */
+
+  box-sizing: border-box;
+}
+
+.projectsList {
+  width: 100%;
+  hiegth: 80px;
+  padding: 0px;
+  background: rgba(155, 155, 155, 0.5);
+  border-radius: 10px;
+  margin-bottom: 8px;
+}
+
+.list-title {
+  color: white;
+  font-size: 20px;
+  margin-bottom: 8px;
+  font-family: Sans-serif;
+  width: 100%;
+  text-align: left;
+  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+
+  -moz-box-sizing: border-box; /* Firefox, other Gecko */
+
+  box-sizing: border-box;
+}
+
+.list-des {
+  color: white;
+  font-size: 17px;
+  margin-top: 0px;
+  font-family: Sans-serif;
+  width: 100%;
+  text-align: left;
+  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+
+  -moz-box-sizing: border-box; /* Firefox, other Gecko */
+
+  box-sizing: border-box;
+}
+
+.details {
+  display: inline-block;
+  vertical-align: middle;
+  width: 255px;
+}
+
+.Details {
+  display: inline-block;
+  vertical-align: middle;
+  width: 855px;
+}
+
+.photo {
+  display: inline-block;
+  vertical-align: middle;
+  width: 80px;
+  height: 80px;
+}
+
+.Photo {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+button {
+  background-color: #008dcd;
+  width: 100%;
+  color: white;
+  border-radius: 10px;
+  font-size: 16px;
+  border-width: 0px;
+  padding: 8px;
+  margin-bottom: 8px;
+    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+
+  -moz-box-sizing: border-box; /* Firefox, other Gecko */
+
+  box-sizing: border-box;
+}
+
+.Settings {
+  width: 100%;
+  height: 100%;
+  padding: 8px;
+    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+
+  -moz-box-sizing: border-box; /* Firefox, other Gecko */
+
+  box-sizing: border-box;
+}
+
+#blocklyContainer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+    
+  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+
+  -moz-box-sizing: border-box; /* Firefox, other Gecko */
+
+  box-sizing: border-box;
+}
+
+#blocklyDiv {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.blocklySvg {
+  background-color: TRANSPARENT !important;
+}
+div#blocklyDiv .blocklyTreeRow {
+  border-radius: 5px;
+  padding: 3px;
+  margin-bottom: 8px;
+  color: white;
+}
+div#blocklyDiv .blocklyToolboxDiv {
+  background: rgba(155, 155, 155, 0.5);
+  padding: 8px;
+  margin: 8px;
+  border-radius: 10px;
+}
