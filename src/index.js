@@ -33,127 +33,67 @@ import {
 
 //define generators
 function generate () {
-    function gen_widgets () {
-               Blockly.JavaScript['create'] = function(block) {
-           var ID = `ID_` + Math.floor(Math.random() * 100000000000000000) + 1
-  var dropdown_name = block.getFieldValue('NAME');
-  var statements_name = Blockly.JavaScript.statementToCode(block, 'DO');
-                     const variable0 = Blockly.JavaScript.nameDB_.getName(
-      block.getFieldValue('ERR_STR_VAR'), Blockly.VARIABLE_CATEGORY_NAME);
+    function gen_vars() {
+Blockly.JavaScript['create_dynamic_var'] = function(block) {
+  var value_s = Blockly.JavaScript.valueToCode(block, 's', Blockly.JavaScript.ORDER_ATOMIC);
+  var value_t = Blockly.JavaScript.valueToCode(block, 't', Blockly.JavaScript.ORDER_ATOMIC);
   // TODO: Assemble JavaScript into code variable.
-  if (dropdown_name == "button") {
-      var code = "var " + ID + " = document.createElement(`button`);\n document.body.appendChild(" + ID + ");\n" +
-          "{\nlet " + variable0 + " = `" + ID + "`\n" + statements_name + "\n}"
-      }
+  var code = "eval(`var " + value_s.replace("'", " ").replace("'", " ") + " = " + value_t + "`);\n" 
   return code;
+};
+
+        Blockly.JavaScript['get_d_var'] = function(block) {
+  var value_g = Blockly.JavaScript.valueToCode(block, 'g', Blockly.JavaScript.ORDER_ATOMIC);
+  // TODO: Assemble JavaScript into code variable.
+  var code = value_g
+  // TODO: Change ORDER_NONE to the correct strength.
+  return [code, Blockly.JavaScript.ORDER_NONE];
 };
     }
-    gen_widgets();
-  function gen_events () {
-Blockly.JavaScript['events'] = function(block) {
-  var dropdown_name = block.getFieldValue('NAME');
-  var statements_name = Blockly.JavaScript.statementToCode(block, 'NAME');
-  // TODO: Assemble JavaScript into code variable.
-    var code = `window.addEventListener("` + dropdown_name + `", function (event) {` + statements_name + `})\n`;
-  return code;
-};
-  }
-  gen_events();
+    gen_vars();
 }
 
 generate();
 
 // define blocks
 function define_blocks () {
-    function widgets () {
-Blockly.Blocks['create'] = {
-    init: function() {
-    this.appendDummyInput()
-        .appendField("create")
-        .appendField(new Blockly.FieldDropdown([["Button","button"]]), "NAME")
-        .appendField(
-            new FieldParameterFlydown('WidgetId', true, FieldFlydown.DISPLAY_BELOW),
-            'ERR_STR_VAR');
-    this.appendStatementInput("DO")
-        .setCheck(null)
-        .appendField("do");
-            this.setPreviousStatement(true, null);
-    this.setNextStatement(true, null);
-    this.setColour(230);
-    this.setTooltip("Creates a new widget and adds it to the body");
-    this.setHelpUrl("");
-  },
-  withLexicalVarsAndPrefix: function(child, proc) {
-    const params = this.declaredNames();
-    // not arguments_ instance var
-    for (let i = 0; i < params.length; i++) {
-      proc(params[i], '');
-    }
-  },
-  getVars: function() {
-    return [
-      this.getFieldValue('ERR_STR_VAR'),
-    ];
-  },
-  blocksInScope: function() {
-    const doBlock = this.getInputTargetBlock('DO');
-    if (doBlock) {
-      return [doBlock];
-    } else {
-      return [];
-    }
-  },
-  declaredNames: function() {
-    return [
-      this.getFieldValue('ERR_STR_VAR'),
-    ];
-  },
-  renameVar: function(oldName, newName) {
-    if (Blockly.Names.equals(oldName, this.getFieldValue('ERR_STR_VAR'))) {
-      this.setFieldValue(newName, 'ERR_STR_VAR');
-    }
-  },
-  renameBound: function(boundSubstitution, freeSubstitution) {
-    const paramSubstitution = boundSubstitution.restrictDomain(
-        this.declaredNames());
-    this.renameVars(paramSubstitution);
-    const newFreeSubstitution = freeSubstitution.extend(paramSubstitution);
-    LexicalVariable.renameFree(
-        this.getInputTargetBlock(this.bodyInputName), newFreeSubstitution);
-  },
-  renameFree: function(freeSubstitution) {
-    // There shouldn't be any free variables
-  },
-  freeVariables: function() { // return the free variables of this block
-    // There shouldn't be any free variables, so this should return an empty set.
-    // Should return the empty set: something is wrong if it doesn't!
-    return new Blockly.NameSet();
-  }
-};
-    }
-    widgets();
-    
-  function events() {
-Blockly.Blocks['events'] = {
+    function variables () {
+Blockly.Blocks['create_dynamic_var'] = {
   init: function() {
-    this.appendDummyInput()
-        .appendField("when")
-        .appendField(new Blockly.FieldDropdown([["PageFinishedLoading","load"], ["ErrorOccured","error"], ["PageScroll","scroll"], ["PageResized","resize"], ["GamePadConnected","gamepadconnected"], ["GamePadDisconnected","gamepaddisconnected"], ["KeyboardKeyPressedDown","keydown"], ["KeyboardKeyPressedUp","keyup"], ["AnyKeyboardKeyPressed","keypress"], ["MouseUp","mouseup"], ["MouseDown","mousedown"], ["MouseMove","mousemove"], ["MouseClick","click"]]), "NAME");
-    this.appendStatementInput("NAME")
+    this.appendValueInput("s")
+        .setCheck("String")
+        .appendField("set dynamic");
+    this.appendValueInput("t")
         .setCheck(null)
-        .appendField("do");
-    this.setColour(20);
- this.setTooltip("");
+        .appendField("to");
+    this.setInputsInline(true);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(330);
+ this.setTooltip("changes a dynamic variable to the given value(creates one when it doesn't exist)");
  this.setHelpUrl("");
   }
 };
+        
+        Blockly.Blocks['get_d_var'] = {
+  init: function() {
+    this.appendValueInput("g")
+        .setCheck("String")
+        .appendField("get");
+    this.setOutput(true, null);
+    this.setColour(330);
+ this.setTooltip("Returns the value of a dynamic variable");
+ this.setHelpUrl("");
   }
-  events();
+};
+    }
+    variables();
 }
 
 define_blocks();
 
 //variables
+var nonStyles = ["innerHTML"];
 var projects = [];
 
 var project = "";
@@ -163,6 +103,12 @@ function html () {
 <title>`+ project + `<\/title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="shortcut icon" type="image/jpg" href="` + window.localStorage.getItem("icon" + project) + `"\/>
+<style>
+html, body {
+  height: 100%;
+width: 100%;
+}
+<\/style>
 <body>
 <\/body>
 <script type="module">
@@ -286,18 +232,7 @@ function start() {
   document.getElementById("header").style.display = "none";
   document.getElementById("Projects-list").style.display = "none";
   document.getElementById("home").style.display = "none";
-  document.title = "Sketch";
-  let oldLink = document.querySelectorAll('[rel="shortcut icon"]')[0];
-  if (oldLink) {
-    document.head.removeChild(oldLink);
-  }
-  let link = document.createElement("link");
-  link.id = "favicon";
-  link.rel = "shortcut icon";
-  link.href =
-    "https://media.discordapp.net/attachments/898978597996466189/900743720905900032/60d473a38f959300118b9c10.png";
-  document.head.appendChild(link);
-
+    
   window.setTimeout(function () {
     document.getElementById("div").style.display = "none";
     document.getElementById("challange").style.display = "none";
@@ -363,7 +298,9 @@ function new_projectt() {
           " / ",
           dd.getHours(),
           ":",
-          dd.getMinutes()
+          dd.getMinutes(),
+          ":",
+          dd.getMilliseconds()
         ].join("");
       projects.push(new_project);
       window.localStorage.setItem("projects", JSON.stringify(projects));
@@ -387,6 +324,7 @@ function new_projectt() {
        document.getElementById("home").style.display = "none";
           document.getElementById("blocklyContainer").style.display = "block";
           project = new_project
+      workspace.clear();
   }
     }
   };
@@ -860,6 +798,9 @@ const lClick = function () {
    document.getElementById("home").style.display = "none";
           document.getElementById("blocklyContainer").style.display = "block";
           project = this.id
+    workspace.clear();
+    var xml = Blockly.Xml.textToDom(window.localStorage.getItem(window.localStorage.getItem("created" + project) + "blocks"));
+    Blockly.Xml.domToWorkspace(xml, workspace);
 }
 
 function download(filename, text) {
@@ -889,3 +830,11 @@ function open () {
     }
   }
 open();
+
+function save () {
+    var xml = Blockly.Xml.workspaceToDom(workspace);
+  var text = Blockly.Xml.domToText(xml);
+    window.localStorage.setItem(window.localStorage.getItem("created" + project) + "blocks", text);
+}
+
+workspace.addChangeListener(save);
