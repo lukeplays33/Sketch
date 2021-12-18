@@ -64,13 +64,13 @@ p {
 
 .header {
   background-color: #008dcd;
-  hieght: 45px;
+  height: 50px;
   width: 100%;
 }
 
 .home {
   width: 100%;
-  hieght: 100%;
+  height: 100%;
   padding: 8px;
   -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
   -moz-box-sizing: border-box; /* Firefox, other Gecko */
@@ -309,11 +309,28 @@ div#blocklyDiv .blocklyTreeRow {
   margin-bottom: 8px;
   color: white;
 }
+        
 div#blocklyDiv .blocklyToolboxDiv {
+    border-radius: 10px;
   background: rgba(155, 155, 155, 0.5);
   padding: 8px;
-  border-radius: 10px;
     margin: 8px;
+    margin-right: 8px;
+    
+      -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+
+  -moz-box-sizing: border-box; /* Firefox, other Gecko */
+
+  box-sizing: border-box;
+}
+        
+                
+div#blocklyDiv .blocklyFlyout {
+    border-radius: 10px;
+  background: rgba(155, 155, 155, 0.5);
+  padding: 8px;
+    margin: 8px;
+    margin-left: 16px;
     
       -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
 
@@ -371,7 +388,7 @@ div#blocklyDiv .blocklyToolboxDiv {
 
 <section id="blocklyContainer">
     <div id="blocklyDiv">
-        <div style="position: absolute; z-index: 50;
+        <div style="position: absolute; z-index: 500;
                     width: 58px;
   height: 58px;
   background-color: #008dcd;
@@ -393,7 +410,7 @@ div#blocklyDiv .blocklyToolboxDiv {
 
   box-sizing: border-box;" id="GoHome2"></div>
       
-      <div style="position: absolute; z-index: 50;
+      <div style="position: absolute; z-index: 500;
                     width: 58px;
   height: 58px;
   background-color: #008dcd;
@@ -415,7 +432,7 @@ div#blocklyDiv .blocklyToolboxDiv {
 
   box-sizing: border-box;" id="Test"></div>
       
-            <div style="position: absolute; z-index: 50;
+            <div style="position: absolute; z-index: 500;
                     width: 58px;
   height: 58px;
   background-color: #008dcd;
@@ -441,29 +458,14 @@ div#blocklyDiv .blocklyToolboxDiv {
 </section>
 
 <xml xmlns="https://developers.google.com/blockly/xml" id="toolbox" style="display: none">
-  <category name="Logic" colour="#5b80a5">
-    <block type="controls_if"></block>
-    <block type="logic_compare">
-      <field name="OP">EQ</field>
+  <category name="Events" colour="#F3AA44">
+    <block type="initd">
+      <field name="NAME">I'll always do</field>
     </block>
-    <block type="logic_operation">
-      <field name="OP">AND</field>
-    </block>
-    <block type="logic_negate"></block>
-    <block type="logic_boolean">
-      <field name="BOOL">TRUE</field>
-    </block>
-    <block type="logic_null"></block>
-    <block type="logic_ternary"></block>
   </category>
-  <category name="Loops" colour="#5ba55b">
-    <block type="controls_repeat_ext">
-      <value name="TIMES">
-        <shadow type="math_number">
-          <field name="NUM">10</field>
-        </shadow>
-      </value>
-    </block>
+  <sep></sep>
+  <category name="Control" colour="#F3AA44">
+    <block type="controls_repeat_ext"></block>
     <block type="controls_whileUntil">
       <field name="MODE">WHILE</field>
     </block>
@@ -473,11 +475,40 @@ div#blocklyDiv .blocklyToolboxDiv {
     <block type="controls_forEach">
       <field name="VAR" id="X$cY4@@mMmy#rgIi3E=?">item</field>
     </block>
-    <block type="controls_flow_statements">
-      <field name="FLOW">BREAK</field>
+    <block type="set_timeout">
+      <field name="NAME">OPTIONNAME</field>
+      <field name="dddd" id="X$cY4@@mMmy#rgIi3E=?">item</field>
+    </block>
+    <block type="clearint"></block>
+    <block type="continue"></block>
+    <block type="break"></block>
+    <block type="controls_if"></block>
+    <block type="controls_if">
+      <mutation else="1"></mutation>
+    </block>
+    <block type="controls_if">
+      <mutation elseif="1" else="1"></mutation>
+    </block>
+    <block type="logic_ternary"></block>
+    <block type="open_window">
+      <field name="NAME">Zero Two is cute</field>
+      <field name="t">int</field>
     </block>
   </category>
-  <category name="Math" colour="#5b67a5">
+  <category name="Logic" colour="#45B4A9">
+    <block type="logic_compare">
+      <field name="NAME">==</field>
+    </block>
+    <block type="logic_operation">
+      <field name="NAME">&amp;&amp;</field>
+    </block>
+    <block type="logic_negate"></block>
+    <block type="logic_boolean">
+      <field name="NAME">true</field>
+    </block>
+    <block type="logic_null"></block>
+  </category>
+  <category name="Math" colour="#6789cc">
     <block type="math_number">
       <field name="NUM">0</field>
     </block>
@@ -509,7 +540,7 @@ div#blocklyDiv .blocklyToolboxDiv {
     <block type="math_random_int"></block>
     <block type="math_random_float"></block>
   </category>
-  <category name="Text" colour="160">
+  <category name="Text" colour="#DF6078">
     <block type="text">
       <field name="TEXT"></field>
     </block>
@@ -542,7 +573,7 @@ div#blocklyDiv .blocklyToolboxDiv {
       <field name="TYPE">TEXT</field>
     </block>
   </category>
-  <category name="Lists" colour="260">
+  <category name="Lists" colour="#76afc9">
     <block type="lists_create_with">
       <mutation items="0"></mutation>
     </block>
@@ -579,7 +610,7 @@ div#blocklyDiv .blocklyToolboxDiv {
       <field name="DIRECTION">1</field>
     </block>
   </category>
-  <category name="Colour" colour="#a5745b">
+  <category name="Colour" colour="#7F7F7F">
     <block type="colour_picker">
       <field name="COLOUR">#ff0000</field>
     </block>
@@ -588,7 +619,7 @@ div#blocklyDiv .blocklyToolboxDiv {
     <block type="colour_blend"></block>
   </category>
   <sep></sep>
-  <category name="Variables" colour="330">
+  <category name="Variables" colour="#F87956">
     <block type="global_declaration"></block>
     <block type="local_declaration_statement"></block>
     <block type="local_declaration_expression"></block>
@@ -597,7 +628,7 @@ div#blocklyDiv .blocklyToolboxDiv {
     <block type="create_dynamic_var"></block>
     <block type="get_d_var"></block>
   </category>
-  <category name="Functions" colour="#995ba5" custom="PROCEDURE"></category>
+  <category name="Functions" colour="#7560A4" custom="PROCEDURE"></category>
 </xml>
     
     <script type='text/javascript' src='./index.js'></script>

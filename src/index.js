@@ -33,6 +33,59 @@ import {
 
 //define generators
 function generate () {
+    function gen_logic () {
+        Blockly.JavaScript['break'] = function(block) {
+  // TODO: Assemble JavaScript into code variable.
+  var code = 'break;\n';
+  return code;
+};
+
+Blockly.JavaScript['continue'] = function(block) {
+  // TODO: Assemble JavaScript into code variable.
+  var code = 'continue;\n';
+  return code;
+};
+
+Blockly.JavaScript['clearint'] = function(block) {
+  var value_name = Blockly.JavaScript.valueToCode(block, 'NAME', Blockly.JavaScript.ORDER_ATOMIC);
+  // TODO: Assemble JavaScript into code variable.
+  var code = "clearInterval(" + value_name + ");\n" 
+  return code;
+};
+        Blockly.JavaScript['set_timeout'] = function(block) {
+  var variable_name = Blockly.JavaScript.nameDB_.getName(
+      block.getFieldValue('timeout'), Blockly.VARIABLE_CATEGORY_NAME);
+  var value_name = Blockly.JavaScript.valueToCode(block, 'NAME', Blockly.JavaScript.ORDER_ATOMIC);
+  var value_l = Blockly.JavaScript.valueToCode(block, 'l', Blockly.JavaScript.ORDER_ATOMIC);
+  var statements_s = Blockly.JavaScript.statementToCode(block, 's');
+  // TODO: Assemble JavaScript into code variable.
+  var code = "var " + variable_name + " = window.setInterval( function () {\n" + statements_s + "\nif(" + value_l + ") {\n} else {\n clearInterval(" + variable_name + ");\n}\n}, " + value_name + ");"  
+  return code;
+};
+        Blockly.JavaScript['open_window'] = function(block) {
+  var dropdown_name = block.getFieldValue('NAME');
+  var value_name = Blockly.JavaScript.valueToCode(block, 'NAME', Blockly.JavaScript.ORDER_ATOMIC);
+  var dropdown_t = block.getFieldValue('t');
+  // TODO: Assemble JavaScript into code variable.
+            if (dropdown_t == "int") {
+                var code = "window.open(" + value_name + ");"
+                } else {
+                    var code = "window.location.href = " + value_name
+                    }
+  return code;
+};
+    }
+    gen_logic();
+    function gen_events () {
+Blockly.JavaScript['initd'] = function(block) {
+  var dropdown_name = block.getFieldValue('NAME');
+  var statements_name = Blockly.JavaScript.statementToCode(block, 'NAME');
+  // TODO: Assemble JavaScript into code variable.
+  var code = "window.addEventListener(`load`, e => {\n" + statements_name + "\n});"
+  return code;
+};
+    }
+    gen_events();
     function gen_vars() {
 Blockly.JavaScript['create_dynamic_var'] = function(block) {
   var value_s = Blockly.JavaScript.valueToCode(block, 's', Blockly.JavaScript.ORDER_ATOMIC);
@@ -51,12 +104,260 @@ Blockly.JavaScript['create_dynamic_var'] = function(block) {
 };
     }
     gen_vars();
+    function rewrite_core_gen () {
+        Blockly.JavaScript['logic_compare'] = function(block) {
+  var value_name = Blockly.JavaScript.valueToCode(block, 'NAME', Blockly.JavaScript.ORDER_ATOMIC);
+  var dropdown_name = block.getFieldValue('NAME');
+  var value_2 = Blockly.JavaScript.valueToCode(block, '2', Blockly.JavaScript.ORDER_ATOMIC);
+  // TODO: Assemble JavaScript into code variable.
+  var code = value_name + " " + dropdown_name + " " + value_2
+  // TODO: Change ORDER_NONE to the correct strength.
+  return [code, Blockly.JavaScript.ORDER_NONE];
+};
+        Blockly.JavaScript['logic_boolean'] = function(block) {
+  var dropdown_name = block.getFieldValue('NAME');
+  // TODO: Assemble JavaScript into code variable.
+  var code = dropdown_name
+  // TODO: Change ORDER_NONE to the correct strength.
+  return [code, Blockly.JavaScript.ORDER_NONE];
+};
+        Blockly.JavaScript['logic_null'] = function(block) {
+  // TODO: Assemble JavaScript into code variable.
+  var code = 'null';
+  // TODO: Change ORDER_NONE to the correct strength.
+  return [code, Blockly.JavaScript.ORDER_NONE];
+};
+        Blockly.JavaScript['logic_negate'] = function(block) {
+  var value_name = Blockly.JavaScript.valueToCode(block, 'NAME', Blockly.JavaScript.ORDER_ATOMIC);
+  // TODO: Assemble JavaScript into code variable.
+  var code = "!" + value_name
+  // TODO: Change ORDER_NONE to the correct strength.
+  return [code, Blockly.JavaScript.ORDER_NONE];
+};
+        Blockly.JavaScript['logic_operation'] = function(block) {
+  var value_name = Blockly.JavaScript.valueToCode(block, 'NAME', Blockly.JavaScript.ORDER_ATOMIC);
+  var dropdown_name = block.getFieldValue('NAME');
+  var value_2 = Blockly.JavaScript.valueToCode(block, '2', Blockly.JavaScript.ORDER_ATOMIC);
+  // TODO: Assemble JavaScript into code variable.
+  var code = value_name + " " + dropdown_name + " " + value_2
+  // TODO: Change ORDER_NONE to the correct strength.
+  return [code, Blockly.JavaScript.ORDER_NONE];
+};
+    }
+    rewrite_core_gen();
 }
 
 generate();
 
 // define blocks
 function define_blocks () {
+    function rewrite_core_blocks () {
+        Blockly.Blocks['logic_compare'] = {
+  init: function() {
+    this.appendValueInput("NAME")
+        .setCheck(null);
+    this.appendDummyInput()
+        .appendField(new Blockly.FieldDropdown([["=","=="], ["<","<"], [">",">"], ["≠","!="], ["≥",">="], ["≤","<="]]), "NAME");
+    this.appendValueInput("2")
+        .setCheck(null);
+    this.setInputsInline(true);
+    this.setOutput(true, null);
+    this.setColour("#45B4A9");
+ this.setTooltip("Returns true when the inputs are equals, greater or smaller from each other");
+ this.setHelpUrl("");
+  }
+};
+        Blockly.Blocks['logic_operation'] = {
+  init: function() {
+    this.appendValueInput("NAME")
+        .setCheck(null);
+    this.appendDummyInput()
+        .appendField(new Blockly.FieldDropdown([["and","&&"], ["or","||"]]), "NAME");
+    this.appendValueInput("2")
+        .setCheck(null);
+    this.setInputsInline(true);
+    this.setOutput(true, null);
+    this.setColour("#45B4A9");
+ this.setTooltip("Returns true when either one or both inputs return true");
+ this.setHelpUrl("");
+  }
+};
+        Blockly.Blocks['logic_negate'] = {
+  init: function() {
+    this.appendValueInput("NAME")
+        .setCheck(null)
+        .appendField("not");
+    this.setOutput(true, null);
+    this.setColour("#45B4A9");
+ this.setTooltip("Returns true if the input is false, returns false if the input is true");
+ this.setHelpUrl("");
+  }
+};
+        Blockly.Blocks['logic_boolean'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField(new Blockly.FieldDropdown([["true","true"], ["false","false"]]), "NAME");
+    this.setOutput(true, "Boolean");
+    this.setColour("#45B4A9");
+ this.setTooltip("Returns either true or false");
+ this.setHelpUrl("");
+  }
+};
+        Blockly.Blocks['logic_null'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("null");
+    this.setOutput(true, null);
+    this.setColour("#45B4A9");
+ this.setTooltip("Returns null");
+ this.setHelpUrl("");
+  }
+};
+    }
+    rewrite_core_blocks();
+    function logic () {
+        Blockly.Blocks['break'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("break");
+    this.setPreviousStatement(true, null);
+    this.setColour("#F3AA44");
+ this.setTooltip("Break out of the containing loop");
+ this.setHelpUrl("");
+  }
+};
+
+Blockly.Blocks['continue'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("continue");
+    this.setPreviousStatement(true, null);
+    this.setColour("#F3AA44");
+ this.setTooltip("Skip the rest of this loop, and continue with the next iteration");
+ this.setHelpUrl("");
+  }
+};
+
+Blockly.Blocks['clearint'] = {
+  init: function() {
+    this.appendValueInput("NAME")
+        .setCheck(null)
+        .appendField("clearTimeout");
+    this.setPreviousStatement(true, null);
+    this.setColour("#F3AA44");
+ this.setTooltip("Stop the current timeout");
+ this.setHelpUrl("");
+  }
+};
+        
+Blockly.Blocks['set_timeout'] = {
+  init: function() {
+    this.appendValueInput("NAME")
+        .setCheck(null)
+        .appendField("call")
+        .appendField(new Blockly.FieldDropdown([[project,"OPTIONNAME"]]), "NAME")
+        .appendField(".setTimeout")
+      .setAlign(Blockly.ALIGN_RIGHT);
+    this.appendValueInput("l")
+        .setCheck("Boolean")
+        .appendField("loops")
+      .setAlign(Blockly.ALIGN_RIGHT);
+    this.appendDummyInput()
+        .appendField(
+            new FieldParameterFlydown('TimeoutID', true, FieldFlydown.DISPLAY_BELOW),
+            'timeout');
+    this.appendStatementInput("s")
+        .setCheck(null)
+        .appendField("do");
+      this.setInputsInline(false);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour("#F3AA44");
+ this.setTooltip("Wait the specified amount of time before performing the next action.");
+ this.setHelpUrl("");
+  },
+  withLexicalVarsAndPrefix: function(child, proc) {
+    const params = this.declaredNames();
+    // not arguments_ instance var
+    for (let i = 0; i < params.length; i++) {
+      proc(params[i], '');
+    }
+  },
+  getVars: function() {
+    return [
+      this.getFieldValue('timeout'),
+    ];
+  },
+  blocksInScope: function() {
+    const doBlock = this.getInputTargetBlock('s');
+    if (doBlock) {
+      return [doBlock];
+    } else {
+      return [];
+    }
+  },
+  declaredNames: function() {
+    return [
+      this.getFieldValue('timeout'),
+    ];
+  },
+  renameVar: function(oldName, newName) {
+    if (Blockly.Names.equals(oldName, this.getFieldValue('timeout'))) {
+      this.setFieldValue(newName, 'timeout');
+    }
+  },
+  renameBound: function(boundSubstitution, freeSubstitution) {
+    const paramSubstitution = boundSubstitution.restrictDomain(
+        this.declaredNames());
+    this.renameVars(paramSubstitution);
+    const newFreeSubstitution = freeSubstitution.extend(paramSubstitution);
+    LexicalVariable.renameFree(
+        this.getInputTargetBlock(this.bodyInputName), newFreeSubstitution);
+  },
+  renameFree: function(freeSubstitution) {
+    // There shouldn't be any free variables
+  },
+  freeVariables: function() { // return the free variables of this block
+    // There shouldn't be any free variables, so this should return an empty set.
+    // Should return the empty set: something is wrong if it doesn't!
+    return new Blockly.NameSet();
+  }
+};
+                Blockly.Blocks['open_window'] = {
+  init: function() {
+    this.appendValueInput("NAME")
+        .setCheck("String")
+        .appendField("call")
+        .appendField(new Blockly.FieldDropdown([[project,"Zero Two is cute"]]), "NAME")
+        .appendField(".openLink");
+    this.appendDummyInput()
+        .appendField(new Blockly.FieldDropdown([["InNewTab","int"], ["InCurrentTab","ict"]]), "t");
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour("#F3AA44");
+ this.setTooltip("Open a link in a new tab or current tab");
+ this.setHelpUrl("");
+  }
+};
+    }
+    logic();
+    function events () {
+        Blockly.Blocks['initd'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("when")
+        .appendField(new Blockly.FieldDropdown([[project,"I'll always do"]]), "NAME")
+        .appendField(".Load");
+    this.appendStatementInput("NAME")
+        .setCheck(null)
+        .appendField("do");
+    this.setColour("#F3AA44");
+ this.setTooltip("Do some statements when the page finished loading.");
+ this.setHelpUrl("");
+  }
+};
+    }
+    events();
     function variables () {
 Blockly.Blocks['create_dynamic_var'] = {
   init: function() {
@@ -69,7 +370,7 @@ Blockly.Blocks['create_dynamic_var'] = {
     this.setInputsInline(true);
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour(330);
+    this.setColour("#F87956");
  this.setTooltip("changes a dynamic variable to the given value(creates one when it doesn't exist)");
  this.setHelpUrl("");
   }
@@ -81,7 +382,7 @@ Blockly.Blocks['create_dynamic_var'] = {
         .setCheck("String")
         .appendField("get");
     this.setOutput(true, null);
-    this.setColour(330);
+    this.setColour("#F87956");
  this.setTooltip("Returns the value of a dynamic variable");
  this.setHelpUrl("");
   }
@@ -103,6 +404,7 @@ function html () {
 <title>`+ project + `<\/title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="shortcut icon" type="image/jpg" href="` + window.localStorage.getItem("icon" + project) + `"\/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
 html, body {
   height: 100%;
@@ -110,6 +412,7 @@ width: 100%;
 }
 <\/style>
 <body>
+<div id="react-root"></div>
 <\/body>
 <script type="module">
 `
@@ -141,10 +444,47 @@ var dd = new Date();
 var x = ""
 var y = ""
 
+// change hue
+Blockly.HSV_SATURATION = 0.56;
+Blockly.HSV_VALUE = 0.83;
+
 // Inject Blockly.
 
 const workspace = Blockly.inject("blocklyDiv", {
   trashcan: false,
+    
+    theme: {
+      'blockStyles' : {
+          "logic_blocks": {
+            "colourPrimary": "#F3AA44"
+         },
+                    "loop_blocks": {
+            "colourPrimary": "#F3AA44"
+         },
+         "list_blocks": {
+            "colourPrimary": "#76afc9"
+         },
+                   "math_blocks": {
+            "colourPrimary": "#6789cc"
+         },
+                   "text_blocks": {
+            "colourPrimary": "#DF6078"
+         },
+                             "colour_blocks": {
+            "colourPrimary": "#7F7F7F"
+         },
+                                                 "variable_blocks": {
+            "colourPrimary": "#F87956"
+         },
+                                                 "procedure_blocks": {
+            "colourPrimary": "#7560A4"
+         }
+      },
+      'componentStyles' : {
+         'flyoutOpacity': '0.0',
+          'scrollbarOpacity' : '0.0',
+      }
+   },
 
   toolbox: document.getElementById("toolbox"),
 
@@ -219,7 +559,8 @@ document.getElementById("blocklyContainer").style.display = "none";
 
 // start site
 function start() {
-  
+    document.getElementById("blocklyContainer").style.height = (String((window.innerHeight) - 50) + 'px');
+    
   document.getElementById("GoHome2").style.backgroundImage =
     "url(https://media.discordapp.net/attachments/898978597996466189/911302759175823380/round_home_white_24dp.png)";
   document.getElementById("Test").style.backgroundImage =
@@ -499,7 +840,7 @@ function settings() {
   var reset = (document.getElementById("reset").onclick = function () {
     if (confirm("WARNING: If you continue all data will be reset.")) {
       window.localStorage.clear();
-      window.location.href = "https://lukeplays33.github.io/Sketch/";
+      window.location.reload();
     } else {
     }
   });
