@@ -382,12 +382,38 @@ div#blocklyDiv .blocklyFlyout {
   <button id='share'>Share Sketch</button>
   <p id="e">Editor</p>
   <button id="open">Open editor after new project has been created: Off</button>
+    <p id="project"></p>
+    <button id="delete">Delete Project</button>
+        <button id="projectIcon">Change FavIcon</button>
+    <input type="text" id="projectName" placeholder="Project Name"><br><br>
   <div class="goHome" id="goHome"></div>
   <div class="reset" id="reset"></div>
 </div>
 
 <section id="blocklyContainer">
     <div id="blocklyDiv">
+        <div style="position: absolute; z-index: 500;
+                    width: 58px;
+  height: 58px;
+  background-color: #008dcd;
+  border-radius: 50%;
+  font-size: 50px;
+  color: white;
+  text-align: center;
+background-image: url(https://media.discordapp.net/attachments/898978597996466189/910234994893549588/61818b07d54ef50010e42587.png);
+  background-repeat: no-repeat;
+  background-size: 40px;
+  background-position: center;
+
+  position: fixed;
+  right: 88px;
+  bottom: 16px;
+  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+
+  -moz-box-sizing: border-box; /* Firefox, other Gecko */
+
+  box-sizing: border-box;" id="ssetings"></div>
+        
         <div style="position: absolute; z-index: 500;
                     width: 58px;
   height: 58px;
@@ -461,6 +487,16 @@ div#blocklyDiv .blocklyFlyout {
   <category name="Events" colour="#F3AA44">
     <block type="initd">
       <field name="NAME">I'll always do</field>
+    </block>
+    <block type="window_click">
+      <field name="NAME">I´ll marry her, I´ll just have to find a way</field>
+    </block>
+    <block type="key_changed">
+      <field name="NAME">Sup?</field>
+    </block>
+    <block type="custom_events">
+      <field name="d">Zero Two &lt;3</field>
+      <field name="NAME">error</field>
     </block>
   </category>
   <sep></sep>
@@ -619,16 +655,39 @@ div#blocklyDiv .blocklyFlyout {
     <block type="colour_blend"></block>
   </category>
   <sep></sep>
-  <category name="Variables" colour="#F87956">
+  <category name="Variables" colour="#CD5E94">
     <block type="global_declaration"></block>
     <block type="local_declaration_statement"></block>
     <block type="local_declaration_expression"></block>
     <block type="lexical_variable_get"></block>
     <block type="lexical_variable_set"></block>
+    <block type="change">
+      <field name="NAME">OPTIONNAME</field>
+    </block>
     <block type="create_dynamic_var"></block>
+    <block type="change_d_var"></block>
     <block type="get_d_var"></block>
   </category>
   <category name="Functions" colour="#7560A4" custom="PROCEDURE"></category>
+  <sep></sep>
+  <category name="JavaScript" colour="#985DD3">
+    <block type="asd">
+      <field name="js">alert("Hi There");</field>
+    </block>
+    <block type="asd_left_output">
+      <field name="js">alert("Hi There");</field>
+    </block>
+    <block type="try_catch"></block>
+    <block type="eval"></block>
+    <block type="import">
+      <field name="n"></field>
+      <field name="l"></field>
+    </block>
+    <block type="custom_events">
+      <field name="d">Zero Two &lt;3</field>
+      <field name="NAME">error</field>
+    </block>
+  </category>
 </xml>
     
     <script type='text/javascript' src='./index.js'></script>

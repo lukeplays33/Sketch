@@ -12,7 +12,7 @@
     "@blockly/disable-top-blocks": "^0.1.20",
     "@blockly/plugin-scroll-options": "^1.0.4",
     "@mit-app-inventor/blockly-block-lexical-variables": "^0.0.10",
-    "blockly": "^6.20210701.0"
+    "blockly": "^7.20211209.1"
   },
   "devDependencies": {
     "copy-webpack-plugin": "^5.1.1",
