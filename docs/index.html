@@ -382,6 +382,8 @@ div#blocklyDiv .blocklyFlyout {
   <button id='share'>Share Sketch</button>
   <p id="e">Editor</p>
   <button id="open">Open editor after new project has been created: Off</button>
+    <button id="grid">Grid: Off</button>
+    <button id="snap">Snap To Place: Off</button>
     <p id="project"></p>
     <button id="delete">Delete Project</button>
         <button id="projectIcon">Change FavIcon</button>
@@ -494,9 +496,38 @@ background-image: url(https://media.discordapp.net/attachments/89897859799646618
     <block type="key_changed">
       <field name="NAME">Sup?</field>
     </block>
+    <block type="game_pad_button_change">
+      <field name="NAME">I'll always do</field>
+    </block>
     <block type="custom_events">
-      <field name="d">Zero Two &lt;3</field>
-      <field name="NAME">error</field>
+      <field name="c"></field>
+      <field name="e"></field>
+    </block>
+    <block type="game_pad_connected">
+      <field name="NAME">I'll always do</field>
+    </block>
+    <block type="game_pad_disconnected">
+      <field name="NAME">I'll always do</field>
+    </block>
+  </category>
+  <category name="Elements" colour="#5D98D3">
+    <block type="body"></block>
+    <block type="create_elem">
+      <field name="NAME">OPTIONNAME</field>
+      <field name="e">b</field>
+    </block>
+    <block type="clone">
+      <field name="NAME">OPTIONNAME</field>
+    </block>
+    <block type="apppend_elem">
+      <field name="NAME">OPTIONNAME</field>
+    </block>
+    <block type="remove">
+      <field name="NAME">OPTIONNAME</field>
+    </block>
+    <block type="set_prop">
+      <field name="NAME">body</field>
+      <field name="prop">bgc</field>
     </block>
   </category>
   <sep></sep>
@@ -511,13 +542,20 @@ background-image: url(https://media.discordapp.net/attachments/89897859799646618
     <block type="controls_forEach">
       <field name="VAR" id="X$cY4@@mMmy#rgIi3E=?">item</field>
     </block>
+    <block type="forever"></block>
     <block type="set_timeout">
       <field name="NAME">OPTIONNAME</field>
       <field name="dddd" id="X$cY4@@mMmy#rgIi3E=?">item</field>
     </block>
-    <block type="clearint"></block>
-    <block type="continue"></block>
-    <block type="break"></block>
+    <block type="rnaf">
+      <field name="NAME">OPTIONNAME</field>
+    </block>
+    <block type="clearint">
+      <field name="NAME">ct</field>
+    </block>
+    <block type="controls_flow_statements">
+      <field name="FLOW">BREAK</field>
+    </block>
     <block type="controls_if"></block>
     <block type="controls_if">
       <mutation else="1"></mutation>
@@ -668,7 +706,12 @@ background-image: url(https://media.discordapp.net/attachments/89897859799646618
     <block type="change_d_var"></block>
     <block type="get_d_var"></block>
   </category>
-  <category name="Functions" colour="#7560A4" custom="PROCEDURE"></category>
+  <category name="Functions" colour="#7560A4">
+    <block type="procedures_defnoreturn"></block>
+    <block type="procedures_defreturn"></block>
+    <block type="procedures_callnoreturn"></block>
+    <block type="procedures_callreturn"></block>
+  </category>
   <sep></sep>
   <category name="JavaScript" colour="#985DD3">
     <block type="asd">
@@ -684,8 +727,8 @@ background-image: url(https://media.discordapp.net/attachments/89897859799646618
       <field name="l"></field>
     </block>
     <block type="custom_events">
-      <field name="d">Zero Two &lt;3</field>
-      <field name="NAME">error</field>
+      <field name="c"></field>
+      <field name="e"></field>
     </block>
   </category>
 </xml>

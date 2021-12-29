@@ -39,7 +39,113 @@ import {
 import * as Utilities from '@mit-app-inventor/blockly-block-lexical-variables/src/utilities';
 import * as Shared from '@mit-app-inventor/blockly-block-lexical-variables/src/shared';
 
+import * as ProcedureUtils from '@mit-app-inventor/blockly-block-lexical-variables/src/procedure_utils';
+import {FieldNoCheckDropdown} from '@mit-app-inventor/blockly-block-lexical-variables/src/fields/field_nocheck_dropdown';
+
+//rickroll everyone
+{
+    let roll = Math.floor(Math.random() * 200) + 1
+if (roll == 10) {
+    window.location.href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
+}
+}
+
 //define generators
+
+Blockly.JavaScript['set_prop'] = function(block) {
+  var dropdown_name = block.getFieldValue('NAME');
+  var value_name = Blockly.JavaScript.valueToCode(block, 'NAME', Blockly.JavaScript.ORDER_ATOMIC);
+  var dropdown_prop = block.getFieldValue('prop');
+  var value_t = Blockly.JavaScript.valueToCode(block, 't', Blockly.JavaScript.ORDER_ATOMIC);
+  // TODO: Assemble JavaScript into code variable.
+  var code = "document." + value_name + ".style." + dropdown_prop + " = " + value_t
+  return code;
+};
+
+Blockly.JavaScript['forever'] = function(block) {
+  var statements_name = Blockly.JavaScript.statementToCode(block, 'NAME');
+  // TODO: Assemble JavaScript into code variable.
+  var code = "while(true) {\n" + statements_name + "\n}\n"
+  return code;
+};
+
+Blockly.JavaScript['body'] = function(block) {
+  var value_name = Blockly.JavaScript.valueToCode(block, 'NAME', Blockly.JavaScript.ORDER_ATOMIC);
+  // TODO: Assemble JavaScript into code variable.
+  var code = 'body';
+  // TODO: Change ORDER_NONE to the correct strength.
+  return [code, Blockly.JavaScript.ORDER_ATOMIC];
+};
+
+Blockly.JavaScript['clone'] = function(block) {
+  var dropdown_name = block.getFieldValue('NAME');
+  var value_name = Blockly.JavaScript.valueToCode(block, 'NAME', Blockly.JavaScript.ORDER_ATOMIC);
+  // TODO: Assemble JavaScript into code variable.
+  var code = value_name + ".cloneNode(true)"
+  // TODO: Change ORDER_NONE to the correct strength.
+  return [code, Blockly.JavaScript.ORDER_ATOMIC];
+};
+
+Blockly.JavaScript['remove'] = function(block) {
+  var dropdown_name = block.getFieldValue('NAME');
+  var value_name = Blockly.JavaScript.valueToCode(block, 'NAME', Blockly.JavaScript.ORDER_ATOMIC);
+  // TODO: Assemble JavaScript into code variable.
+  var code = value_name + ".remove();\n"
+  return code;
+};
+
+Blockly.JavaScript['apppend_elem'] = function(block) {
+  var dropdown_name = block.getFieldValue('NAME');
+  var value_name = Blockly.JavaScript.valueToCode(block, 'NAME', Blockly.JavaScript.ORDER_ATOMIC);
+  var value_b = Blockly.JavaScript.valueToCode(block, 'b', Blockly.JavaScript.ORDER_ATOMIC);
+  // TODO: Assemble JavaScript into code variable.
+  var code = "document." + value_b + ".appendChild(" + value_name + ");\n"
+  return code;
+};
+
+Blockly.JavaScript['create_elem'] = function(block) {
+  var dropdown_name = block.getFieldValue('NAME');
+  var dropdown_e = block.getFieldValue('e');
+  // TODO: Assemble JavaScript into code variable.
+    if (dropdown_e == "b") {
+        var code = "document.createElement('button')"
+        }
+  // TODO: Change ORDER_NONE to the correct strength.
+  return [code, Blockly.JavaScript.ORDER_ATOMIC];
+};
+
+Blockly.JavaScript['game_pad_button_change'] = function(block) {
+  var dropdown_name = block.getFieldValue('NAME');
+  var statements_name = Blockly.JavaScript.statementToCode(block, 'NAME');
+    var id = Blockly.JavaScript.nameDB_.getName(
+      block.getFieldValue('id'), Blockly.VARIABLE_CATEGORY_NAME);
+        var axesid = Blockly.JavaScript.nameDB_.getName(
+      block.getFieldValue('axesid'), Blockly.VARIABLE_CATEGORY_NAME);
+        var axesvalue = Blockly.JavaScript.nameDB_.getName(
+      block.getFieldValue('axesvalue'), Blockly.VARIABLE_CATEGORY_NAME);
+  // TODO: Assemble JavaScript into code variable.
+  var code = "function buttonChange (" + id + "," + axesid + "," + axesvalue + ") {\n" + statements_name + "}\n"
+  return code;
+};
+
+Blockly.JavaScript['game_pad_connected'] = function(block) {
+  var dropdown_name = block.getFieldValue('NAME');
+  var statements_name = Blockly.JavaScript.statementToCode(block, 'NAME');
+                    var id = Blockly.JavaScript.nameDB_.getName(
+      block.getFieldValue('id'), Blockly.VARIABLE_CATEGORY_NAME);
+  // TODO: Assemble JavaScript into code variable.
+  var code = "window.addEventListener('gamepadconnected', e => {\nvar gamepads = navigator.getGamepads ? navigator.getGamepads() : (navigator.webkitGetGamepads ? navigator.webkitGetGamepads : []); var gp = gamepads[0];\n var " + id + " = gp.id;\n"  + statements_name + "\nchangeGamepadAPiButton();\n});\n"
+  return code;
+};
+
+Blockly.JavaScript['game_pad_disconnected'] = function(block) {
+  var dropdown_name = block.getFieldValue('NAME');
+  var statements_name = Blockly.JavaScript.statementToCode(block, 'NAME');
+  // TODO: Assemble JavaScript into code variable.
+  var code = "window.addEventListener('gamepaddisconnected', e => {\nwindow.cancelAnimationFrame(kccb);\n"  + statements_name + "\n});\n"
+  return code;
+};
+
 Blockly.JavaScript['import'] = function(block) {
   var text_n = block.getFieldValue('n');
   var text_l = block.getFieldValue('l');
@@ -48,8 +154,16 @@ Blockly.JavaScript['import'] = function(block) {
   return code;
 };
 
-function generate () {
-    function gen_js () {
+Blockly.JavaScript['rnaf'] = function(block) {
+  var dropdown_name = block.getFieldValue('NAME');
+  var statements_name = Blockly.JavaScript.statementToCode(block, 'NAME');
+    var id = Blockly.JavaScript.nameDB_.getName(
+      block.getFieldValue('id'), Blockly.VARIABLE_CATEGORY_NAME);
+  // TODO: Assemble JavaScript into code variable.
+  var code = "var " + id + " = window.requestAnimationFrame(function () {\n" + statements_name + "}\n);\n"
+  return code;
+};
+    
         Blockly.JavaScript['asd'] = function(block) {
   var text_js = block.getFieldValue('js');
   // TODO: Assemble JavaScript into code variable.
@@ -61,7 +175,7 @@ function generate () {
   // TODO: Assemble JavaScript into code variable.
   var code = text_js
   // TODO: Change ORDER_NONE to the correct strength.
-  return [code, Blockly.JavaScript.ORDER_NONE];
+  return [code, Blockly.JavaScript.ORDER_ATOMIC];
 };
         Blockly.JavaScript['try_catch'] = function(block) {
   var statements_try = Blockly.JavaScript.statementToCode(block, 'try');
@@ -78,25 +192,16 @@ function generate () {
   var code = "eval(" + value_name + ");\n"
   return code;
 };
-    }
-    gen_js();
-    function gen_logic () {
-        Blockly.JavaScript['break'] = function(block) {
-  // TODO: Assemble JavaScript into code variable.
-  var code = 'break;\n';
-  return code;
-};
-
-Blockly.JavaScript['continue'] = function(block) {
-  // TODO: Assemble JavaScript into code variable.
-  var code = 'continue;\n';
-  return code;
-};
 
 Blockly.JavaScript['clearint'] = function(block) {
+  var dropdown_name = block.getFieldValue('NAME');
   var value_name = Blockly.JavaScript.valueToCode(block, 'NAME', Blockly.JavaScript.ORDER_ATOMIC);
   // TODO: Assemble JavaScript into code variable.
-  var code = "clearInterval(" + value_name + ");\n" 
+        if(dropdown_name == "ct") {
+        var code = "clearInterval(" + value_name + ");\n"
+    } else {
+        var code = "window.cancelAnimationFrame(" + value_name + ");\n"
+    }
   return code;
 };
         Blockly.JavaScript['set_timeout'] = function(block) {
@@ -106,7 +211,7 @@ Blockly.JavaScript['clearint'] = function(block) {
   var value_l = Blockly.JavaScript.valueToCode(block, 'l', Blockly.JavaScript.ORDER_ATOMIC);
   var statements_s = Blockly.JavaScript.statementToCode(block, 's');
   // TODO: Assemble JavaScript into code variable.
-  var code = "var " + variable_name + " = window.setInterval( function () {\n" + statements_s + "\nif(" + value_l + ") {\n} else {\n clearInterval(" + variable_name + ");\n}\n}, " + value_name + ");"  
+  var code = "var " + variable_name + " = window.setInterval( function () {\n" + statements_s + "\nif(" + value_l + ") {\n} else {\n clearInterval(" + variable_name + ");\n}\n}, " + value_name + ");\n"  
   return code;
 };
         Blockly.JavaScript['open_window'] = function(block) {
@@ -121,9 +226,7 @@ Blockly.JavaScript['clearint'] = function(block) {
                     }
   return code;
 };
-    }
-    gen_logic();
-    function gen_events () {
+
 Blockly.JavaScript['custom_events'] = function(block) {
   var text_c = block.getFieldValue('c');
   var text_e = block.getFieldValue('e');
@@ -169,9 +272,6 @@ Blockly.JavaScript['initd'] = function(block) {
   var code = "window.addEventListener(`load`, e => {\n" + statements_name + "\n});"
   return code;
 };
-    }
-    gen_events();
-    function gen_vars() {
         Blockly.JavaScript['change_d_var'] = function(block) {
   var value_s = Blockly.JavaScript.valueToCode(block, 's', Blockly.JavaScript.ORDER_ATOMIC);
             value_s = value_s.replace("'", "").replace("'", "");
@@ -200,7 +300,7 @@ Blockly.JavaScript['create_dynamic_var'] = function(block) {
   var value_s = Blockly.JavaScript.valueToCode(block, 's', Blockly.JavaScript.ORDER_ATOMIC);
   var value_t = Blockly.JavaScript.valueToCode(block, 't', Blockly.JavaScript.ORDER_ATOMIC);
   // TODO: Assemble JavaScript into code variable.
-  var code = "var " + value_s.replace("'", "").replace("'", "") + " = " + value_t + "\n" 
+  var code = "var " + value_s.replace("'", "").replace("'", "") + " = " + value_t + ";\n" 
   return code;
 };
 
@@ -210,11 +310,9 @@ Blockly.JavaScript['create_dynamic_var'] = function(block) {
   // TODO: Assemble JavaScript into code variable.
   var code = value_g
   // TODO: Change ORDER_NONE to the correct strength.
-  return [code, Blockly.JavaScript.ORDER_NONE];
+  return [code, Blockly.JavaScript.ORDER_ATOMIC];
 };
-    }
-    gen_vars();
-    function rewrite_core_gen () {
+        
         Blockly.JavaScript['logic_compare'] = function(block) {
   var value_name = Blockly.JavaScript.valueToCode(block, 'NAME', Blockly.JavaScript.ORDER_ATOMIC);
   var dropdown_name = block.getFieldValue('NAME');
@@ -253,14 +351,10 @@ Blockly.JavaScript['create_dynamic_var'] = function(block) {
   // TODO: Change ORDER_NONE to the correct strength.
   return [code, Blockly.JavaScript.ORDER_NONE];
 };
-    }
-    rewrite_core_gen();
-}
-
-generate();
 
 //variables
-var nonStyles = ["innerHTML"];
+
+var events = ["initd", 'window_click', 'key_changed', 'game_pad_connected','game_pad_disconnected', 'game_pad_button_change'];
 var projects = [];
 
 var project = "";
@@ -281,11 +375,29 @@ width: 100%;
 <div id="react-root"></div>
 <\/body>
 <script type="module">
+var kccb = '';
+function changeGamepadAPiButton () {
+var gamepads = navigator.getGamepads ? navigator.getGamepads() : (navigator.webkitGetGamepads ? navigator.webkitGetGamepads : []);
+var gp = gamepads[0];
+for (var i = 0; i < gp.buttons.length; i++) {
+if (gp.buttons[i] == 0 || gp.buttons[i].value > 0 || gp.buttons[i].pressed == true) {
+buttonChange(i,0 ,0);
+}
+}
+for (var i = 0; i < gp.axes.length; i++) {
+if (gp.axes[i] != 0){
+buttonChange(0,i,gp.axes[i]);
+}
+}
+kccb = window.requestAnimationFrame(changeGamepadAPiButton);
+}
 `
   return gen
 }
 
 const reader = new FileReader();
+
+var options = [["BackgroundColor", "bgc"]];
 
 var days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 var monthNames = [
@@ -317,6 +429,12 @@ Blockly.HSV_VALUE = 0.83;
 // Inject Blockly.
 
 const workspace = Blockly.inject("blocklyDiv", {
+    grid:
+         {spacing: window.localStorage.getItem("grid"),
+          length: 8,
+          colour: '#ccc',
+          snap: window.localStorage.getItem("snap")
+         },
   trashcan: false,
     
     theme: {
@@ -644,6 +762,9 @@ function settings() {
       document.getElementById("download").style.backgroundColor = "#424242";
         
         document.getElementById("ssetings").style.backgroundColor = "#424242";
+        
+        document.getElementById("snap").style.backgroundColor = "#424242";
+    document.getElementById("grid").style.backgroundColor = "#424242";
 
       document.getElementById("theme").innerHTML = "Dark Theme: On";
 
@@ -677,6 +798,9 @@ function settings() {
       document.getElementById("goHome").style.backgroundColor = "#008dcd";
 
       document.getElementById("GoHome2").style.backgroundColor = "#008dcd";
+        
+        document.getElementById("snap").style.backgroundColor = "#008dcd";
+    document.getElementById("grid").style.backgroundColor = "#008dcd";
 
       document.getElementById("add").style.backgroundColor = "#008dcd";
 
@@ -707,6 +831,28 @@ function settings() {
         document.getElementById("delete").style.backgroundColor = "#fc0303";
     }
   };
+    
+    var snap = document.getElementById("snap");
+    snap.onclick = function () {
+        if (window.localStorage.getItem("snap") == "false" || window.localStorage.getItem("snap") == null ) {
+            window.localStorage.setItem("snap", true);
+            snap.innerHTML = "Snap To Place: On"
+        } else {
+            window.localStorage.setItem("snap", "false");
+            snap.innerHTML = "Snap To Place: Off"
+        }
+    }
+
+    var grid = document.getElementById("grid");
+    grid.onclick = function () {
+        if (window.localStorage.getItem("grid") == 0 || window.localStorage.getItem("grid") == null) {
+            window.localStorage.setItem("grid", 40);
+            grid.innerHTML = "Grid: On"
+        } else {
+            window.localStorage.setItem("grid", 0);
+            grid.innerHTML = "Grid: Off"
+        }
+    }
 
   var settings = document.getElementById("settings");
 
@@ -838,6 +984,9 @@ function Dtheme() {
     
     document.getElementById("Test").style.backgroundColor = "#424242";
     document.getElementById("goHome").style.backgroundColor = "#424242";
+      
+      document.getElementById("snap").style.backgroundColor = "#424242";
+    document.getElementById("grid").style.backgroundColor = "#424242";
 
     document.getElementById("GoHome2").style.backgroundColor = "#424242";
       
@@ -933,6 +1082,16 @@ w.document.open();
     }
 }
 editor();
+
+if (window.localStorage.getItem("grid") == 0 || window.localStorage.getItem("grid") == null ) {
+} else {
+    document.getElementById("grid").innerHTML = "Grid: On"
+}
+
+if (window.localStorage.getItem("snap") == "false" || window.localStorage.getItem("snap") == null ) {
+} else {
+    document.getElementById("snap").innerHTML = "Snap To Place: On"
+}
 
 //context menu
 function configureContextMenu(menuOptions) {
@@ -1148,6 +1307,37 @@ function save () {
 
 workspace.addChangeListener(save);
 
+//block checker
+function checkBlocks (t) {
+    var bb = workspace.getTopBlocks();
+    var blocks = [];
+    for (var i of bb) {
+        if (i.type == t) {
+            blocks.push(i);
+        }
+    }
+    return blocks
+}
+
+//event errors
+
+function check () {
+    for (var i of events) {
+        var more = checkBlocks(i);
+        if (more.length > 1) {
+            for (var i of more) {
+                i.setWarningText("There can only be one event handler for this event");
+            }
+        } else {
+            for (var i of more) {
+                i.setWarningText(null);
+            }
+        }
+    }
+}
+
+workspace.addChangeListener(check);
+
 //get vars
 function getVariableName(name) {
   const pair = Shared.unprefixName(name);
@@ -1163,6 +1353,7 @@ function getVariableName(name) {
 
 
 // define blocks
+
 Blockly.Blocks['asd'] = {
   init: function() {
     this.appendDummyInput()
@@ -1331,36 +1522,14 @@ Blockly.Blocks['eval'] = {
   }
 };
 
-        Blockly.Blocks['break'] = {
-  init: function() {
-    this.appendDummyInput()
-        .appendField("break");
-    this.setPreviousStatement(true, null);
-    this.setColour("#F3AA44");
- this.setTooltip("Break out of the containing loop");
- this.setHelpUrl("");
-  }
-};
-
-Blockly.Blocks['continue'] = {
-  init: function() {
-    this.appendDummyInput()
-        .appendField("continue");
-    this.setPreviousStatement(true, null);
-    this.setColour("#F3AA44");
- this.setTooltip("Skip the rest of this loop, and continue with the next iteration");
- this.setHelpUrl("");
-  }
-};
-
 Blockly.Blocks['clearint'] = {
   init: function() {
     this.appendValueInput("NAME")
         .setCheck(null)
-        .appendField("clearTimeout");
+        .appendField(new Blockly.FieldDropdown([["ClearTimeout","ct"], ["CancelAnimationFrame","caf"]]), "NAME");
     this.setPreviousStatement(true, null);
     this.setColour("#F3AA44");
- this.setTooltip("Stop the current timeout");
+ this.setTooltip("Stop the current timeout or animation frame requests");
  this.setHelpUrl("");
   }
 };
@@ -1765,6 +1934,363 @@ Blockly.Blocks['import'] = {
         .appendField(new Blockly.FieldTextInput(""), "l");
     this.setColour(270);
  this.setTooltip("Import any javascript libary from skypack");
+ this.setHelpUrl("");
+  }
+};
+
+Blockly.Blocks['rnaf'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("call")
+        .appendField(new Blockly.FieldDropdown([[window.localStorage.getItem("projectName" + project),"OPTIONNAME"]]), "NAME")
+        .appendField(".RequestAnimationFrame")
+      .appendField(
+                  new FieldParameterFlydown('AnimationId', true, FieldFlydown.DISPLAY_BELOW),
+            'id');
+    this.appendStatementInput("NAME")
+        .setCheck(null)
+        .appendField("do");
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour("#F3AA44");
+ this.setTooltip("Do some statements when a Animation Frame Iis requested");
+ this.setHelpUrl("");
+  },
+  withLexicalVarsAndPrefix: function(child, proc) {
+    const params = this.declaredNames();
+    // not arguments_ instance var
+    for (let i = 0; i < params.length; i++) {
+      proc(params[i], '');
+    }
+  },
+  getVars: function() {
+    return [
+      this.getFieldValue('id'),
+    ];
+  },
+  blocksInScope: function() {
+    const doBlock = this.getInputTargetBlock('NAME');
+    if (doBlock) {
+      return [doBlock];
+    } else {
+      return [];
+    }
+  },
+  declaredNames: function() {
+    return [
+      this.getFieldValue('id'),
+    ];
+  },
+  renameVar: function(oldName, newName) {
+    if (Blockly.Names.equals(oldName, this.getFieldValue('id'))) {
+      this.setFieldValue(newName, 'id');
+    }
+  },
+  renameBound: function(boundSubstitution, freeSubstitution) {
+    const paramSubstitution = boundSubstitution.restrictDomain(
+        this.declaredNames());
+    this.renameVars(paramSubstitution);
+    const newFreeSubstitution = freeSubstitution.extend(paramSubstitution);
+    LexicalVariable.renameFree(
+        this.getInputTargetBlock(this.bodyInputName), newFreeSubstitution);
+  },
+  renameFree: function(freeSubstitution) {
+    // There shouldn't be any free variables
+  },
+  freeVariables: function() { // return the free variables of this block
+    // There shouldn't be any free variables, so this should return an empty set.
+    // Should return the empty set: something is wrong if it doesn't!
+    return new Blockly.NameSet();
+  }
+};
+
+Blockly.Blocks['game_pad_connected'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("when")
+        .appendField(new Blockly.FieldDropdown([[window.localStorage.getItem("projectName" + project),"I'll always do"]]), "NAME")
+        .appendField(".GamepadConnected")
+                  .appendField(
+                  new FieldParameterFlydown('ControllerId', true, FieldFlydown.DISPLAY_BELOW),
+            'id');
+    this.appendStatementInput("NAME")
+        .setCheck(null)
+        .appendField("do");
+    this.setColour("#F3AA44");
+ this.setTooltip("Do some statements when a controler has been connected");
+ this.setHelpUrl("");
+  },
+  withLexicalVarsAndPrefix: function(child, proc) {
+    const params = this.declaredNames();
+    // not arguments_ instance var
+    for (let i = 0; i < params.length; i++) {
+      proc(params[i], '');
+    }
+  },
+  getVars: function() {
+    return [
+      this.getFieldValue('id'),
+    ];
+  },
+  blocksInScope: function() {
+    const doBlock = this.getInputTargetBlock('NAME');
+    if (doBlock) {
+      return [doBlock];
+    } else {
+      return [];
+    }
+  },
+  declaredNames: function() {
+    return [
+      this.getFieldValue('id'),
+    ];
+  },
+  renameVar: function(oldName, newName) {
+    if (Blockly.Names.equals(oldName, this.getFieldValue('id'))) {
+      this.setFieldValue(newName, 'id');
+    }
+  },
+  renameBound: function(boundSubstitution, freeSubstitution) {
+    const paramSubstitution = boundSubstitution.restrictDomain(
+        this.declaredNames());
+    this.renameVars(paramSubstitution);
+    const newFreeSubstitution = freeSubstitution.extend(paramSubstitution);
+    LexicalVariable.renameFree(
+        this.getInputTargetBlock(this.bodyInputName), newFreeSubstitution);
+  },
+  renameFree: function(freeSubstitution) {
+    // There shouldn't be any free variables
+  },
+  freeVariables: function() { // return the free variables of this block
+    // There shouldn't be any free variables, so this should return an empty set.
+    // Should return the empty set: something is wrong if it doesn't!
+    return new Blockly.NameSet();
+  }
+};
+
+Blockly.Blocks['game_pad_disconnected'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("when")
+        .appendField(new Blockly.FieldDropdown([[window.localStorage.getItem("projectName" + project),"I'll always do"]]), "NAME")
+        .appendField(".GamepadDisconnected")
+    this.appendStatementInput("NAME")
+        .setCheck(null)
+        .appendField("do");
+    this.setColour("#F3AA44");
+ this.setTooltip("Do some statements when a controler has been disconnected");
+ this.setHelpUrl("");
+  }
+};
+
+Blockly.Blocks['game_pad_button_change'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("when")
+        .appendField(new Blockly.FieldDropdown([[window.localStorage.getItem("projectName" + project),"I'll always do"]]), "NAME")
+        .appendField(".GamepadButtonChange")
+                        .appendField(
+                  new FieldParameterFlydown('ButtonId', true, FieldFlydown.DISPLAY_BELOW),
+            'id')
+                              .appendField(
+                  new FieldParameterFlydown('AxesId', true, FieldFlydown.DISPLAY_BELOW),
+            'axesid')
+                              .appendField(
+                  new FieldParameterFlydown('AxesValue', true, FieldFlydown.DISPLAY_BELOW),
+            'axesvalue');
+    this.appendStatementInput("NAME")
+        .setCheck(null)
+        .appendField("do");
+    this.setColour("#F3AA44");
+ this.setTooltip("Do some statements when a button on the controller is pressed");
+ this.setHelpUrl("");
+  },
+  withLexicalVarsAndPrefix: function(child, proc) {
+    const params = this.declaredNames();
+    // not arguments_ instance var
+    for (let i = 0; i < params.length; i++) {
+      proc(params[i], '');
+    }
+  },
+  getVars: function() {
+    return [
+      this.getFieldValue('id'),
+        this.getFieldValue('axesid'),
+        this.getFieldValue('axesvalue'),
+    ];
+  },
+  blocksInScope: function() {
+    const doBlock = this.getInputTargetBlock('NAME');
+    if (doBlock) {
+      return [doBlock];
+    } else {
+      return [];
+    }
+  },
+  declaredNames: function() {
+    return [
+            this.getFieldValue('id'),
+        this.getFieldValue('axesid'),
+        this.getFieldValue('axesvalue'),
+    ];
+  },
+  renameVar: function(oldName, newName) {
+    if (Blockly.Names.equals(oldName, this.getFieldValue('id'))) {
+      this.setFieldValue(newName, 'id');
+    }
+          if (Blockly.Names.equals(oldName, this.getFieldValue('axesid'))) {
+      this.setFieldValue(newName, 'axesid');
+    }
+          if (Blockly.Names.equals(oldName, this.getFieldValue('axesvalue'))) {
+      this.setFieldValue(newName, 'axesvalue');
+    }
+  },
+  renameBound: function(boundSubstitution, freeSubstitution) {
+    const paramSubstitution = boundSubstitution.restrictDomain(
+        this.declaredNames());
+    this.renameVars(paramSubstitution);
+    const newFreeSubstitution = freeSubstitution.extend(paramSubstitution);
+    LexicalVariable.renameFree(
+        this.getInputTargetBlock(this.bodyInputName), newFreeSubstitution);
+  },
+  renameFree: function(freeSubstitution) {
+    // There shouldn't be any free variables
+  },
+  freeVariables: function() { // return the free variables of this block
+    // There shouldn't be any free variables, so this should return an empty set.
+    // Should return the empty set: something is wrong if it doesn't!
+    return new Blockly.NameSet();
+  }
+};
+
+Blockly.Blocks['create_elem'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("call")
+        .appendField(new Blockly.FieldDropdown([[window.localStorage.getItem("projectName" + project),"OPTIONNAME"]]), "NAME")
+        .appendField(".CreateNew")
+        .appendField(new Blockly.FieldDropdown([["Button","b"]]), "e")
+        .appendField("Element");
+    this.setOutput(true, null);
+    this.setColour(210);
+ this.setTooltip("");
+ this.setHelpUrl("");
+  }
+};
+
+Blockly.Blocks['apppend_elem'] = {
+  init: function() {
+    this.appendValueInput("NAME")
+        .setCheck(null)
+        .appendField("call")
+.appendField(new Blockly.FieldDropdown([[window.localStorage.getItem("projectName" + project),"OPTIONNAME"]]), "NAME")
+        .appendField(".AppendElement");
+    this.appendValueInput("b")
+        .setCheck(null)
+        .appendField("to");
+    this.setInputsInline(true);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(210);
+ this.setTooltip("Add a newly created element to the body or element");
+ this.setHelpUrl("");
+  }
+};
+
+Blockly.Blocks['remove'] = {
+  init: function() {
+    this.appendValueInput("NAME")
+        .setCheck(null)
+        .appendField("call")
+        .appendField(new Blockly.FieldDropdown([[window.localStorage.getItem("projectName" + project),"OPTIONNAME"]]), "NAME")
+        .appendField(".RemoveElement");
+    this.setInputsInline(true);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(210);
+ this.setTooltip("Removes an element");
+ this.setHelpUrl("");
+  }
+};
+
+Blockly.Blocks['clone'] = {
+  init: function() {
+    this.appendValueInput("NAME")
+        .setCheck(null)
+        .appendField("call")
+        .appendField(new Blockly.FieldDropdown([[window.localStorage.getItem("projectName" + project),"OPTIONNAME"]]), "NAME")
+        .appendField(".CloneElement");
+    this.setOutput(true, null);
+    this.setColour(210);
+ this.setTooltip("Clones an element");
+ this.setHelpUrl("");
+  }
+};
+
+Blockly.Blocks['body'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("body");
+    this.setOutput(true, null);
+    this.setColour(210);
+ this.setTooltip("Return the location of the documents body");
+ this.setHelpUrl("");
+  }
+};
+
+Blockly.Blocks['set_prop'] = {
+  init: function() {
+    this.appendValueInput("NAMEEE")
+        .setCheck(null)
+        .appendField("set")
+        .appendField(new Blockly.FieldDropdown([["Body","body"], ["Button","b"]]), "NAME");
+    this.appendDummyInput()
+        .appendField("'s")
+              .appendField(new Blockly.FieldDropdown(
+        this.generateOptions), 'DAY');
+    this.appendValueInput("t")
+        .setCheck(null)
+        .appendField("to");
+    this.setInputsInline(true);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(210);
+ this.setTooltip("Set the selected property value of the element ");
+ this.setHelpUrl("");
+  },
+
+  generateOptions: function() {
+    return options;
+  }
+};
+
+// change props
+
+function props () {
+    var top = workspace.getTopBlocks();
+    for (var i of top) {
+                if (i.type == "set_prop") {
+      if (i.getField("NAME").getValue() == "body") {
+          options = [["BackgroundColor", "backgroundColor"], ["BackgroundImage", "backgroundImage"], ["BackgroundImageResizeMode", "backgroundSize"], ["BackgroundImageRepeat" , "backgroundRepeat"], ["BackgroundPosition", "backgroundPosition"], ["Margin", "margin"], ["Padding", "padding"]];
+      } else if( i.getField("NAME").getValue() == "b") {
+                    options = [["BackgroundImage", "bgi"]];
+      }
+            }
+    }
+}
+
+workspace.addChangeListener(props);
+
+Blockly.Blocks['forever'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("forever");
+    this.appendStatementInput("NAME")
+        .setCheck(null);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour("#F3AA44");
+ this.setTooltip("Runs the blocks until there is a break block");
  this.setHelpUrl("");
   }
 };
