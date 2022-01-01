@@ -42,15 +42,26 @@ import * as Shared from '@mit-app-inventor/blockly-block-lexical-variables/src/s
 import * as ProcedureUtils from '@mit-app-inventor/blockly-block-lexical-variables/src/procedure_utils';
 import {FieldNoCheckDropdown} from '@mit-app-inventor/blockly-block-lexical-variables/src/fields/field_nocheck_dropdown';
 
+import fx from 'fireworks'
+
+import { HolidayAPI } from 'holidayapi';
+
 //rickroll everyone
 {
-    let roll = Math.floor(Math.random() * 200) + 1
+    let roll = Math.floor(Math.random() * 100) + 1
 if (roll == 10) {
     window.location.href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
 }
 }
 
 //define generators
+
+Blockly.JavaScript['break_and_continue'] = function(block) {
+  var dropdown_name = block.getFieldValue('NAME');
+  // TODO: Assemble JavaScript into code variable.
+  var code = dropdown_name + ";\n"
+  return code;
+};
 
 Blockly.JavaScript['set_prop'] = function(block) {
   var dropdown_name = block.getFieldValue('NAME');
@@ -355,6 +366,7 @@ Blockly.JavaScript['create_dynamic_var'] = function(block) {
 //variables
 
 var events = ["initd", 'window_click', 'key_changed', 'game_pad_connected','game_pad_disconnected', 'game_pad_button_change'];
+var loops = ['controls_repeat', 'controls_repeat_ext', 'controls_forEach', 'controls_for', 'controls_whileUntil', 'forever'];
 var projects = [];
 
 var project = "";
@@ -397,8 +409,6 @@ kccb = window.requestAnimationFrame(changeGamepadAPiButton);
 
 const reader = new FileReader();
 
-var options = [["BackgroundColor", "bgc"]];
-
 var days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 var monthNames = [
   "Jan",
@@ -418,9 +428,6 @@ var currentdate = new Date();
 var oneJan = new Date(currentdate.getFullYear(), 0, 1);
 var numberOfDays = Math.floor((currentdate - oneJan) / (24 * 60 * 60 * 1000));
 var dd = new Date();
-
-var x = ""
-var y = ""
 
 // change hue
 Blockly.HSV_SATURATION = 0.56;
@@ -543,6 +550,7 @@ document.getElementById("blocklyContainer").style.display = "none";
 
 // start site
 function start() {
+
                       document.getElementById("project").style.display = "none";
         document.getElementById("projectName").style.display = "none";
         document.getElementById("projectIcon").style.display = "none";
@@ -570,6 +578,10 @@ function start() {
     document.getElementById("home").style.display = "block";
     if (!window.localStorage.getItem("projects") == "") {
       projects = JSON.parse(window.localStorage.getItem("projects"));
+            if(projects.length == 0 ) {
+    } else {
+        document.getElementById("no_project").style.display = "none";
+    }
       for (var i of projects) {
         var neww_list_item = document.getElementById("Projects-list");
         var itemm = neww_list_item.cloneNode(true);
@@ -605,6 +617,7 @@ function new_projectt() {
     var new_project = prompt("New Project Name");
     if (new_project === `` || new_project == null) {
     } else {
+        document.getElementById("no_project").style.display = "none";
       var new_list_item = document.getElementById("Projects-list");
       var item = new_list_item.cloneNode(true);
       new_list_item.id = new_project;
@@ -746,6 +759,9 @@ function settings() {
       document.getElementById("open").style.backgroundColor = "#424242";
     
     document.getElementById("e").style.color = "white";
+        
+        document.getElementById("no_project").style.color = "white";
+        
       document.getElementById("add").style.backgroundColor = "#424242";
 
       document.getElementById("settings").style.backgroundColor = "#424242";
@@ -793,6 +809,8 @@ function settings() {
       document.getElementById("header").style.backgroundColor = "#008dcd";
         
         document.getElementById("ssetings").style.backgroundColor = "#008dcd";
+        
+        document.getElementById("no_project").style.color = "#008dcd";
 
       document.getElementById("Test").style.backgroundColor = "#008dcd";
       document.getElementById("goHome").style.backgroundColor = "#008dcd";
@@ -955,6 +973,11 @@ function settings() {
         document.getElementById("projectName").style.display = "none";
         document.getElementById("projectIcon").style.display = "none";
           document.getElementById("delete").style.display = "none";
+            
+                        if(projects.length == 0 ) {
+                            document.getElementById("no_project").style.display = "block";
+    } else {
+    }
         }
     }
 }
@@ -976,6 +999,8 @@ setBGImage();
 
 function Dtheme() {
   if (window.localStorage.getItem("DarkMode") == "true") {
+      
+      document.getElementById("no_project").style.color = "white";
     
     document.body.style.backgroundColor = "black";
     document.getElementById("header").style.backgroundColor = "#424242";
@@ -1257,11 +1282,6 @@ function registerFirstContextMenuOptions() {
   };
 }
 
-window.onmousemove = function (e) {
-  x = e.x;
-  y = e.y;
-}
-
 const lClick = function () {
    document.getElementById("home").style.display = "none";
           document.getElementById("blocklyContainer").style.display = "block";
@@ -1338,6 +1358,41 @@ function check () {
 
 workspace.addChangeListener(check);
 
+// loop errors
+
+function loop_errors () {
+    var blocks = workspace.getAllBlocks();
+    for (var i of blocks) {
+        if(i.type == "break_and_continue") {
+            var parent = String(i.getSurroundParent())
+            for (var item of loops) {
+                if (parent.includes(item)) {
+                    i.setWarningText(null);
+                } else {
+                    i.setWarningText("This block can only be placed inside of a loop");
+                }
+            }
+        }
+    }
+}
+    
+    workspace.addChangeListener(loop_errors);
+
+// dynamic getters errors
+
+function getter_errors () {
+    var blocks = workspace.getAllBlocks();
+    for (var i of blocks) {
+        if (i.type == "get_d_var") {
+            if (i.getRootBlock().type == "global_declaration") {
+                i.setWarningText("This block cannot be in a defenition");
+        } else {
+            i.setWarningText(null);
+        }
+        }
+    }
+}
+
 //get vars
 function getVariableName(name) {
   const pair = Shared.unprefixName(name);
@@ -1371,7 +1426,7 @@ Blockly.Blocks['asd_left_output'] = {
   init: function() {
     this.appendDummyInput()
         .appendField("add scource directly")
-        .appendField(new Blockly.FieldTextInput("alert(\"Hi There\");"), "js");
+        .appendField(new Blockly.FieldTextInput("'Zero Two is cute?' == true"), "js");
     this.setOutput(true, null);
     this.setColour(270);
  this.setTooltip("Inject a piece of JavaScript code that doesn't exist in SKetch yet");
@@ -1526,7 +1581,7 @@ Blockly.Blocks['clearint'] = {
   init: function() {
     this.appendValueInput("NAME")
         .setCheck(null)
-        .appendField(new Blockly.FieldDropdown([["ClearTimeout","ct"], ["CancelAnimationFrame","caf"]]), "NAME");
+        .appendField(new Blockly.FieldDropdown([["clearTimeout","ct"], ["cancelAnimationFrame","caf"]]), "NAME");
     this.setPreviousStatement(true, null);
     this.setColour("#F3AA44");
  this.setTooltip("Stop the current timeout or animation frame requests");
@@ -1615,7 +1670,7 @@ Blockly.Blocks['set_timeout'] = {
         .appendField(new Blockly.FieldDropdown([[window.localStorage.getItem("projectName" + project),"Zero Two is cute"]]), "NAME")
         .appendField(".openLink");
     this.appendDummyInput()
-        .appendField(new Blockly.FieldDropdown([["InNewTab","int"], ["InCurrentTab","ict"]]), "t");
+        .appendField(new Blockly.FieldDropdown([["inNewTab","int"], ["inCurrentTab","ict"]]), "t");
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
     this.setColour("#F3AA44");
@@ -1644,7 +1699,7 @@ Blockly.Blocks['custom_events'] = {
     this.appendDummyInput()
         .appendField("when")
         .appendField(new Blockly.FieldDropdown([[window.localStorage.getItem("projectName" + project),"Sup?"]]), "NAME")
-        .appendField(".KeyChange")
+        .appendField(".keyChange")
       .appendField(
             new FieldParameterFlydown('KeyName', true, FieldFlydown.DISPLAY_BELOW),
             'keyname')
@@ -1716,7 +1771,7 @@ Blockly.Blocks['custom_events'] = {
     this.appendDummyInput()
         .appendField("when")
         .appendField(new Blockly.FieldDropdown([[window.localStorage.getItem("projectName" + project),"I´ll marry her, I´ll just have to find a way"]]), "NAME")
-        .appendField(".MouseChange")
+        .appendField(".mouseChange")
       .appendField(
             new FieldParameterFlydown('MouseX', true, FieldFlydown.DISPLAY_BELOW),
             'mousex')
@@ -1804,7 +1859,7 @@ Blockly.Blocks['custom_events'] = {
     this.appendDummyInput()
         .appendField("when")
         .appendField(new Blockly.FieldDropdown([[window.localStorage.getItem("projectName" + project),"I'll always do"]]), "NAME")
-        .appendField(".Load");
+        .appendField(".load");
     this.appendStatementInput("NAME")
         .setCheck(null)
         .appendField("do");
@@ -1943,7 +1998,7 @@ Blockly.Blocks['rnaf'] = {
     this.appendDummyInput()
         .appendField("call")
         .appendField(new Blockly.FieldDropdown([[window.localStorage.getItem("projectName" + project),"OPTIONNAME"]]), "NAME")
-        .appendField(".RequestAnimationFrame")
+        .appendField(".requestAnimationFrame")
       .appendField(
                   new FieldParameterFlydown('AnimationId', true, FieldFlydown.DISPLAY_BELOW),
             'id');
@@ -2009,7 +2064,7 @@ Blockly.Blocks['game_pad_connected'] = {
     this.appendDummyInput()
         .appendField("when")
         .appendField(new Blockly.FieldDropdown([[window.localStorage.getItem("projectName" + project),"I'll always do"]]), "NAME")
-        .appendField(".GamepadConnected")
+        .appendField(".gamepadConnected")
                   .appendField(
                   new FieldParameterFlydown('ControllerId', true, FieldFlydown.DISPLAY_BELOW),
             'id');
@@ -2073,7 +2128,7 @@ Blockly.Blocks['game_pad_disconnected'] = {
     this.appendDummyInput()
         .appendField("when")
         .appendField(new Blockly.FieldDropdown([[window.localStorage.getItem("projectName" + project),"I'll always do"]]), "NAME")
-        .appendField(".GamepadDisconnected")
+        .appendField(".gamepadDisconnected")
     this.appendStatementInput("NAME")
         .setCheck(null)
         .appendField("do");
@@ -2088,7 +2143,7 @@ Blockly.Blocks['game_pad_button_change'] = {
     this.appendDummyInput()
         .appendField("when")
         .appendField(new Blockly.FieldDropdown([[window.localStorage.getItem("projectName" + project),"I'll always do"]]), "NAME")
-        .appendField(".GamepadButtonChange")
+        .appendField(".gamepadButtonChange")
                         .appendField(
                   new FieldParameterFlydown('ButtonId', true, FieldFlydown.DISPLAY_BELOW),
             'id')
@@ -2168,7 +2223,7 @@ Blockly.Blocks['create_elem'] = {
     this.appendDummyInput()
         .appendField("call")
         .appendField(new Blockly.FieldDropdown([[window.localStorage.getItem("projectName" + project),"OPTIONNAME"]]), "NAME")
-        .appendField(".CreateNew")
+        .appendField(".createNew")
         .appendField(new Blockly.FieldDropdown([["Button","b"]]), "e")
         .appendField("Element");
     this.setOutput(true, null);
@@ -2184,7 +2239,7 @@ Blockly.Blocks['apppend_elem'] = {
         .setCheck(null)
         .appendField("call")
 .appendField(new Blockly.FieldDropdown([[window.localStorage.getItem("projectName" + project),"OPTIONNAME"]]), "NAME")
-        .appendField(".AppendElement");
+        .appendField(".appendElement");
     this.appendValueInput("b")
         .setCheck(null)
         .appendField("to");
@@ -2203,7 +2258,7 @@ Blockly.Blocks['remove'] = {
         .setCheck(null)
         .appendField("call")
         .appendField(new Blockly.FieldDropdown([[window.localStorage.getItem("projectName" + project),"OPTIONNAME"]]), "NAME")
-        .appendField(".RemoveElement");
+        .appendField(".removeElement");
     this.setInputsInline(true);
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
@@ -2219,7 +2274,7 @@ Blockly.Blocks['clone'] = {
         .setCheck(null)
         .appendField("call")
         .appendField(new Blockly.FieldDropdown([[window.localStorage.getItem("projectName" + project),"OPTIONNAME"]]), "NAME")
-        .appendField(".CloneElement");
+        .appendField(".cloneElement");
     this.setOutput(true, null);
     this.setColour(210);
  this.setTooltip("Clones an element");
@@ -2247,7 +2302,7 @@ Blockly.Blocks['set_prop'] = {
     this.appendDummyInput()
         .appendField("'s")
               .appendField(new Blockly.FieldDropdown(
-        this.generateOptions), 'DAY');
+        drop(this)), 'DAY');
     this.appendValueInput("t")
         .setCheck(null)
         .appendField("to");
@@ -2255,31 +2310,20 @@ Blockly.Blocks['set_prop'] = {
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
     this.setColour(210);
- this.setTooltip("Set the selected property value of the element ");
+ this.setTooltip("Set the selected property value of the element");
  this.setHelpUrl("");
-  },
-
-  generateOptions: function() {
-    return options;
   }
 };
 
-// change props
+// props setters and getters dropdown
 
-function props () {
-    var top = workspace.getTopBlocks();
-    for (var i of top) {
-                if (i.type == "set_prop") {
-      if (i.getField("NAME").getValue() == "body") {
-          options = [["BackgroundColor", "backgroundColor"], ["BackgroundImage", "backgroundImage"], ["BackgroundImageResizeMode", "backgroundSize"], ["BackgroundImageRepeat" , "backgroundRepeat"], ["BackgroundPosition", "backgroundPosition"], ["Margin", "margin"], ["Padding", "padding"]];
-      } else if( i.getField("NAME").getValue() == "b") {
-                    options = [["BackgroundImage", "bgi"]];
+function drop (i) {
+    if (i.getField("NAME").getValue() == "body") {
+          return [["BackgroundColor", "backgroundColor"], ["BackgroundImage", "backgroundImage"], ["BackgroundImageResizeMode", "backgroundSize"], ["BackgroundImageRepeat" , "backgroundRepeat"], ["BackgroundPosition", "backgroundPosition"], ["Margin", "margin"], ["Padding", "padding"]];
+      } else if(i.getField("NAME").getValue() == "b") {
+                    return [["BackgroundImage", "bgi"]];
       }
-            }
-    }
 }
-
-workspace.addChangeListener(props);
 
 Blockly.Blocks['forever'] = {
   init: function() {
@@ -2291,6 +2335,19 @@ Blockly.Blocks['forever'] = {
     this.setNextStatement(true, null);
     this.setColour("#F3AA44");
  this.setTooltip("Runs the blocks until there is a break block");
+ this.setHelpUrl("");
+  }
+};
+
+Blockly.Blocks['break_and_continue'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField(new Blockly.FieldDropdown([["Break out of","break"], ["Continue with","continue"]]), "NAME")
+        .appendField("loop");
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour("#F3AA44");
+ this.setTooltip("Stop or continue with the current loop");
  this.setHelpUrl("");
   }
 };

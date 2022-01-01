@@ -12,7 +12,9 @@
     "@blockly/disable-top-blocks": "^0.1.20",
     "@blockly/plugin-scroll-options": "^1.0.4",
     "@mit-app-inventor/blockly-block-lexical-variables": "^0.0.10",
-    "blockly": "^7.20211209.1"
+    "blockly": "^7.20211209.1",
+    "fireworks": "^2.2.7",
+    "holidayapi": "^5.0.0"
   },
   "devDependencies": {
     "copy-webpack-plugin": "^5.1.1",

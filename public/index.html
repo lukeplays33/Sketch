@@ -361,6 +361,7 @@ div#blocklyDiv .blocklyFlyout {
 
 <div class="home" id="home">
   <input type="text" id="search" placeholder="Search Projects..."><br><br>
+    <p id="no_project"> No porjects found, press + to create one</p>
   <div class="projectsList" id="Projects-list">
     <img src="https://media.discordapp.net/attachments/898978597996466189/900743720905900032/60d473a38f959300118b9c10.png" id="icon" class="photo" width="80px" hieght="80px">
     <div id="title-and-des" class="details">
@@ -526,8 +527,7 @@ background-image: url(https://media.discordapp.net/attachments/89897859799646618
       <field name="NAME">OPTIONNAME</field>
     </block>
     <block type="set_prop">
-      <field name="NAME">body</field>
-      <field name="prop">bgc</field>
+      <field name="prop">backgroundColor</field>
     </block>
   </category>
   <sep></sep>
@@ -553,8 +553,8 @@ background-image: url(https://media.discordapp.net/attachments/89897859799646618
     <block type="clearint">
       <field name="NAME">ct</field>
     </block>
-    <block type="controls_flow_statements">
-      <field name="FLOW">BREAK</field>
+    <block type="break_and_continue">
+      <field name="NAME">break</field>
     </block>
     <block type="controls_if"></block>
     <block type="controls_if">
@@ -718,7 +718,7 @@ background-image: url(https://media.discordapp.net/attachments/89897859799646618
       <field name="js">alert("Hi There");</field>
     </block>
     <block type="asd_left_output">
-      <field name="js">alert("Hi There");</field>
+      <field name="js">'Zero two is cute?' == true</field>
     </block>
     <block type="try_catch"></block>
     <block type="eval"></block>
