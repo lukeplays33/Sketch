@@ -56,20 +56,83 @@ if (roll == 10) {
 
 //define generators
 
+Blockly.JavaScript['get_prop'] = function(block) {
+  var dropdown_prop = block.getFieldValue('prop');
+  var value_e = Blockly.JavaScript.valueToCode(block, 'e', Blockly.JavaScript.ORDER_ATOMIC);
+  // TODO: Assemble JavaScript into code variable.
+    var code = value_e + ".style." + dropdown_prop
+  // TODO: Change ORDER_NONE to the correct strength.
+  return [code, Blockly.JavaScript.ORDER_ATOMIC];
+};
+
+Blockly.JavaScript['set_prop'] = function(block) {
+  var dropdown_prop = block.getFieldValue('prop');
+  var value_e = Blockly.JavaScript.valueToCode(block, 'e', Blockly.JavaScript.ORDER_ATOMIC);
+  var value_name = Blockly.JavaScript.valueToCode(block, 'NAME', Blockly.JavaScript.ORDER_ATOMIC);
+  // TODO: Assemble JavaScript into code variable.
+    var code = value_e + ".style." + dropdown_prop + " = " + value_name + ";\n"
+  return code;
+};
+
+Blockly.JavaScript['get_iframe_prop'] = function(block) {
+  var dropdown_prop = block.getFieldValue('prop');
+  var value_e = Blockly.JavaScript.valueToCode(block, 'e', Blockly.JavaScript.ORDER_ATOMIC);
+  // TODO: Assemble JavaScript into code variable.
+        if( dropdown_prop == "af") {
+        var code = value_e + ".allowFullscreen"
+    } else if ( dropdown_prop == "apm") {
+        var code = value_e + ".allowPaymentRequest"
+    } else if ( dropdown_prop == "iu") {
+        var code = value_e + ".src"
+    } else if ( dropdown_prop == "ih") {
+        var code = value_e + ".srcdoc"
+    } else if ( dropdown_prop == "ib") {
+        var code = value_e + ".frameBorder"
+    }
+  // TODO: Change ORDER_NONE to the correct strength.
+  return [code, Blockly.JavaScript.ORDER_NONE];
+};
+
+Blockly.JavaScript['set_iframe_prop'] = function(block) {
+  var dropdown_prop = block.getFieldValue('prop');
+  var value_e = Blockly.JavaScript.valueToCode(block, 'e', Blockly.JavaScript.ORDER_ATOMIC);
+  var value_name = Blockly.JavaScript.valueToCode(block, 'NAME', Blockly.JavaScript.ORDER_ATOMIC);
+  // TODO: Assemble JavaScript into code variable.
+    if( dropdown_prop == "af") {
+        var code = value_e + ".allowFullscreen = " + value_name + ";\n"
+    } else if ( dropdown_prop == "apm") {
+        var code = value_e + ".allowPaymentRequest = " + value_name + ";\n"
+    } else if ( dropdown_prop == "iu") {
+        var code = value_e + ".src = " + value_name + ";\n"
+    } else if ( dropdown_prop == "ih") {
+        var code = value_e + ".srcdoc = " + value_name + ";\n"
+    } else if ( dropdown_prop == "ib") {
+        var code = value_e + ".frameBorder = " + value_name + ";\n"
+    }
+  return code;
+};
+
+Blockly.JavaScript['reload_iframe'] = function(block) {
+  var dropdown_prop = block.getFieldValue('prop');
+  var value_e = Blockly.JavaScript.valueToCode(block, 'e', Blockly.JavaScript.ORDER_ATOMIC);
+  // TODO: Assemble JavaScript into code variable.
+  var code = value_e + ".setAttribute('src', " + value_e + ".src);\n"
+  return code;
+};
+
+Blockly.JavaScript['all_elements'] = function(block) {
+  var dropdown_name = block.getFieldValue('NAME');
+  var dropdown_e = block.getFieldValue('e');
+  // TODO: Assemble JavaScript into code variable.
+  var code = "document.getElementsByClassName('" + dropdown_e + "')\n"
+  // TODO: Change ORDER_NONE to the correct strength.
+  return [code, Blockly.JavaScript.ORDER_ATOMIC];
+};
+
 Blockly.JavaScript['break_and_continue'] = function(block) {
   var dropdown_name = block.getFieldValue('NAME');
   // TODO: Assemble JavaScript into code variable.
   var code = dropdown_name + ";\n"
-  return code;
-};
-
-Blockly.JavaScript['set_prop'] = function(block) {
-  var dropdown_name = block.getFieldValue('NAME');
-  var value_name = Blockly.JavaScript.valueToCode(block, 'NAME', Blockly.JavaScript.ORDER_ATOMIC);
-  var dropdown_prop = block.getFieldValue('prop');
-  var value_t = Blockly.JavaScript.valueToCode(block, 't', Blockly.JavaScript.ORDER_ATOMIC);
-  // TODO: Assemble JavaScript into code variable.
-  var code = "document." + value_name + ".style." + dropdown_prop + " = " + value_t
   return code;
 };
 
@@ -83,7 +146,7 @@ Blockly.JavaScript['forever'] = function(block) {
 Blockly.JavaScript['body'] = function(block) {
   var value_name = Blockly.JavaScript.valueToCode(block, 'NAME', Blockly.JavaScript.ORDER_ATOMIC);
   // TODO: Assemble JavaScript into code variable.
-  var code = 'body';
+  var code = 'document.body';
   // TODO: Change ORDER_NONE to the correct strength.
   return [code, Blockly.JavaScript.ORDER_ATOMIC];
 };
@@ -110,19 +173,52 @@ Blockly.JavaScript['apppend_elem'] = function(block) {
   var value_name = Blockly.JavaScript.valueToCode(block, 'NAME', Blockly.JavaScript.ORDER_ATOMIC);
   var value_b = Blockly.JavaScript.valueToCode(block, 'b', Blockly.JavaScript.ORDER_ATOMIC);
   // TODO: Assemble JavaScript into code variable.
-  var code = "document." + value_b + ".appendChild(" + value_name + ");\n"
+  var code = value_b + ".appendChild(" + value_name + ");\n"
   return code;
 };
 
 Blockly.JavaScript['create_elem'] = function(block) {
   var dropdown_name = block.getFieldValue('NAME');
   var dropdown_e = block.getFieldValue('e');
+  var statements_name = Blockly.JavaScript.statementToCode(block, 'NAME');
+    var eid = Blockly.JavaScript.nameDB_.getName(
+      block.getFieldValue('eid'), Blockly.VARIABLE_CATEGORY_NAME);
   // TODO: Assemble JavaScript into code variable.
-    if (dropdown_e == "b") {
-        var code = "document.createElement('button')"
-        }
-  // TODO: Change ORDER_NONE to the correct strength.
-  return [code, Blockly.JavaScript.ORDER_ATOMIC];
+    if (dropdown_e == "if") {
+        var code = "var " + eid + " = document.createElement('iframe');\n" + eid + ".setAttribute('src', 'https://lukeplays33.github.io/Sketch/');\n" + eid + ".style.height = window.innerHeight + 'px';\n" + eid + ".style.width = window.innerWidth + 'px';\n"
+    } else if (dropdown_e == "d") {
+        var code = "var " + eid + " = document.createElement('div');\n"
+    } else if (dropdown_e == "i") {
+        var code = "var " + eid + " = document.createElement('img');\n" + eid + ".src = 'https://i.kym-cdn.com/photos/images/newsfeed/001/473/342/633.png';\n"
+    } else if (dropdown_e == "p") {
+        var code = "var " + eid + " = document.createElement('p');\n" + eid + ".innerHTML = 'I am a paragraph, oh yes I am';\n"
+    } else if ( dropdown_e == "b") {
+        var code = "var " + eid + " = document.createElement('button');\n" + eid + ".innerHTML = 'Never gonna give you up, Never gonna let you down';\n"
+    } else if ( dropdown_e == "ddb") {
+        var code = "var " + eid + " = document.createElement('select');\n             var newDropdownOption = document.createElement('option');\nnewDropdownOption.value = 'value1';\nnewDropdownOption.text = 'option 1';\n" + eid + ".add(newDropdownOption);\n"
+        } else if ( dropdown_e == "cp") {
+            var code = "var " + eid + " = document.createElement('input');\n" + eid + ".type = 'color';\n"
+    } else if ( dropdown_e == "dp") {
+        var code = "var " + eid + " = document.createElement('input');\n" + eid + ".type = 'date';\n"
+    } else if ( dropdown_e == "tp") {
+        var code = "var " + eid + " = document.createElement('input');\n" + eid + ".type = 'time';\n"
+    } else if ( dropdown_e == "tf2") {
+        var code = "var " + eid + " = document.createElement('input');\n" + eid + ".placeholder = 'This is a placeholder, oh yes this is';\n"
+    } else if ( dropdown_e == "c") {
+        var code = "var " + eid + " = document.createElement('canvas');\n"
+    } else if (dropdown_e == "s") {
+        var code = "var " + eid + " = document.createElement('input');\n" + eid + ".type = 'range';\n" + eid + ".max = 100;\n" + eid + ".value = 50;\n"
+    } else if ( dropdown_e == "pb") {
+        var code = "var " + eid + " = document.createElement('input');\n" + eid + ".type = 'range';\n" + eid + ".max = 100;\n" + eid + ".value = 50;\n" + eid + ".disabled = true;\n"
+    } else if ( dropdown_e == "cb") {
+        var code = "var " + eid + " = document.createElement('input');\n" + eid + ".type = 'checkbox';\n"
+    } else if ( dropdown_e == "rb") {
+        var code = "var " + eid + " = document.createElement('input');\n" + eid + ".type = 'radio';\n"
+    }
+    
+    var code = code + eid + ".className = '" + dropdown_e + "'\n" + statements_name + "\n"
+    
+  return code;
 };
 
 Blockly.JavaScript['game_pad_button_change'] = function(block) {
@@ -379,12 +475,12 @@ function html () {
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
 html, body {
+margin: 0px;
   height: 100%;
 width: 100%;
 }
 <\/style>
 <body>
-<div id="react-root"></div>
 <\/body>
 <script type="module">
 var kccb = '';
@@ -1378,20 +1474,7 @@ function loop_errors () {
     
     workspace.addChangeListener(loop_errors);
 
-// dynamic getters errors
-
-function getter_errors () {
-    var blocks = workspace.getAllBlocks();
-    for (var i of blocks) {
-        if (i.type == "get_d_var") {
-            if (i.getRootBlock().type == "global_declaration") {
-                i.setWarningText("This block cannot be in a defenition");
-        } else {
-            i.setWarningText(null);
-        }
-        }
-    }
-}
+//block build/test if any warnings exist
 
 //get vars
 function getVariableName(name) {
@@ -1455,19 +1538,21 @@ Blockly.Blocks['try_catch'] = {
  this.setHelpUrl("");
   },
   withLexicalVarsAndPrefix: function(child, proc) {
-    const params = this.declaredNames();
-    // not arguments_ instance var
-    for (let i = 0; i < params.length; i++) {
-      proc(params[i], '');
-    }
-  },
+            if (this.getInputTargetBlock('catch') === child) {
+                const params = this.declaredNames();
+                // not arguments_ instance var
+                for (let i = 0; i < params.length; i++) {
+                    proc(params[i], '');
+                }
+            }
+        },
   getVars: function() {
     return [
       this.getFieldValue('error'),
     ];
   },
   blocksInScope: function() {
-    const doBlock = this.getInputTargetBlock('s');
+    const doBlock = this.getInputTargetBlock('catch');
     if (doBlock) {
       return [doBlock];
     } else {
@@ -1616,12 +1701,14 @@ Blockly.Blocks['set_timeout'] = {
  this.setHelpUrl("");
   },
   withLexicalVarsAndPrefix: function(child, proc) {
-    const params = this.declaredNames();
-    // not arguments_ instance var
-    for (let i = 0; i < params.length; i++) {
-      proc(params[i], '');
-    }
-  },
+            if (this.getInputTargetBlock('s') === child) {
+                const params = this.declaredNames();
+                // not arguments_ instance var
+                for (let i = 0; i < params.length; i++) {
+                    proc(params[i], '');
+                }
+            }
+        },
   getVars: function() {
     return [
       this.getFieldValue('timeout'),
@@ -2012,12 +2099,14 @@ Blockly.Blocks['rnaf'] = {
  this.setHelpUrl("");
   },
   withLexicalVarsAndPrefix: function(child, proc) {
-    const params = this.declaredNames();
-    // not arguments_ instance var
-    for (let i = 0; i < params.length; i++) {
-      proc(params[i], '');
-    }
-  },
+            if (this.getInputTargetBlock('NAME') === child) {
+                const params = this.declaredNames();
+                // not arguments_ instance var
+                for (let i = 0; i < params.length; i++) {
+                    proc(params[i], '');
+                }
+            }
+        },
   getVars: function() {
     return [
       this.getFieldValue('id'),
@@ -2224,12 +2313,67 @@ Blockly.Blocks['create_elem'] = {
         .appendField("call")
         .appendField(new Blockly.FieldDropdown([[window.localStorage.getItem("projectName" + project),"OPTIONNAME"]]), "NAME")
         .appendField(".createNew")
-        .appendField(new Blockly.FieldDropdown([["Button","b"]]), "e")
-        .appendField("Element");
-    this.setOutput(true, null);
+        .appendField(new Blockly.FieldDropdown([["Iframe","if"], ["Div","d"], ["Image","i"], ["Paragraph","p"], ["Button","b"], ["DropDownButton","ddb"], ["ColorPicker","cp"], ["DatePicker","dp"], ["TimePicker","tp"], ["TextField","tf2"], ["Canvas","c"], ["Slider","s"], ["ProgressBar","pb"], ["Checkbox","cb"], ["RadioButton","rb"]]), "e")
+        .appendField("Element")
+      .appendField(
+                  new FieldParameterFlydown('ElementId' + workspace.getBlocksByType('create_elem').length, true, FieldFlydown.DISPLAY_BELOW),
+            'eid')
+    this.appendStatementInput("NAME")
+        .setCheck(null)
+        .appendField("do");
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
     this.setColour(210);
- this.setTooltip("");
+ this.setTooltip("Creatte a new element");
  this.setHelpUrl("");
+  },
+  withLexicalVarsAndPrefix: function(child, proc) {
+            if (this.getInputTargetBlock('NAME') === child) {
+                const params = this.declaredNames();
+                // not arguments_ instance var
+                for (let i = 0; i < params.length; i++) {
+                    proc(params[i], '');
+                }
+            }
+        },
+  getVars: function() {
+    return [
+      this.getFieldValue('eid'),
+    ];
+  },
+  blocksInScope: function() {
+    const doBlock = this.getInputTargetBlock('NAME');
+    if (doBlock) {
+      return [doBlock];
+    } else {
+      return [];
+    }
+  },
+  declaredNames: function() {
+    return [
+            this.getFieldValue('eid'),
+    ];
+  },
+  renameVar: function(oldName, newName) {
+    if (Blockly.Names.equals(oldName, this.getFieldValue('eid'))) {
+      this.setFieldValue(newName, 'eid');
+    }
+  },
+  renameBound: function(boundSubstitution, freeSubstitution) {
+    const paramSubstitution = boundSubstitution.restrictDomain(
+        this.declaredNames());
+    this.renameVars(paramSubstitution);
+    const newFreeSubstitution = freeSubstitution.extend(paramSubstitution);
+    LexicalVariable.renameFree(
+        this.getInputTargetBlock(this.bodyInputName), newFreeSubstitution);
+  },
+  renameFree: function(freeSubstitution) {
+    // There shouldn't be any free variables
+  },
+  freeVariables: function() { // return the free variables of this block
+    // There shouldn't be any free variables, so this should return an empty set.
+    // Should return the empty set: something is wrong if it doesn't!
+    return new Blockly.NameSet();
   }
 };
 
@@ -2293,38 +2437,6 @@ Blockly.Blocks['body'] = {
   }
 };
 
-Blockly.Blocks['set_prop'] = {
-  init: function() {
-    this.appendValueInput("NAMEEE")
-        .setCheck(null)
-        .appendField("set")
-        .appendField(new Blockly.FieldDropdown([["Body","body"], ["Button","b"]]), "NAME");
-    this.appendDummyInput()
-        .appendField("'s")
-              .appendField(new Blockly.FieldDropdown(
-        drop(this)), 'DAY');
-    this.appendValueInput("t")
-        .setCheck(null)
-        .appendField("to");
-    this.setInputsInline(true);
-    this.setPreviousStatement(true, null);
-    this.setNextStatement(true, null);
-    this.setColour(210);
- this.setTooltip("Set the selected property value of the element");
- this.setHelpUrl("");
-  }
-};
-
-// props setters and getters dropdown
-
-function drop (i) {
-    if (i.getField("NAME").getValue() == "body") {
-          return [["BackgroundColor", "backgroundColor"], ["BackgroundImage", "backgroundImage"], ["BackgroundImageResizeMode", "backgroundSize"], ["BackgroundImageRepeat" , "backgroundRepeat"], ["BackgroundPosition", "backgroundPosition"], ["Margin", "margin"], ["Padding", "padding"]];
-      } else if(i.getField("NAME").getValue() == "b") {
-                    return [["BackgroundImage", "bgi"]];
-      }
-}
-
 Blockly.Blocks['forever'] = {
   init: function() {
     this.appendDummyInput()
@@ -2348,6 +2460,112 @@ Blockly.Blocks['break_and_continue'] = {
     this.setNextStatement(true, null);
     this.setColour("#F3AA44");
  this.setTooltip("Stop or continue with the current loop");
+ this.setHelpUrl("");
+  }
+};
+
+Blockly.Blocks['all_elements'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("call")
+        .appendField(new Blockly.FieldDropdown([[window.localStorage.getItem("projectName" + project),"OPTIONNAME"]]), "NAME")
+        .appendField(".getAll")
+        .appendField(new Blockly.FieldDropdown([["Iframe","if"], ["Div","d"], ["Image","i"], ["Paragraph","p"], ["Button","b"], ["DropDownButton","ddb"], ["ColorPicker","cp"], ["DatePicker","dp"], ["TimePicker","tp"], ["TextField","tf2"], ["Canvas","c"], ["Slider","s"], ["ProgressBar","pb"], ["Checkbox","cb"], ["RadioButton","rb"]]), "e")
+        .appendField("Elements");
+    this.setOutput(true, null);
+    this.setColour(210);
+ this.setTooltip("Return a list a all elements");
+ this.setHelpUrl("");
+  }
+};
+
+Blockly.Blocks['set_iframe_prop'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("set")
+        .appendField(new Blockly.FieldDropdown([["AllowFullscreen","af"], ["AllowPaymentMethod","apm"], ["IframeURL","iu"], ["IframeHTML","ih"], ["IframeBorder","ib"]]), "prop");
+    this.appendValueInput("e")
+        .setCheck(null)
+        .appendField("of iframe")
+      .setAlign(Blockly.ALIGN_RIGHT);
+    this.appendValueInput("NAME")
+        .setCheck(null)
+        .appendField("to")
+      .setAlign(Blockly.ALIGN_RIGHT);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(210);
+ this.setTooltip("Set the selected property value of the element ");
+ this.setHelpUrl("");
+  }
+};
+
+Blockly.Blocks['get_iframe_prop'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("get")
+        .appendField(new Blockly.FieldDropdown([["AllowFullscreen","af"], ["AllowPaymentMethod","apm"], ["IframeURL","iu"], ["IframeHTML","ih"], ["IframeBorder","ib"]]), "prop");
+    this.appendValueInput("e")
+        .setCheck(null)
+        .appendField("of iframe")
+            .setAlign(Blockly.ALIGN_RIGHT);
+    this.setOutput(true, null);
+    this.setColour(210);
+ this.setTooltip("Get the selected property value of the element ");
+ this.setHelpUrl("");
+  }
+};
+
+Blockly.Blocks['reload_iframe'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("call iframe.")
+        .appendField(new Blockly.FieldDropdown([["Reload","r"]]), "prop");
+    this.appendValueInput("e")
+        .setCheck(null)
+        .appendField("for iframe")
+      .setAlign(Blockly.ALIGN_RIGHT);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(210);
+ this.setTooltip("Reload the website inside of the iframe");
+ this.setHelpUrl("");
+  }
+};
+
+Blockly.Blocks['set_prop'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("set")
+        .appendField(new Blockly.FieldDropdown([["BackgroundColor","backgroundColor"], ["BackgroundImage","backgroundImage"], ["BackgroundImageResizeMode","backgroundSize"], ["BackgroundImagePosition","backgroundPosition"], ["BackgroundImageRepeat","backgroundRepeat"], ["MarginLeft","marginLeft"], ["MarginRight","marginRight"], ["MarginBottom","marginBottom"], ["MarginTop","marginTop"], ["PaddingLeft","paddingLeft"], ["PaddingRight","paddingRight"], ["PaddingTop","paddingTop"], ["PaddingBottom","paddingBottom"], ["Height","height"], ["Width","width"], ["BorderStyle","borderStyle"], ["BorderColor","borderColor"], ["BorderWidth","borderWidth"], ["BorderRadius","borderRadius"]]), "prop");
+    this.appendValueInput("e")
+        .setCheck(null)
+        .appendField("of element")
+      .setAlign(Blockly.ALIGN_RIGHT);
+    this.appendValueInput("NAME")
+        .setCheck(null)
+        .appendField("to")
+      .setAlign(Blockly.ALIGN_RIGHT);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(210);
+ this.setTooltip("Set the selected property value of the element ");
+ this.setHelpUrl("");
+  }
+};
+
+Blockly.Blocks['get_prop'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("get")
+        .appendField(new Blockly.FieldDropdown([["BackgroundColor","backgroundColor"], ["BackgroundImage","backgroundImage"], ["BackgroundImageResizeMode","backgroundSize"], ["BackgroundImagePosition","backgroundPosition"], ["BackgroundImageRepeat","backgroundRepeat"], ["MarginLeft","marginLeft"], ["MarginRight","marginRight"], ["MarginBottom","marginBottom"], ["MarginTop","marginTop"], ["PaddingLeft","paddingLeft"], ["PaddingRight","paddingRight"], ["PaddingTop","paddingTop"], ["PaddingBottom","paddingBottom"], ["Height","height"], ["Width","width"], ["BorderStyle","borderStyle"], ["BorderColor","borderColor"], ["BorderWidth","borderWidth"], ["BorderRadius","borderRadius"]]), "prop");
+    this.appendValueInput("e")
+        .setCheck(null)
+        .appendField("of element")
+      .setAlign(Blockly.ALIGN_RIGHT);
+    this.setOutput(true, null);
+    this.setColour(210);
+ this.setTooltip("Get the selected property value of the element ");
  this.setHelpUrl("");
   }
 };
