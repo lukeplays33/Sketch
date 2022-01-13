@@ -149,7 +149,7 @@ input {
   font-size: 50px;
   color: white;
   text-align: center;
-  background-image: url("Images/round_add_white_24dp.png");
+  background-image: url("../Images/round_add_white_24dp.png");
   background-repeat: no-repeat;
   background-size: 40px;
   background-position: center;
@@ -172,7 +172,7 @@ input {
   font-size: 50px;
   color: white;
   text-align: center;
-  background-image: url("Images/round_home_white_24dp.png");
+  background-image: url("../Images/round_home_white_24dp.png");
   background-repeat: no-repeat;
   background-size: 40px;
   background-position: center;
@@ -195,7 +195,7 @@ input {
   font-size: 50px;
   color: white;
   text-align: center;
-  background-image: url("Images/61818b07d54ef50010e42587-1.png");
+  background-image: url("../Images/61818b07d54ef50010e42587-1.png");
   background-repeat: no-repeat;
   background-size: 40px;
   background-position: center;
@@ -218,7 +218,7 @@ input {
   font-size: 50px;
   color: white;
   text-align: center;
-  background-image: url("Images/round_restart_alt_white_24dp.png");
+  background-image: url("../Images/round_restart_alt_white_24dp.png");
   background-repeat: no-repeat;
   background-size: 40px;
   background-position: center;
