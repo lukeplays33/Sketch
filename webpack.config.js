@@ -31,7 +31,7 @@ module.exports = {
     entry: {
         index: './src/index.js',
         generator: './src/generator.js',
-        locale: './src/locale.js'
+        locale: './src/locale.js',
     },
     output: {
         path: path.resolve(__dirname, 'docs'),
