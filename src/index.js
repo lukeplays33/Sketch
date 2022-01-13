@@ -623,16 +623,16 @@ function start() {
     
     
   document.getElementById("GoHome2").style.backgroundImage =
-    "url(../Images/round_home_white_24dp.png)";
+    "url(Images/round_home_white_24dp.png)";
     
     document.getElementById("upload").style.backgroundImage =
-    "url(../Images/round_file_Upload_white.png)";
+    "url(Images/round_file_Upload_white.png)";
     
   document.getElementById("Test").style.backgroundImage =
-    "url(../Images/round_play_arrow_white_24dp.png)";
+    "url(Images/round_play_arrow_white_24dp.png)";
   
   document.getElementById("download").style.backgroundImage =
-    "url(../Images/round_file_download_white_24dp.png)";
+    "url(Images/round_file_download_white_24dp.png)";
 
   document.getElementById("Settings").style.display = "none";
   document.getElementById("header").style.display = "none";
@@ -1157,7 +1157,7 @@ function Dtheme() {
     document.getElementById("loading").style.borderTop = "8px solid #424242";
 
     document.getElementById("logo").src =
-      "../Images/Untitled116-1.png";
+      "Images/Untitled116-1.png";
       
       document.getElementById("delete").style.backgroundColor = "#ad0e0e";
 
