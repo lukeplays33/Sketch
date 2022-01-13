@@ -48,7 +48,7 @@ import { HolidayAPI } from 'holidayapi';
 
 //rickroll everyone
 {
-    let roll = Math.floor(Math.random() * 100) + 1
+    let roll = Math.floor(Math.random() * 1000) + 1
 if (roll == 10) {
     window.location.href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
 }
@@ -56,68 +56,12 @@ if (roll == 10) {
 
 //define generators
 
-Blockly.JavaScript['get_prop'] = function(block) {
-  var dropdown_prop = block.getFieldValue('prop');
-  var value_e = Blockly.JavaScript.valueToCode(block, 'e', Blockly.JavaScript.ORDER_ATOMIC);
+Blockly.JavaScript['load_asset'] = function(block) {
+  var dropdown_name = block.getFieldValue('NAME');
   // TODO: Assemble JavaScript into code variable.
-    var code = value_e + ".style." + dropdown_prop
-  // TODO: Change ORDER_NONE to the correct strength.
-  return [code, Blockly.JavaScript.ORDER_ATOMIC];
-};
-
-Blockly.JavaScript['set_prop'] = function(block) {
-  var dropdown_prop = block.getFieldValue('prop');
-  var value_e = Blockly.JavaScript.valueToCode(block, 'e', Blockly.JavaScript.ORDER_ATOMIC);
-  var value_name = Blockly.JavaScript.valueToCode(block, 'NAME', Blockly.JavaScript.ORDER_ATOMIC);
-  // TODO: Assemble JavaScript into code variable.
-    var code = value_e + ".style." + dropdown_prop + " = " + value_name + ";\n"
-  return code;
-};
-
-Blockly.JavaScript['get_iframe_prop'] = function(block) {
-  var dropdown_prop = block.getFieldValue('prop');
-  var value_e = Blockly.JavaScript.valueToCode(block, 'e', Blockly.JavaScript.ORDER_ATOMIC);
-  // TODO: Assemble JavaScript into code variable.
-        if( dropdown_prop == "af") {
-        var code = value_e + ".allowFullscreen"
-    } else if ( dropdown_prop == "apm") {
-        var code = value_e + ".allowPaymentRequest"
-    } else if ( dropdown_prop == "iu") {
-        var code = value_e + ".src"
-    } else if ( dropdown_prop == "ih") {
-        var code = value_e + ".srcdoc"
-    } else if ( dropdown_prop == "ib") {
-        var code = value_e + ".frameBorder"
-    }
+  var code = "assetsBase64[" + dropdown_name + "]"
   // TODO: Change ORDER_NONE to the correct strength.
   return [code, Blockly.JavaScript.ORDER_NONE];
-};
-
-Blockly.JavaScript['set_iframe_prop'] = function(block) {
-  var dropdown_prop = block.getFieldValue('prop');
-  var value_e = Blockly.JavaScript.valueToCode(block, 'e', Blockly.JavaScript.ORDER_ATOMIC);
-  var value_name = Blockly.JavaScript.valueToCode(block, 'NAME', Blockly.JavaScript.ORDER_ATOMIC);
-  // TODO: Assemble JavaScript into code variable.
-    if( dropdown_prop == "af") {
-        var code = value_e + ".allowFullscreen = " + value_name + ";\n"
-    } else if ( dropdown_prop == "apm") {
-        var code = value_e + ".allowPaymentRequest = " + value_name + ";\n"
-    } else if ( dropdown_prop == "iu") {
-        var code = value_e + ".src = " + value_name + ";\n"
-    } else if ( dropdown_prop == "ih") {
-        var code = value_e + ".srcdoc = " + value_name + ";\n"
-    } else if ( dropdown_prop == "ib") {
-        var code = value_e + ".frameBorder = " + value_name + ";\n"
-    }
-  return code;
-};
-
-Blockly.JavaScript['reload_iframe'] = function(block) {
-  var dropdown_prop = block.getFieldValue('prop');
-  var value_e = Blockly.JavaScript.valueToCode(block, 'e', Blockly.JavaScript.ORDER_ATOMIC);
-  // TODO: Assemble JavaScript into code variable.
-  var code = value_e + ".setAttribute('src', " + value_e + ".src);\n"
-  return code;
 };
 
 Blockly.JavaScript['all_elements'] = function(block) {
@@ -465,6 +409,8 @@ var events = ["initd", 'window_click', 'key_changed', 'game_pad_connected','game
 var loops = ['controls_repeat', 'controls_repeat_ext', 'controls_forEach', 'controls_for', 'controls_whileUntil', 'forever'];
 var projects = [];
 
+var secretsMSG = ["I am a monster", "Well hello there, If you've found this then congratulations there is more to see than you think, Just giving you a hint ;)."]
+
 var project = "";
 
 function html () {
@@ -483,6 +429,7 @@ width: 100%;
 <body>
 <\/body>
 <script type="module">
+var assetsBase64 = ` + assetsBase64 + `
 var kccb = '';
 function changeGamepadAPiButton () {
 var gamepads = navigator.getGamepads ? navigator.getGamepads() : (navigator.webkitGetGamepads ? navigator.webkitGetGamepads : []);
@@ -525,11 +472,17 @@ var oneJan = new Date(currentdate.getFullYear(), 0, 1);
 var numberOfDays = Math.floor((currentdate - oneJan) / (24 * 60 * 60 * 1000));
 var dd = new Date();
 
+var assetsBlockDropdown = [];
+var assetsBase64 = [];
+
 // change hue
 Blockly.HSV_SATURATION = 0.56;
 Blockly.HSV_VALUE = 0.83;
 
 // Inject Blockly.
+
+document.getElementById("blocklyContainer").style.height = (String((window.innerHeight) - 50) + 'px');
+document.getElementById("editor").style.height = (String((window.innerHeight) - 50) + 'px');
 
 const workspace = Blockly.inject("blocklyDiv", {
     grid:
@@ -568,7 +521,7 @@ const workspace = Blockly.inject("blocklyDiv", {
          }
       },
       'componentStyles' : {
-         'flyoutOpacity': '0.0',
+                   'flyoutOpacity': '0.0',
           'scrollbarOpacity' : '0.0',
       }
    },
@@ -646,21 +599,40 @@ document.getElementById("blocklyContainer").style.display = "none";
 
 // start site
 function start() {
-
+    var s = Math.floor(Math.random * 2) + 1
+    if (s == 1) {
+        document.getElementById("challange").innerHTML = secretsMSG[Math.floor(Math.random() * secretsMSG.length)]
+    } else {
+    async function updateQuote() {
+    const response = await fetch("https://api.quotable.io/random");
+    const data = await response.json();
+    if (response.ok) {
+        document.getElementById("challange").innerHTML = data.content + " ~ " + data.author
+    } else {
+        document.getElementById("challange").innerHTML = secretsMSG[Math.floor(Math.random() * secretsMSG.length)]
+    }
+    }
+    updateQuote();
+    }
+    
                       document.getElementById("project").style.display = "none";
         document.getElementById("projectName").style.display = "none";
         document.getElementById("projectIcon").style.display = "none";
     document.getElementById("delete").style.display = "none";
     
-    document.getElementById("blocklyContainer").style.height = (String((window.innerHeight) - 50) + 'px');
+    
     
   document.getElementById("GoHome2").style.backgroundImage =
-    "url(https://media.discordapp.net/attachments/898978597996466189/911302759175823380/round_home_white_24dp.png)";
+    "url(../Images/round_home_white_24dp.png)";
+    
+    document.getElementById("upload").style.backgroundImage =
+    "url(../Images/round_file_Upload_white.png)";
+    
   document.getElementById("Test").style.backgroundImage =
-    "url(https://media.discordapp.net/attachments/898978597996466189/914946147783688192/round_play_arrow_white_24dp.png)";
+    "url(../Images/round_play_arrow_white_24dp.png)";
   
   document.getElementById("download").style.backgroundImage =
-    "url(https://media.discordapp.net/attachments/898978597996466189/915973527935533056/round_file_download_white_24dp.png)";
+    "url(../Images/round_file_download_white_24dp.png)";
 
   document.getElementById("Settings").style.display = "none";
   document.getElementById("header").style.display = "none";
@@ -668,6 +640,19 @@ function start() {
   document.getElementById("home").style.display = "none";
     
   window.setTimeout(function () {
+          if(window.localStorage.getItem("welcome") == "" || window.localStorage.getItem("welcome") == null) {
+        document.getElementById("welcome").style.display = "block";
+    }
+      var dismiss = document.getElementById("dismiss");
+      dismiss.onclick = function (){
+        document.getElementById("welcome").style.display = "none";
+                  window.localStorage.setItem("welcome", true);
+      }
+      var join = document.getElementById("join");
+      join.onclick=function () {
+          window.open("https://discord.gg/r4jMcw7H4g");
+      }
+      
     document.getElementById("div").style.display = "none";
     document.getElementById("challange").style.display = "none";
     document.getElementById("header").style.display = "block";
@@ -800,6 +785,26 @@ search();
 
 // add settings page
 function settings() {
+    var vs = document.getElementById("vsStyle");
+    vs.onclick = function () {
+        if(window.localStorage.getItem("vsStyle") == null || window.localStorage.getItem("vsStyle") == "" ) {
+            vs.innerHTML = "Use Fullscreen Visual Editor: On"
+            window.localStorage.setItem("vsStyle", true);
+        } else {
+            vs.innerHTML = "Use Fullscreen Visual Editor: Off"
+                window.localStorage.setItem("vsStyle", "");
+        }
+            if(!window.localStorage.getItem("vsStyle") == null || !window.localStorage.getItem("vsStyle") == "" || navigator.userAgentData.mobile) {
+document.getElementById("editor").style.width = window.innerWidth + "px"
+        } else {
+            document.getElementById("editor").style.width = "350px"
+        }
+    }
+    
+    if(navigator.userAgentData.mobile) {
+        document.getElementById("vsStyle").style.display = "none";
+    }
+    
   var bgimage = document.getElementById("bgimage");
   bgimage.onclick = function () {
     if (!window.localStorage.getItem("BGImage") == "") {
@@ -875,8 +880,11 @@ function settings() {
         
         document.getElementById("ssetings").style.backgroundColor = "#424242";
         
+        document.getElementById("upload").style.backgroundColor = "#424242";
+        
         document.getElementById("snap").style.backgroundColor = "#424242";
     document.getElementById("grid").style.backgroundColor = "#424242";
+        document.getElementById("vsStyle").style.backgroundColor = "#424242";
 
       document.getElementById("theme").innerHTML = "Dark Theme: On";
 
@@ -910,7 +918,11 @@ function settings() {
 
       document.getElementById("Test").style.backgroundColor = "#008dcd";
       document.getElementById("goHome").style.backgroundColor = "#008dcd";
+        
+        document.getElementById("vsStyle").style.backgroundColor = "#008dcd";
 
+        document.getElementById("upload").style.backgroundColor = "#008dcd";
+        
       document.getElementById("GoHome2").style.backgroundColor = "#008dcd";
         
         document.getElementById("snap").style.backgroundColor = "#008dcd";
@@ -1100,6 +1112,8 @@ function Dtheme() {
     
     document.body.style.backgroundColor = "black";
     document.getElementById("header").style.backgroundColor = "#424242";
+      
+      document.getElementById("upload").style.backgroundColor = "#424242";
     
     document.getElementById("download").style.backgroundColor = "#424242";
     
@@ -1108,6 +1122,7 @@ function Dtheme() {
       
       document.getElementById("snap").style.backgroundColor = "#424242";
     document.getElementById("grid").style.backgroundColor = "#424242";
+      document.getElementById("vsStyle").style.backgroundColor = "#424242";
 
     document.getElementById("GoHome2").style.backgroundColor = "#424242";
       
@@ -1142,7 +1157,7 @@ function Dtheme() {
     document.getElementById("loading").style.borderTop = "8px solid #424242";
 
     document.getElementById("logo").src =
-      "https://media.discordapp.net/attachments/898978597996466189/911561074178949150/Untitled116.png";
+      "../Images/Untitled116-1.png";
       
       document.getElementById("delete").style.backgroundColor = "#ad0e0e";
 
@@ -1178,10 +1193,19 @@ goHome.onclick = function () {
 };
   var test = document.getElementById("Test");
   test.onclick = function () {
+     if(!getWarnings().length == 0) {
+          if(confirm('WARNING: there are ' + getWarnings().length + ' warnings found.\nAre you sure you want to coninue testing?\nTesting with warnings may break your project.')) {
     var w = window.open();
 w.document.open();
     w.document.write(html() + Blockly.JavaScript.workspaceToCode(workspace) + "<\/script>");
     w.document.close();
+          }
+      } else {
+              var w = window.open();
+w.document.open();
+    w.document.write(html() + Blockly.JavaScript.workspaceToCode(workspace) + "<\/script>");
+    w.document.close();
+      }
   }
   var d = document.getElementById("download");
   d.onclick = function () {
@@ -1213,6 +1237,12 @@ if (window.localStorage.getItem("snap") == "false" || window.localStorage.getIte
 } else {
     document.getElementById("snap").innerHTML = "Snap To Place: On"
 }
+
+        if(!window.localStorage.getItem("vsStyle") == null || !window.localStorage.getItem("vsStyle") == "" || navigator.userAgentData.mobile) {
+            document.getElementById("vsStyle").innerHTML = "Use Fullscreen Visual Editor: On"
+        } else {
+            document.getElementById("vsStyle").innerHTML = "Use Fullscreen Visual Editor: Off"
+        }
 
 //context menu
 function configureContextMenu(menuOptions) {
@@ -1385,6 +1415,11 @@ const lClick = function () {
     workspace.clear();
     var xml = Blockly.Xml.textToDom(window.localStorage.getItem(window.localStorage.getItem("created" + project) + "blocks"));
     Blockly.Xml.domToWorkspace(xml, workspace);
+            if(!window.localStorage.getItem("vsStyle") == null || !window.localStorage.getItem("vsStyle") == "" || navigator.userAgentData.mobile) {
+document.getElementById("editor").style.width = window.innerWidth + "px"
+        } else {
+            document.getElementById("editor").style.width = "350px"
+        }
 }
 
 function download(filename, text) {
@@ -1401,7 +1436,13 @@ function download(filename, text) {
 }
 
 function downloadHTML () {
+    if(!getWarnings().length == 0) {
+        if(confirm('WARNING: there are ' + getWarnings().length + ' warnings found.\nAre you sure you want to coninue downloading?\nDownloading with warnings may break your project.')) {
+            download(window.localStorage.getItem("projectName" + project) + ".html", html() + Blockly.JavaScript.workspaceToCode(workspace) + "<\/script>");
+        }
+    } else {
 download(window.localStorage.getItem("projectName" + project) + ".html", html() + Blockly.JavaScript.workspaceToCode(workspace) + "<\/script>");
+    }
 }
 
 function open () {
@@ -1422,6 +1463,57 @@ function save () {
 }
 
 workspace.addChangeListener(save);
+
+// upload assets
+  var as = document.getElementById("upload");
+  as.onclick = function () {
+    let input = document.createElement("input");
+    input.type = "file";
+    input.onchange = (_) => {
+      input.accept = "image/*";
+      // you can use this method to get file and perform respective operations
+      var files = Array.from(input.files);
+      console.log(files);
+      for (let i = 0; i < files.length; i++) {
+        reader.addEventListener(
+          "load",
+          function () {
+              assetsBase64.push(reader.result);
+             assetsBlockDropdown.push([files[i].name, "" + assetsBase64.indexOf(reader.result) + ""]);
+          },
+          false
+        );
+        reader.readAsDataURL(files[i]);
+      }
+    };
+    input.click();
+  };
+
+//get warnings
+
+function getWarnings() {
+  var blocks = workspace.getAllBlocks();
+  var warnings = [];
+  for (var i = 0; i < blocks.length; i++) {
+    if (blocks[i].warning) {
+      warnings.push(blocks[i].warning);
+    }
+  }
+  return warnings;
+}
+
+//alert user of hiden warnings
+
+function warning () {
+    if(!getWarnings().length == 0) {
+        document.getElementById('warnings').innerHTML = '⚠️ There are a total of ' + getWarnings().length + ' warning(s) ⚠️';
+        document.getElementById('warnings').style.display = "block";
+    } else {
+         document.getElementById('warnings').style.display = "none";
+    }
+}
+
+workspace.addChangeListener(warning);
 
 //block checker
 function checkBlocks (t) {
@@ -1473,8 +1565,6 @@ function loop_errors () {
 }
     
     workspace.addChangeListener(loop_errors);
-
-//block build/test if any warnings exist
 
 //get vars
 function getVariableName(name) {
@@ -2315,9 +2405,8 @@ Blockly.Blocks['create_elem'] = {
         .appendField(".createNew")
         .appendField(new Blockly.FieldDropdown([["Iframe","if"], ["Div","d"], ["Image","i"], ["Paragraph","p"], ["Button","b"], ["DropDownButton","ddb"], ["ColorPicker","cp"], ["DatePicker","dp"], ["TimePicker","tp"], ["TextField","tf2"], ["Canvas","c"], ["Slider","s"], ["ProgressBar","pb"], ["Checkbox","cb"], ["RadioButton","rb"]]), "e")
         .appendField("Element")
-      .appendField(
-                  new FieldParameterFlydown('ElementId' + workspace.getBlocksByType('create_elem').length, true, FieldFlydown.DISPLAY_BELOW),
-            'eid')
+             .appendField(new FieldGlobalFlydown(
+           'ElementId', true, FieldFlydown.DISPLAY_BELOW), 'eid');
     this.appendStatementInput("NAME")
         .setCheck(null)
         .appendField("do");
@@ -2327,54 +2416,18 @@ Blockly.Blocks['create_elem'] = {
  this.setTooltip("Creatte a new element");
  this.setHelpUrl("");
   },
-  withLexicalVarsAndPrefix: function(child, proc) {
-            if (this.getInputTargetBlock('NAME') === child) {
-                const params = this.declaredNames();
-                // not arguments_ instance var
-                for (let i = 0; i < params.length; i++) {
-                    proc(params[i], '');
-                }
-            }
-        },
   getVars: function() {
-    return [
-      this.getFieldValue('eid'),
-    ];
+    const field = this.getField('eid');
+    return field ? [field.getText()] : [];
   },
-  blocksInScope: function() {
-    const doBlock = this.getInputTargetBlock('NAME');
-    if (doBlock) {
-      return [doBlock];
-    } else {
-      return [];
-    }
-  },
-  declaredNames: function() {
-    return [
-            this.getFieldValue('eid'),
-    ];
+  getGlobalNames: function() {
+    return this.getVars();
   },
   renameVar: function(oldName, newName) {
     if (Blockly.Names.equals(oldName, this.getFieldValue('eid'))) {
       this.setFieldValue(newName, 'eid');
     }
   },
-  renameBound: function(boundSubstitution, freeSubstitution) {
-    const paramSubstitution = boundSubstitution.restrictDomain(
-        this.declaredNames());
-    this.renameVars(paramSubstitution);
-    const newFreeSubstitution = freeSubstitution.extend(paramSubstitution);
-    LexicalVariable.renameFree(
-        this.getInputTargetBlock(this.bodyInputName), newFreeSubstitution);
-  },
-  renameFree: function(freeSubstitution) {
-    // There shouldn't be any free variables
-  },
-  freeVariables: function() { // return the free variables of this block
-    // There shouldn't be any free variables, so this should return an empty set.
-    // Should return the empty set: something is wrong if it doesn't!
-    return new Blockly.NameSet();
-  }
 };
 
 Blockly.Blocks['apppend_elem'] = {
@@ -2479,93 +2532,164 @@ Blockly.Blocks['all_elements'] = {
   }
 };
 
-Blockly.Blocks['set_iframe_prop'] = {
+//case block
+
+Blockly.Blocks['switch_case'] = {
   init: function() {
-    this.appendDummyInput()
-        .appendField("set")
-        .appendField(new Blockly.FieldDropdown([["AllowFullscreen","af"], ["AllowPaymentMethod","apm"], ["IframeURL","iu"], ["IframeHTML","ih"], ["IframeBorder","ib"]]), "prop");
-    this.appendValueInput("e")
-        .setCheck(null)
-        .appendField("of iframe")
-      .setAlign(Blockly.ALIGN_RIGHT);
     this.appendValueInput("NAME")
         .setCheck(null)
-        .appendField("to")
-      .setAlign(Blockly.ALIGN_RIGHT);
+        .appendField("case");
+    this.appendStatementInput("case")
+        .setCheck(null);
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour(210);
- this.setTooltip("Set the selected property value of the element ");
+    this.setColour(270);
+      this.setMutator(new Blockly.Mutator(['case']));
+ this.setTooltip("If the case value matches the switch value run the blocks");
  this.setHelpUrl("");
-  }
+  },
+    decompose: function(workspace) {
+  var topBlock = workspace.newBlock('switch');
+  topBlock.initSvg();
+  return topBlock;
+},
+    compose: function(topBlock) {
+}
 };
 
-Blockly.Blocks['get_iframe_prop'] = {
-  init: function() {
-    this.appendDummyInput()
-        .appendField("get")
-        .appendField(new Blockly.FieldDropdown([["AllowFullscreen","af"], ["AllowPaymentMethod","apm"], ["IframeURL","iu"], ["IframeHTML","ih"], ["IframeBorder","ib"]]), "prop");
-    this.appendValueInput("e")
-        .setCheck(null)
-        .appendField("of iframe")
-            .setAlign(Blockly.ALIGN_RIGHT);
-    this.setOutput(true, null);
-    this.setColour(210);
- this.setTooltip("Get the selected property value of the element ");
- this.setHelpUrl("");
-  }
-};
+//mutator block
 
-Blockly.Blocks['reload_iframe'] = {
+Blockly.Blocks['case'] = {
   init: function() {
     this.appendDummyInput()
-        .appendField("call iframe.")
-        .appendField(new Blockly.FieldDropdown([["Reload","r"]]), "prop");
-    this.appendValueInput("e")
-        .setCheck(null)
-        .appendField("for iframe")
-      .setAlign(Blockly.ALIGN_RIGHT);
+        .appendField("case");
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour(210);
- this.setTooltip("Reload the website inside of the iframe");
+    this.setColour(270);
+ this.setTooltip("");
  this.setHelpUrl("");
   }
 };
 
-Blockly.Blocks['set_prop'] = {
+//mutator top block
+
+Blockly.Blocks['switch'] = {
   init: function() {
     this.appendDummyInput()
-        .appendField("set")
-        .appendField(new Blockly.FieldDropdown([["BackgroundColor","backgroundColor"], ["BackgroundImage","backgroundImage"], ["BackgroundImageResizeMode","backgroundSize"], ["BackgroundImagePosition","backgroundPosition"], ["BackgroundImageRepeat","backgroundRepeat"], ["MarginLeft","marginLeft"], ["MarginRight","marginRight"], ["MarginBottom","marginBottom"], ["MarginTop","marginTop"], ["PaddingLeft","paddingLeft"], ["PaddingRight","paddingRight"], ["PaddingTop","paddingTop"], ["PaddingBottom","paddingBottom"], ["Height","height"], ["Width","width"], ["BorderStyle","borderStyle"], ["BorderColor","borderColor"], ["BorderWidth","borderWidth"], ["BorderRadius","borderRadius"]]), "prop");
-    this.appendValueInput("e")
-        .setCheck(null)
-        .appendField("of element")
-      .setAlign(Blockly.ALIGN_RIGHT);
+        .appendField("switch");
+    this.appendStatementInput("case")
+        .setCheck(null);
+    this.setInputsInline(true);
+    this.setColour(270);
+ this.setTooltip("");
+ this.setHelpUrl("");
+  }
+};
+
+Blockly.Blocks['switch2'] = {
+  init: function() {
     this.appendValueInput("NAME")
         .setCheck(null)
-        .appendField("to")
-      .setAlign(Blockly.ALIGN_RIGHT);
+        .appendField("switch");
+    this.appendStatementInput("case")
+        .setCheck(null);
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour(210);
- this.setTooltip("Set the selected property value of the element ");
+    this.setColour(270);
+ this.setTooltip("If the case value matches the switch value run the blocks");
  this.setHelpUrl("");
   }
 };
 
-Blockly.Blocks['get_prop'] = {
+Blockly.Blocks['load_asset'] = {
   init: function() {
     this.appendDummyInput()
-        .appendField("get")
-        .appendField(new Blockly.FieldDropdown([["BackgroundColor","backgroundColor"], ["BackgroundImage","backgroundImage"], ["BackgroundImageResizeMode","backgroundSize"], ["BackgroundImagePosition","backgroundPosition"], ["BackgroundImageRepeat","backgroundRepeat"], ["MarginLeft","marginLeft"], ["MarginRight","marginRight"], ["MarginBottom","marginBottom"], ["MarginTop","marginTop"], ["PaddingLeft","paddingLeft"], ["PaddingRight","paddingRight"], ["PaddingTop","paddingTop"], ["PaddingBottom","paddingBottom"], ["Height","height"], ["Width","width"], ["BorderStyle","borderStyle"], ["BorderColor","borderColor"], ["BorderWidth","borderWidth"], ["BorderRadius","borderRadius"]]), "prop");
-    this.appendValueInput("e")
-        .setCheck(null)
-        .appendField("of element")
-      .setAlign(Blockly.ALIGN_RIGHT);
+        .appendField(new Blockly.FieldDropdown(this.getAssets), "NAME");
     this.setOutput(true, null);
-    this.setColour(210);
- this.setTooltip("Get the selected property value of the element ");
+    this.setColour(0);
+ this.setTooltip("Load an asset");
  this.setHelpUrl("");
-  }
+  },
+    getAssets: function () {
+        return assetsBlockDropdown.length == 0 ? [["NoAssetUploadedYet","OPTIONNAME"]] : assetsBlockDropdown
+    }
+};
+
+Blockly.Blocks['create_listener'] = {
+  init: function() {
+this.appendDummyInput()
+        .appendField("when")
+        .appendField(new Blockly.FieldDropdown([["AnyIframe","if"], ["AnyDiv","d"], ["AnyImage","i"], ["AnyParagraph","p"], ["AnyButton","b"], ["AnyDropDownButton","ddb"], ["AnyColorPicker","cp"], ["AnyDatePicker","dp"], ["AnyTimePicker","tp"], ["AnyTextField","tf2"], ["AnyCanvas","c"], ["AnySlider","s"], ["AnyProgressBar","pb"], ["AnyCheckbox","cb"], ["AnyRadioButton","rb"]]), "NAME")
+        .appendField(".")
+        .appendField(new Blockly.FieldDropdown([["option","OPTIONNAME"], ["option","OPTIONNAME"], ["option","OPTIONNAME"]]), "e")
+      .appendField(
+                  new FieldParameterFlydown('ElementId' + workspace.getBlocksByType('create_elem').length, true, FieldFlydown.DISPLAY_BELOW),
+            'eid')
+    this.appendStatementInput("s")
+        .setCheck(null)
+        .appendField("do");
+    this.setColour("#F3AA44");
+ this.setTooltip("Do some statements when an event for an element fires");
+ this.setHelpUrl("");
+  },
+  withLexicalVarsAndPrefix: function(child, proc) {
+            if (this.getInputTargetBlock('NAME') === child) {
+                const params = this.declaredNames();
+                // not arguments_ instance var
+                for (let i = 0; i < params.length; i++) {
+                    proc(params[i], '');
+                }
+            }
+        },
+  getVars: function() {
+    return [
+      this.getFieldValue('eid'),
+    ];
+  },
+  blocksInScope: function() {
+    const doBlock = this.getInputTargetBlock('NAME');
+    if (doBlock) {
+      return [doBlock];
+    } else {
+      return [];
+    }
+  },
+  declaredNames: function() {
+    return [
+            this.getFieldValue('eid'),
+    ];
+  },
+  renameVar: function(oldName, newName) {
+    if (Blockly.Names.equals(oldName, this.getFieldValue('eid'))) {
+      this.setFieldValue(newName, 'eid');
+    }
+  },
+  renameBound: function(boundSubstitution, freeSubstitution) {
+    const paramSubstitution = boundSubstitution.restrictDomain(
+        this.declaredNames());
+    this.renameVars(paramSubstitution);
+    const newFreeSubstitution = freeSubstitution.extend(paramSubstitution);
+    LexicalVariable.renameFree(
+        this.getInputTargetBlock(this.bodyInputName), newFreeSubstitution);
+  },
+  renameFree: function(freeSubstitution) {
+    // There shouldn't be any free variables
+  },
+  freeVariables: function() { // return the free variables of this block
+    // There shouldn't be any free variables, so this should return an empty set.
+    // Should return the empty set: something is wrong if it doesn't!
+    return new Blockly.NameSet();
+  },
+    getEvents: function () {
+        var opt = [];
+        var e = [...new Set([
+ ...Object.getOwnPropertyNames(document),
+ ...Object.getOwnPropertyNames(Object.getPrototypeOf(Object.getPrototypeOf(document))),
+ ...Object.getOwnPropertyNames(Object.getPrototypeOf(window)),
+].filter(k => k.startsWith("on") && (document[k] == null || typeof document[k] == "function")))];
+        for (var i of e) {
+            opt.push([i, i]);
+        }
+        return opt
+    }
 };

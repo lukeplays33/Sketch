@@ -1,4 +1,0 @@
-Sitemap: https://lukeplays33.github.io/Sketch/sitemap.xml
-
-User-agent: *
-Disallow:
