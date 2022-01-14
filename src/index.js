@@ -409,7 +409,7 @@ var events = ["initd", 'window_click', 'key_changed', 'game_pad_connected','game
 var loops = ['controls_repeat', 'controls_repeat_ext', 'controls_forEach', 'controls_for', 'controls_whileUntil', 'forever'];
 var projects = [];
 
-var secretsMSG = ["I am a monster", "Well hello there, If you've found this then congratulations there is more to see than you think, Just giving you a hint ;)."]
+var secretsMSG = ["I am a monster", "Well hello there, If you've found this then congratulations there is more to see than you think, Just giving you a hint ;).", "I'll marry her, I'lljust have to finda way", "02 x Sketch"];
 
 var project = "";
 
@@ -599,7 +599,7 @@ document.getElementById("blocklyContainer").style.display = "none";
 
 // start site
 function start() {
-    var s = Math.floor(Math.random * 2) + 1
+    var s = Math.floor(Math.random() * 450) + 1
     if (s == 1) {
         document.getElementById("challange").innerHTML = secretsMSG[Math.floor(Math.random() * secretsMSG.length)]
     } else {
@@ -633,6 +633,9 @@ function start() {
   
   document.getElementById("download").style.backgroundImage =
     "url(Images/round_file_download_white_24dp.png)";
+    
+    document.getElementById("ssetings").style.backgroundImage =
+    "url(Images/61818b07d54ef50010e42587-1.png)";
 
   document.getElementById("Settings").style.display = "none";
   document.getElementById("header").style.display = "none";
@@ -651,6 +654,11 @@ function start() {
       var join = document.getElementById("join");
       join.onclick=function () {
           window.open("https://discord.gg/r4jMcw7H4g");
+      }
+      
+            var docs = document.getElementById("docs");
+      join.onclick=function () {
+          window.open("https://lukehoogenboom.gitbook.io/sketch-docs/");
       }
       
     document.getElementById("div").style.display = "none";
@@ -2548,12 +2556,48 @@ Blockly.Blocks['switch_case'] = {
  this.setTooltip("If the case value matches the switch value run the blocks");
  this.setHelpUrl("");
   },
+    updateShape_: function() {
+    for (let i = 1; this.getInput('c' + i); i++) {
+      this.removeInput('c' + i);
+      this.removeInput('DO' + i);
+    }
+    // Rebuild block.
+
+    // Observe how it is looking at the `this.elseifCount_` property
+    for (let i = 1; i <= this.caseCount_; i++) {
+      this.appendValueInput('c' + i).appendField(
+          Msg['CONTROLS_IF_MSG_ELSEIF']);
+      this.appendStatementInput('DO' + i).appendField(
+          Msg['CONTROLS_IF_MSG_THEN']);
+    }
+    },
     decompose: function(workspace) {
   var topBlock = workspace.newBlock('switch');
   topBlock.initSvg();
   return topBlock;
 },
     compose: function(topBlock) {
+         let toppBlock = topBlock.nextConnection.targetBlock();
+    // Count number of inputs.
+    this.caseCount_ = 0;
+    const valueConnections = [null];
+    const statementConnections = [null];
+    while (toppBlock && !toppBlock.isInsertionMarker()) {
+      switch (toppBlock.type) {
+        case 'case':
+          this.caseCount_++;
+          valueConnections.push(toppBlock.valueConnection_);
+          statementConnections.push(toppBlock.statementConnection_);
+          break;
+        default:
+          throw TypeError('Unknown block type: ' + toppBlock.type);
+      }
+      toppBlock = toppBlock.nextConnection &&
+          toppBlock.nextConnection.targetBlock();
+    }
+
+    // Observe how it calls `updateShape_`
+    this.updateShape_();
 }
 };
 
