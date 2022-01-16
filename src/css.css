@@ -233,6 +233,30 @@ input {
   box-sizing: border-box;
 }
 
+.menu {
+  width: 58px;
+  height: 58px;
+  background-color: #008dcd;
+  border-radius: 50%;
+  font-size: 50px;
+  color: white;
+  text-align: center;
+  background-image: url("../Images/round_menu_white_24dp.png");
+  background-repeat: no-repeat;
+  background-size: 40px;
+  background-position: center;
+
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+    left: 0px;
+  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+
+  -moz-box-sizing: border-box; /* Firefox, other Gecko */
+
+  box-sizing: border-box;
+}
+
 .projectsList {
   width: 100%;
   hiegth: 80px;
@@ -427,6 +451,7 @@ div#blocklyDiv .blocklyFlyout {
         }
         }
 
+ @media only screen and (max-width: 600px) {
 #welcome {
       position: fixed;
   top: 50%;
@@ -434,10 +459,10 @@ div#blocklyDiv .blocklyFlyout {
   /* bring your own prefixes */
   transform: translate(-50%, -50%);
     background: rgba(155, 155, 155, 0.5);
-    width; 100%;
+    width: 330px;
     border-radius: 10px;
     padding: 8px;
-    padding_bottom: 0px;
+    padding-bottom: 0px;
     position: fixed;
       -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
 
@@ -446,6 +471,30 @@ div#blocklyDiv .blocklyFlyout {
   box-sizing: border-box;
     display: none;
 }
+}
+
+ @media only screen and (min-width: 600px) {
+#welcome {
+      position: fixed;
+  top: 50%;
+  left: 50%;
+  /* bring your own prefixes */
+  transform: translate(-50%, -50%);
+    background: rgba(155, 155, 155, 0.5);
+    width: 600px;
+    border-radius: 10px;
+    padding: 8px;
+    padding-bottom: 0px;
+    position: fixed;
+      -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+
+  -moz-box-sizing: border-box; /* Firefox, other Gecko */
+
+  box-sizing: border-box;
+    display: none;
+}
+}
+
 
 #close {
     object-fit: contain;

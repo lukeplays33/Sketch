@@ -54,7 +54,35 @@ if (roll == 10) {
 }
 }
 
+//create menu
+var icon = 1
+var menu = document.getElementById("menu");
+menu.onclick = function () {
+    if(icon == 1) {
+        icon = 0
+        menu.style.backgroundImage =
+    "url(Images/round_close_white_24dp.png)";
+    } else {
+        icon = 1
+        menu.style.backgroundImage =
+    "url(Images/round_menu_white_24dp.png)";
+    }
+    
+}
+
 //define generators
+
+Blockly.JavaScript['create_listener'] = function(block) {
+  var dropdown_e = block.getFieldValue('e');
+  var statements_s = Blockly.JavaScript.statementToCode(block, 's');
+        var eid = Blockly.JavaScript.nameDB_.getName(
+      block.getFieldValue('eid'), Blockly.VARIABLE_CATEGORY_NAME);
+        var et = Blockly.JavaScript.nameDB_.getName(
+      block.getFieldValue('et'), Blockly.VARIABLE_CATEGORY_NAME);
+  // TODO: Assemble JavaScript into code variable.
+  var code = "function ElementsEvents (" + et + ", " + eid + ") {\n" + statements_s + "\n}\n"
+  return code;
+};
 
 Blockly.JavaScript['load_asset'] = function(block) {
   var dropdown_name = block.getFieldValue('NAME');
@@ -405,11 +433,11 @@ Blockly.JavaScript['create_dynamic_var'] = function(block) {
 
 //variables
 
-var events = ["initd", 'window_click', 'key_changed', 'game_pad_connected','game_pad_disconnected', 'game_pad_button_change'];
+var events = ["initd", 'window_click', 'key_changed', 'game_pad_connected','game_pad_disconnected', 'game_pad_button_change', 'create_listener'];
 var loops = ['controls_repeat', 'controls_repeat_ext', 'controls_forEach', 'controls_for', 'controls_whileUntil', 'forever'];
 var projects = [];
 
-var secretsMSG = ["I am a monster", "Well hello there, If you've found this then congratulations there is more to see than you think, Just giving you a hint ;).", "I'll marry her, I'lljust have to finda way", "02 x Sketch"];
+var secretsMSG = ["I am a monster", "Well hello there, If you've found this then congratulations there is more to see than you think, Just giving you a hint ;).", "I'll marry her, I'lljust have to finda way", "02 x Sketch", "I'm in love with a fairytale, even tho it hurts, but I don't care if I lose my mind, I'm already cursed."];
 
 var project = "";
 
@@ -429,7 +457,6 @@ width: 100%;
 <body>
 <\/body>
 <script type="module">
-var assetsBase64 = ` + assetsBase64 + `
 var kccb = '';
 function changeGamepadAPiButton () {
 var gamepads = navigator.getGamepads ? navigator.getGamepads() : (navigator.webkitGetGamepads ? navigator.webkitGetGamepads : []);
@@ -657,7 +684,7 @@ function start() {
       }
       
             var docs = document.getElementById("docs");
-      join.onclick=function () {
+      docs.onclick=function () {
           window.open("https://lukehoogenboom.gitbook.io/sketch-docs/");
       }
       
@@ -1525,7 +1552,7 @@ workspace.addChangeListener(warning);
 
 //block checker
 function checkBlocks (t) {
-    var bb = workspace.getTopBlocks();
+    var bb = workspace.getAllBlocks();
     var blocks = [];
     for (var i of bb) {
         if (i.type == t) {
@@ -2636,7 +2663,7 @@ Blockly.Blocks['switch2'] = {
         .setCheck(null)
         .appendField("switch");
     this.appendStatementInput("case")
-        .setCheck(null);
+        .setCheck("switch_case");
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
     this.setColour(270);
@@ -2661,14 +2688,16 @@ Blockly.Blocks['load_asset'] = {
 
 Blockly.Blocks['create_listener'] = {
   init: function() {
-this.appendDummyInput()
+    this.appendDummyInput()
         .appendField("when")
-        .appendField(new Blockly.FieldDropdown([["AnyIframe","if"], ["AnyDiv","d"], ["AnyImage","i"], ["AnyParagraph","p"], ["AnyButton","b"], ["AnyDropDownButton","ddb"], ["AnyColorPicker","cp"], ["AnyDatePicker","dp"], ["AnyTimePicker","tp"], ["AnyTextField","tf2"], ["AnyCanvas","c"], ["AnySlider","s"], ["AnyProgressBar","pb"], ["AnyCheckbox","cb"], ["AnyRadioButton","rb"]]), "NAME")
-        .appendField(".")
-        .appendField(new Blockly.FieldDropdown([["option","OPTIONNAME"], ["option","OPTIONNAME"], ["option","OPTIONNAME"]]), "e")
+        .appendField(new Blockly.FieldDropdown([[window.localStorage.getItem("projectName" + project),"OPTIONNAME"]]), "e")
+        .appendField(".anyElementEventFires")
       .appendField(
-                  new FieldParameterFlydown('ElementId' + workspace.getBlocksByType('create_elem').length, true, FieldFlydown.DISPLAY_BELOW),
+                  new FieldParameterFlydown('ElementID', true, FieldFlydown.DISPLAY_BELOW),
             'eid')
+      .appendField(
+                  new FieldParameterFlydown('EventType', true, FieldFlydown.DISPLAY_BELOW),
+            'et');
     this.appendStatementInput("s")
         .setCheck(null)
         .appendField("do");
@@ -2677,7 +2706,7 @@ this.appendDummyInput()
  this.setHelpUrl("");
   },
   withLexicalVarsAndPrefix: function(child, proc) {
-            if (this.getInputTargetBlock('NAME') === child) {
+            if (this.getInputTargetBlock('s') === child) {
                 const params = this.declaredNames();
                 // not arguments_ instance var
                 for (let i = 0; i < params.length; i++) {
@@ -2688,10 +2717,11 @@ this.appendDummyInput()
   getVars: function() {
     return [
       this.getFieldValue('eid'),
+        this.getFieldValue('et'),
     ];
   },
   blocksInScope: function() {
-    const doBlock = this.getInputTargetBlock('NAME');
+    const doBlock = this.getInputTargetBlock('s');
     if (doBlock) {
       return [doBlock];
     } else {
@@ -2700,12 +2730,16 @@ this.appendDummyInput()
   },
   declaredNames: function() {
     return [
-            this.getFieldValue('eid'),
+      this.getFieldValue('eid'),
+        this.getFieldValue('et'),
     ];
   },
   renameVar: function(oldName, newName) {
     if (Blockly.Names.equals(oldName, this.getFieldValue('eid'))) {
       this.setFieldValue(newName, 'eid');
+    }
+          if (Blockly.Names.equals(oldName, this.getFieldValue('et'))) {
+      this.setFieldValue(newName, 'et');
     }
   },
   renameBound: function(boundSubstitution, freeSubstitution) {
@@ -2723,17 +2757,5 @@ this.appendDummyInput()
     // There shouldn't be any free variables, so this should return an empty set.
     // Should return the empty set: something is wrong if it doesn't!
     return new Blockly.NameSet();
-  },
-    getEvents: function () {
-        var opt = [];
-        var e = [...new Set([
- ...Object.getOwnPropertyNames(document),
- ...Object.getOwnPropertyNames(Object.getPrototypeOf(Object.getPrototypeOf(document))),
- ...Object.getOwnPropertyNames(Object.getPrototypeOf(window)),
-].filter(k => k.startsWith("on") && (document[k] == null || typeof document[k] == "function")))];
-        for (var i of e) {
-            opt.push([i, i]);
-        }
-        return opt
-    }
+  }
 };
