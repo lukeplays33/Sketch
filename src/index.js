@@ -72,6 +72,13 @@ menu.onclick = function () {
 
 //define generators
 
+Blockly.JavaScript['new_line'] = function(block) {
+  // TODO: Assemble JavaScript into code variable.
+  var code = "'\\r\\n'";
+  // TODO: Change ORDER_NONE to the correct strength.
+  return [code, Blockly.JavaScript.ORDER_NONE];
+};
+
 Blockly.JavaScript['create_listener'] = function(block) {
   var dropdown_e = block.getFieldValue('e');
   var statements_s = Blockly.JavaScript.statementToCode(block, 's');
@@ -2625,7 +2632,20 @@ Blockly.Blocks['switch_case'] = {
 
     // Observe how it calls `updateShape_`
     this.updateShape_();
-}
+},
+    mutationToDom: function() {
+  // You *must* create a <mutation></mutation> element.
+  // This element can have children.
+  var container = Blockly.utils.xml.createElement('mutation');
+  container.setAttribute('items', this.caseCount_);
+  return container;
+},
+
+domToMutation: function(xmlElement) {
+  this.caseCount_ = parseInt(xmlElement.getAttribute('items'), 10);
+  // This is a helper function which adds or removes inputs from the block.
+  this.updateShape_();
+},
 };
 
 //mutator block
@@ -2652,6 +2672,7 @@ Blockly.Blocks['switch'] = {
         .setCheck(null);
     this.setInputsInline(true);
     this.setColour(270);
+        this.setNextStatement(true);
  this.setTooltip("");
  this.setHelpUrl("");
   }
@@ -2757,5 +2778,16 @@ Blockly.Blocks['create_listener'] = {
     // There shouldn't be any free variables, so this should return an empty set.
     // Should return the empty set: something is wrong if it doesn't!
     return new Blockly.NameSet();
+  }
+};
+
+Blockly.Blocks['new_line'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("new line");
+    this.setOutput(true, null);
+    this.setColour("#DF6078");
+ this.setTooltip("Return a newline string, used as a delimeter");
+ this.setHelpUrl("");
   }
 };
