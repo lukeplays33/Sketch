@@ -16,7 +16,7 @@
 <body>
 
 <div class="logo" id="div">
-  <img src="Images/60d473a38f959300118b9c10-1.png" id="logo" width="300" height="80">
+  <img src="Images/Untitled183_20210624211409-1.png" id="logo" width="300" height="80">
   <div class="loader" id="loading"></div>
 </div>
 
@@ -38,46 +38,19 @@
 </div>
     
     <div class="menu" id="menu"></div>
-
-<div class="home" id="home">
-  <input type="text" id="search" placeholder="Search Projects..."><br><br>
-    <p id="no_project"> No porjects found, press + to create one</p>
-  <div class="projectsList" id="Projects-list">
-    <img src="Images/60d473a38f959300118b9c10-1.png" id="icon" class="photo" width="80px" hieght="80px">
-    <div id="title-and-des" class="details">
-      <p id="Title" class="list-title">Title</p>
-      <p id="Description" class="list-des">Description</p>
-    </div>
-  </div>
-  <div class="create" id="add"></div>
-  <div class="settings" id="settings"></div>
-</div>
-
-<div class="Settings" id="Settings">
-  <p id="siteSettings">Site Settings</p>
-    <input type="text" id="BGImageURL" placeholder="Background Image URL"><br><br>
-  <button id="BGImage">Select Background Image</button>
-  <button id="bgimage">Custom Background Image: Off</button>
-  <button id="theme">Dark Theme: Off </button>
-  <p id="refrence">Refrence</p>
-  <button id='share'>Share Sketch</button>
-  <p id="e">Editor</p>
-    <button id="vsStyle">Use Fullscreen Visual Editor: Off</button>
-  <button id="open">Open editor after new project has been created: Off</button>
-    <button id="grid">Grid: Off</button>
-    <button id="snap">Snap To Place: Off</button>
-    <p id="project"></p>
-    <button id="delete">Delete Project</button>
-        <button id="projectIcon">Change FavIcon</button>
-    <input type="text" id="projectName" placeholder="Project Name"><br><br>
-  <div class="goHome" id="goHome"></div>
-  <div class="reset" id="reset"></div>
-</div>
-
-<section id="blocklyContainer">
-    <div id="editor">
-    </div>
-    <div id="blocklyDiv">
+    <div class="menuItems" id="menuItems" style="display: none;">
+    <div class="create" id="add">
+                        <select name="c" id="c">
+          <option value="Create New Project">Create New Project</option>
+  <option value="Import New Project">Import New Project</option>
+                </select>
+        </div>
+        <div class="settings" id="settings">
+        </div>
+          <div class="goHome" id="goHome">
+        </div>
+          <div class="reset" id="reset">
+        </div>
         <div style="position: absolute; z-index: 500;
                     width: 58px;
   height: 58px;
@@ -92,8 +65,8 @@ background-image: url(../Images/61818b07d54ef50010e42587-1.png);
   background-position: center;
 
   position: fixed;
-  right: 88px;
-  bottom: 16px;
+  right: 16px;
+  bottom: 138px;
   -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
 
   -moz-box-sizing: border-box; /* Firefox, other Gecko */
@@ -115,7 +88,7 @@ background-image: url(../Images/61818b07d54ef50010e42587-1.png);
 
   position: fixed;
   right: 16px;
-  bottom: 16px;
+  bottom: 75px;
   -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
 
   -moz-box-sizing: border-box; /* Firefox, other Gecko */
@@ -137,7 +110,7 @@ background-image: url(../Images/61818b07d54ef50010e42587-1.png);
 
   position: fixed;
   right: 16px;
-  bottom: 88px;
+  bottom: 198px;
   -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
 
   -moz-box-sizing: border-box; /* Firefox, other Gecko */
@@ -159,12 +132,17 @@ background-image: url(../Images/61818b07d54ef50010e42587-1.png);
 
   position: fixed;
   right: 16px;
-  bottom: 158px;
+  bottom:260px;
   -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
 
   -moz-box-sizing: border-box; /* Firefox, other Gecko */
 
-  box-sizing: border-box;" id="download"></div>
+  box-sizing: border-box;" id="download">
+                <select name="down" id="down">
+          <option value="Project HTML">Project HTML</option>
+  <option value="Project XML">Project XML</option>
+                </select>
+    </div>
         
         <div style="position: absolute; z-index: 500;
                     width: 58px;
@@ -181,19 +159,77 @@ background-image: url(../Images/61818b07d54ef50010e42587-1.png);
 
   position: fixed;
   right: 16px;
-  bottom: 228px;
+  bottom: 320px;
   -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
 
   -moz-box-sizing: border-box; /* Firefox, other Gecko */
 
   box-sizing: border-box;" id="upload"></div>
         
+        <div style="position: absolute; z-index: 500;
+                    width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  font-size: 50px;
+  color: white;
+  text-align: center;
+  background-image: url(`../Images/round_extension_white.png`);
+  background-repeat: no-repeat;
+  background-size: 40px;
+  background-position: center;
+
+  position: fixed;
+  right: 16px;
+  bottom: 380px;
+  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+
+  -moz-box-sizing: border-box; /* Firefox, other Gecko */
+
+  box-sizing: border-box;" id="Switch"></div>
+    </div>
+
+<div class="home" id="home">
+  <input type="text" id="search" placeholder="Search Projects..."><br><br>
+    <p id="no_project"> No porjects found, press + to create one</p>
+  <div class="projectsList" id="Projects-list">
+    <img src="Images/60d473a38f959300118b9c10-1.png" id="icon" class="photo" width="80px" hieght="80px">
+    <div id="title-and-des" class="details">
+      <p id="Title" class="list-title">Title</p>
+      <p id="Description" class="list-des">Description</p>
+    </div>
+  </div>
+</div>
+
+<div class="Settings" id="Settings">
+  <p id="siteSettings">Site Settings</p>
+    <input type="text" id="BGImageURL" placeholder="Background Image URL"><br><br>
+  <button id="BGImage">Select Background Image</button>
+  <button id="bgimage">Custom Background Image: Off</button>
+  <button id="theme">Dark Theme: Off </button>
+  <p id="refrence">Refrence</p>
+  <button id='share'>Share Sketch</button>
+  <p id="e">Editor</p>
+    <button id="vsStyle">Use Fullscreen Visual Editor: Off</button>
+  <button id="open">Open editor after new project has been created: Off</button>
+    <button id="grid">Grid: Off</button>
+    <button id="snap">Snap To Place: Off</button>
+    <p id="project"></p>
+    <button id="delete">Delete Project</button>
+        <button id="projectIcon">Change FavIcon</button>
+    <input type="text" id="projectName" placeholder="Project Name"><br><br>
+</div>
+
+<section id="blocklyContainer">
+    <div id="editor">
+    </div>
+    <div id="blocklyDiv">
+        
         <p id="warnings" style="position: absolute; z-index: 500;
                                 font-size: 20px; right: 0px; margin: 8px; color: white; background-color: rgba(155, 155, 155, 0.5);
   border-radius: 10px; padding: 4px;;">⚠️ There are a total of 0 warning(s) ⚠️</p>
     </div>
-</section>
-
+</section>\
+    
 <xml xmlns="https://developers.google.com/blockly/xml" id="toolbox" style="display: none">
   <category name="Events" colour="#F3AA44">
     <block type="initd">
@@ -220,7 +256,6 @@ background-image: url(../Images/61818b07d54ef50010e42587-1.png);
     </block>
     <block type="create_listener">
       <field name="e">OPTIONNAME</field>
-      <field name="e">OPTIONNAME</field>
     </block>
   </category>
   <category name="Elements" colour="#5D98D3">
@@ -243,7 +278,6 @@ background-image: url(../Images/61818b07d54ef50010e42587-1.png);
       <field name="e">if</field>
     </block>
     <block type="create_listener">
-      <field name="e">OPTIONNAME</field>
       <field name="e">OPTIONNAME</field>
     </block>
   </category>
@@ -290,6 +324,8 @@ background-image: url(../Images/61818b07d54ef50010e42587-1.png);
       <field name="NAME">Zero Two is cute</field>
       <field name="t">int</field>
     </block>
+    <block type="switch2"></block>
+    <block type="switch_case"></block>
   </category>
   <category name="Logic" colour="#45B4A9">
     <block type="logic_compare">
@@ -368,6 +404,7 @@ background-image: url(../Images/61818b07d54ef50010e42587-1.png);
       <mutation type="TEXT"></mutation>
       <field name="TYPE">TEXT</field>
     </block>
+    <block type="new_line"></block>
   </category>
   <category name="Lists" colour="#76afc9">
     <block type="lists_create_with">
@@ -378,6 +415,7 @@ background-image: url(../Images/61818b07d54ef50010e42587-1.png);
     </block>
     <block type="lists_repeat"></block>
     <block type="lists_length"></block>
+    <block type="remove_duplicates"></block>
     <block type="lists_isEmpty"></block>
     <block type="lists_indexOf">
       <field name="END">FIRST</field>

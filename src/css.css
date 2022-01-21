@@ -156,12 +156,13 @@ input {
 
   position: fixed;
   right: 16px;
-  bottom: 16px;
+  bottom: 75px;
   -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
 
   -moz-box-sizing: border-box; /* Firefox, other Gecko */
 
   box-sizing: border-box;
+    z-index: 1;
 }
 
 .goHome {
@@ -179,12 +180,13 @@ input {
 
   position: fixed;
   right: 16px;
-  bottom: 16px;
+  bottom: 75px;
   -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
 
   -moz-box-sizing: border-box; /* Firefox, other Gecko */
 
   box-sizing: border-box;
+    z-index: 1;
 }
 
 .settings {
@@ -202,7 +204,7 @@ input {
 
   position: fixed;
   right: 16px;
-  bottom: 88px;
+  bottom: 138px;
   -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
 
   -moz-box-sizing: border-box; /* Firefox, other Gecko */
@@ -225,17 +227,18 @@ input {
 
   position: fixed;
   right: 16px;
-  bottom: 88px;
+  bottom: 138px;
   -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
 
   -moz-box-sizing: border-box; /* Firefox, other Gecko */
 
   box-sizing: border-box;
+    z-index: 1;
 }
 
 .menu {
   width: 58px;
-  height: 58px;
+    height: 58px;
   background-color: #008dcd;
   border-radius: 50%;
   font-size: 50px;
@@ -249,12 +252,32 @@ input {
   position: fixed;
   right: 16px;
   bottom: 16px;
-    left: 0px;
   -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
 
   -moz-box-sizing: border-box; /* Firefox, other Gecko */
 
   box-sizing: border-box;
+    z-index: 501;
+}
+
+.menuItems {
+  width: 58px;
+    height: 170px;
+  background-color: #008dcd;
+  border-radius: 800px;
+  font-size: 50px;
+  color: white;
+  text-align: center;
+
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+
+  -moz-box-sizing: border-box; /* Firefox, other Gecko */
+
+  box-sizing: border-box;
+    z-index: 500;
 }
 
 .projectsList {
@@ -504,4 +527,15 @@ div#blocklyDiv .blocklyFlyout {
     left: 0px;
     z-index: 5px;
     margin-left: 8px;
+}
+
+select{
+    width: 100%;
+    height: 100%;
+    opacity: 0.0;
+          -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+
+  -moz-box-sizing: border-box; /* Firefox, other Gecko */
+
+  box-sizing: border-box;
 }

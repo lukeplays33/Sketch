@@ -62,15 +62,46 @@ menu.onclick = function () {
         icon = 0
         menu.style.backgroundImage =
     "url(Images/round_close_white_24dp.png)";
+        document.getElementById("menuItems").style.display = "block";
     } else {
         icon = 1
         menu.style.backgroundImage =
     "url(Images/round_menu_white_24dp.png)";
+            document.getElementById("menuItems").style.display = "none";
     }
     
 }
 
 //define generators
+
+Blockly.JavaScript['remove_duplicates'] = function(block) {
+  var value_name = Blockly.JavaScript.valueToCode(block, 'NAME', Blockly.JavaScript.ORDER_ATOMIC);
+  // TODO: Assemble JavaScript into code variable.
+  var code = "[... new Set(" + value_name + ")]";
+  // TODO: Change ORDER_NONE to the correct strength.
+  return [code, Blockly.JavaScript.ORDER_NONE];
+};
+
+Blockly.JavaScript['switch_case'] = function(block) {
+    var value_name1 = Blockly.JavaScript.valueToCode(block, 'NAME', Blockly.JavaScript.ORDER_ATOMIC);
+  var statements_case1 = Blockly.JavaScript.statementToCode(block, 'case');
+  // TODO: Assemble JavaScript into code variable.
+  var code = "case " + value_name1 + ": {\n" + statements_case1 + "\nbreak;\n}"
+  for( var i = 1; i < this.caseCount_ + 1; i++) {
+        var value_name = Blockly.JavaScript.valueToCode(block, 'c' + i, Blockly.JavaScript.ORDER_ATOMIC);
+  var statements_case = Blockly.JavaScript.statementToCode(block, 'DO' + i);
+      var code = code + "\ncase " + value_name + ": {\n" + statements_case + "\nbreak;\n}"
+  }
+  return code;
+};
+
+Blockly.JavaScript['switch2'] = function(block) {
+  var value_name = Blockly.JavaScript.valueToCode(block, 'NAME', Blockly.JavaScript.ORDER_ATOMIC);
+  var statements_case = Blockly.JavaScript.statementToCode(block, 'case');
+  // TODO: Assemble JavaScript into code variable.
+  var code = "switch (" + value_name + ") {\n" + statements_case + "\n}\n"
+  return code;
+};
 
 Blockly.JavaScript['new_line'] = function(block) {
   // TODO: Assemble JavaScript into code variable.
@@ -164,38 +195,38 @@ Blockly.JavaScript['create_elem'] = function(block) {
       block.getFieldValue('eid'), Blockly.VARIABLE_CATEGORY_NAME);
   // TODO: Assemble JavaScript into code variable.
     if (dropdown_e == "if") {
-        var code = "var " + eid + " = document.createElement('iframe');\n" + eid + ".setAttribute('src', 'https://lukeplays33.github.io/Sketch/');\n" + eid + ".style.height = window.innerHeight + 'px';\n" + eid + ".style.width = window.innerWidth + 'px';\n"
+        var code = "{\nlet " + eid + " = document.createElement('iframe');\n" + eid + ".setAttribute('src', 'https://lukeplays33.github.io/Sketch/');\n" + eid + ".style.height = window.innerHeight + 'px';\n" + eid + ".style.width = window.innerWidth + 'px';\n"
     } else if (dropdown_e == "d") {
-        var code = "var " + eid + " = document.createElement('div');\n"
+        var code = "{\nlet " + eid + " = document.createElement('div');\n"
     } else if (dropdown_e == "i") {
-        var code = "var " + eid + " = document.createElement('img');\n" + eid + ".src = 'https://i.kym-cdn.com/photos/images/newsfeed/001/473/342/633.png';\n"
+        var code = "{\nlet " + eid + " = document.createElement('img');\n" + eid + ".src = 'https://i.kym-cdn.com/photos/images/newsfeed/001/473/342/633.png';\n"
     } else if (dropdown_e == "p") {
-        var code = "var " + eid + " = document.createElement('p');\n" + eid + ".innerHTML = 'I am a paragraph, oh yes I am';\n"
+        var code = "{\nlet " + eid + " = document.createElement('p');\n" + eid + ".innerHTML = 'I am a paragraph, oh yes I am';\n"
     } else if ( dropdown_e == "b") {
-        var code = "var " + eid + " = document.createElement('button');\n" + eid + ".innerHTML = 'Never gonna give you up, Never gonna let you down';\n"
+        var code = "{\nlet " + eid + " = document.createElement('button');\n" + eid + ".innerHTML = 'Never gonna give you up, Never gonna let you down';\n"
     } else if ( dropdown_e == "ddb") {
-        var code = "var " + eid + " = document.createElement('select');\n             var newDropdownOption = document.createElement('option');\nnewDropdownOption.value = 'value1';\nnewDropdownOption.text = 'option 1';\n" + eid + ".add(newDropdownOption);\n"
+        var code = "{\nlet " + eid + " = document.createElement('select');\n             var newDropdownOption = document.createElement('option');\nnewDropdownOption.value = 'value1';\nnewDropdownOption.text = 'option 1';\n" + eid + ".add(newDropdownOption);\n"
         } else if ( dropdown_e == "cp") {
-            var code = "var " + eid + " = document.createElement('input');\n" + eid + ".type = 'color';\n"
+            var code = "{\nlet " + eid + " = document.createElement('input');\n" + eid + ".type = 'color';\n"
     } else if ( dropdown_e == "dp") {
-        var code = "var " + eid + " = document.createElement('input');\n" + eid + ".type = 'date';\n"
+        var code = "{\nlet " + eid + " = document.createElement('input');\n" + eid + ".type = 'date';\n"
     } else if ( dropdown_e == "tp") {
-        var code = "var " + eid + " = document.createElement('input');\n" + eid + ".type = 'time';\n"
+        var code = "{\nlet " + eid + " = document.createElement('input');\n" + eid + ".type = 'time';\n"
     } else if ( dropdown_e == "tf2") {
-        var code = "var " + eid + " = document.createElement('input');\n" + eid + ".placeholder = 'This is a placeholder, oh yes this is';\n"
+        var code = "{\nlet " + eid + " = document.createElement('input');\n" + eid + ".placeholder = 'This is a placeholder, oh yes this is';\n"
     } else if ( dropdown_e == "c") {
-        var code = "var " + eid + " = document.createElement('canvas');\n"
+        var code = "{\nlet " + eid + " = document.createElement('canvas');\n"
     } else if (dropdown_e == "s") {
-        var code = "var " + eid + " = document.createElement('input');\n" + eid + ".type = 'range';\n" + eid + ".max = 100;\n" + eid + ".value = 50;\n"
+        var code = "{\nlet " + eid + " = document.createElement('input');\n" + eid + ".type = 'range';\n" + eid + ".max = 100;\n" + eid + ".value = 50;\n"
     } else if ( dropdown_e == "pb") {
-        var code = "var " + eid + " = document.createElement('input');\n" + eid + ".type = 'range';\n" + eid + ".max = 100;\n" + eid + ".value = 50;\n" + eid + ".disabled = true;\n"
+        var code = "{\nlet " + eid + " = document.createElement('input');\n" + eid + ".type = 'range';\n" + eid + ".max = 100;\n" + eid + ".value = 50;\n" + eid + ".disabled = true;\n"
     } else if ( dropdown_e == "cb") {
-        var code = "var " + eid + " = document.createElement('input');\n" + eid + ".type = 'checkbox';\n"
+        var code = "{\nlet " + eid + " = document.createElement('input');\n" + eid + ".type = 'checkbox';\n"
     } else if ( dropdown_e == "rb") {
-        var code = "var " + eid + " = document.createElement('input');\n" + eid + ".type = 'radio';\n"
+        var code = "{\nlet " + eid + " = document.createElement('input');\n" + eid + ".type = 'radio';\n"
     }
     
-    var code = code + eid + ".className = '" + dropdown_e + "'\n" + statements_name + "\n"
+    var code = code + eid + ".className = '" + dropdown_e + "'\n" + statements_name + "\n}\n"
     
   return code;
 };
@@ -346,8 +377,10 @@ Blockly.JavaScript['key_changed'] = function(block) {
       block.getFieldValue('mouseup'), Blockly.VARIABLE_CATEGORY_NAME);
             var down = Blockly.JavaScript.nameDB_.getName(
       block.getFieldValue('mousedown'), Blockly.VARIABLE_CATEGORY_NAME);
+                        var scroll = Blockly.JavaScript.nameDB_.getName(
+      block.getFieldValue('mws'), Blockly.VARIABLE_CATEGORY_NAME);
   // TODO: Assemble JavaScript into code variable.
-  var code = "{\nvar " + x + " = 0;\n var " + y +" = 0;\nvar " + up + " = true;\nvar " + down + " = false;\nfunction mouse_change_sup (event) {\n" + statements_name + "\n}\nwindow.addEventListener('mousemove', e => {\n" +  x + " = e.x;\n" + y + " = e.y;\nmouse_change_sup();\n});\nwindow.addEventListener(`mouseup`, e =>{\n" + up + " = true;\n" + down + " = false;\nmouse_change_sup();\n});\nwindow.addEventListener(`mousedown`, e =>{\n" + up + " = false;\n" + down + " = true;\nmouse_change_sup();\n});\n}\n" 
+  var code = "{\nvar " + scroll + " = 0;\nvar " + x + " = 0;\n var " + y +" = 0;\nvar " + up + " = true;\nvar " + down + " = false;\nfunction mouse_change_sup (event) {\n" + statements_name + "\n}\nwindow.addEventListener('mousemove', e => {\n" +  x + " = e.x;\n" + y + " = e.y;\nmouse_change_sup();\n});\nwindow.addEventListener(`mouseup`, e =>{\n" + up + " = true;\n" + down + " = false;\nmouse_change_sup();\n});\nwindow.addEventListener(`mousedown`, e =>{\n" + up + " = false;\n" + down + " = true;\nmouse_change_sup();\n});\nwindow.addEventListener('wheel', e =>{\n" + scroll + " = e.deltaY;\nmouse_change_sup();\n});\n}\n" 
   return code;
 };
         
@@ -444,7 +477,7 @@ var events = ["initd", 'window_click', 'key_changed', 'game_pad_connected','game
 var loops = ['controls_repeat', 'controls_repeat_ext', 'controls_forEach', 'controls_for', 'controls_whileUntil', 'forever'];
 var projects = [];
 
-var secretsMSG = ["I am a monster", "Well hello there, If you've found this then congratulations there is more to see than you think, Just giving you a hint ;).", "I'll marry her, I'lljust have to finda way", "02 x Sketch", "I'm in love with a fairytale, even tho it hurts, but I don't care if I lose my mind, I'm already cursed."];
+var secretsMSG = ["I am a monster", "Well hello there, If you've found this then congratulations there is more to see than you think, Just giving you a hint ;).", "I'll marry her, I'lljust have to finda way", "02 x Sketch", "I'm in love with a fairytale, even tho it hurts, but I don't care if I lose my mind, I'm already cursed.","Hentai", "Hello There", "What is this?, I hate this feeling"];
 
 var project = "";
 
@@ -506,8 +539,10 @@ var oneJan = new Date(currentdate.getFullYear(), 0, 1);
 var numberOfDays = Math.floor((currentdate - oneJan) / (24 * 60 * 60 * 1000));
 var dd = new Date();
 
-var assetsBlockDropdown = [];
+var assetsBlockDropdown = [["UploadAsset","OPTIONNAME"]];
 var assetsBase64 = [];
+
+var menuSize = navigator.userAgentData.mobile ? "420px" : "350px"
 
 // change hue
 Blockly.HSV_SATURATION = 0.56;
@@ -649,11 +684,15 @@ function start() {
     updateQuote();
     }
     
+    document.getElementById("menu").style.display = "none";
+    
                       document.getElementById("project").style.display = "none";
         document.getElementById("projectName").style.display = "none";
         document.getElementById("projectIcon").style.display = "none";
     document.getElementById("delete").style.display = "none";
     
+            document.getElementById("reset").style.display = "none";
+    document.getElementById("goHome").style.display = "none";
     
     
   document.getElementById("GoHome2").style.backgroundImage =
@@ -670,6 +709,16 @@ function start() {
     
     document.getElementById("ssetings").style.backgroundImage =
     "url(Images/61818b07d54ef50010e42587-1.png)";
+    
+     document.getElementById("Switch").style.backgroundImage =
+    "url(Images/round_extension_white.png)";
+    
+    document.getElementById("ssetings").style.display = "none";
+    document.getElementById("GoHome2").style.display = "none";
+        document.getElementById("download").style.display = "none";
+        document.getElementById("Test").style.display = "none";
+        document.getElementById("upload").style.display = "none";
+    document.getElementById("Switch").style.display = "none";
 
   document.getElementById("Settings").style.display = "none";
   document.getElementById("header").style.display = "none";
@@ -677,6 +726,7 @@ function start() {
   document.getElementById("home").style.display = "none";
     
   window.setTimeout(function () {
+      document.getElementById("menu").style.display = "block";
           if(window.localStorage.getItem("welcome") == "" || window.localStorage.getItem("welcome") == null) {
         document.getElementById("welcome").style.display = "block";
     }
@@ -735,8 +785,9 @@ start();
 
 //create new project
 function new_projectt() {
-  var add = document.getElementById("add");
-  add.onclick = function () {
+  var add = document.getElementById("c");
+  add.onchange = function () {
+      if(add.value == "Create New Project") {
     var new_project = prompt("New Project Name");
     if (new_project === `` || new_project == null) {
     } else {
@@ -792,8 +843,115 @@ function new_projectt() {
           document.getElementById("blocklyContainer").style.display = "block";
           project = new_project
       workspace.clear();
+      
+      
+      document.getElementById("menuItems").style.height = menuSize;
+      
+          document.getElementById("ssetings").style.display = "block";
+    document.getElementById("GoHome2").style.display = "block";
+        document.getElementById("download").style.display = "block";
+        document.getElementById("Test").style.display = "block";
+        document.getElementById("upload").style.display = "block";
+      
+                  document.getElementById("create").style.display = "none";
+    document.getElementById("settings").style.display = "none";
   }
-    }
+    }  
+      }  else {
+          let input = document.createElement("input");
+    input.type = "file";
+    input.onchange = (_) => {
+      input.accept = "text/*";
+      // you can use this method to get file and perform respective operations
+      var files = Array.from(input.files);
+      console.log(files);
+      for (let i = 0; i < files.length; i++) {
+        reader.addEventListener(
+          "load",
+          function () {
+                  var new_project = files[i].name.replace(".xml", "");
+    if (new_project === `` || new_project == null) {
+    } else {
+        document.getElementById("no_project").style.display = "none";
+      var new_list_item = document.getElementById("Projects-list");
+      var item = new_list_item.cloneNode(true);
+      new_list_item.id = new_project;
+      new_list_item.style.display = "block";
+ new_list_item.onclick = lClick;
+      const select = new_list_item.querySelector("#Title");
+      select.id = "Title" + new_project;
+      document.getElementById("Title" + new_project).innerHTML = new_project;
+        window.localStorage.setItem("projectName" + new_project, new_project);
+
+      const select2 = new_list_item.querySelector("#Description");
+      select2.id = "Description" + new_project;
+      var date = new Date();
+      document.getElementById("Description" + new_project).innerHTML =
+        "Created: " +
+        [
+          days[dd.getDay()],
+          " / ",
+          monthNames[dd.getMonth()],
+          " / ",
+          dd.getFullYear(),
+          " / ",
+          dd.getHours(),
+          ":",
+          dd.getMinutes(),
+          ":",
+          dd.getMilliseconds()
+        ].join("");
+      projects.push(new_project);
+      window.localStorage.setItem("projects", JSON.stringify(projects));
+      window.localStorage.setItem(
+        "created" + new_project,
+        document.getElementById("Description" + new_project).innerHTML
+      );
+
+      const select3 = new_list_item.querySelector("#icon");
+      select3.id = "icon" + new_project;
+
+      window.localStorage.setItem(
+        "icon" + new_project,
+        document.getElementById("icon" + new_project).src
+      );
+      document.getElementById("home").appendChild(item);
+      
+        if (window.localStorage.getItem("open") == "") {
+    
+  } else {
+                    window.localStorage.setItem(window.localStorage.getItem("created" + new_project) + "blocks", reader.result);
+      
+       document.getElementById("home").style.display = "none";
+          document.getElementById("blocklyContainer").style.display = "block";
+          project = new_project
+      workspace.clear();
+      
+      
+      document.getElementById("menuItems").style.height = menuSize;
+        
+      var xml = Blockly.Xml.textToDom(window.localStorage.getItem(window.localStorage.getItem("created" + project) + "blocks"));
+    Blockly.Xml.domToWorkspace(xml, workspace);
+      
+          document.getElementById("ssetings").style.display = "block";
+    document.getElementById("GoHome2").style.display = "block";
+        document.getElementById("download").style.display = "block";
+        document.getElementById("Test").style.display = "block";
+        document.getElementById("upload").style.display = "block";
+      
+                  document.getElementById("create").style.display = "none";
+    document.getElementById("settings").style.display = "none";
+  }
+    }  
+                            window.localStorage.setItem(window.localStorage.getItem("created" + new_project) + "blocks", reader.result);
+          },
+          false
+        );
+        reader.readAsText(files[i]);
+      }
+    };
+    input.click();
+}
   };
 }
 new_projectt();
@@ -845,6 +1003,8 @@ document.getElementById("editor").style.width = window.innerWidth + "px"
     
     if(navigator.userAgentData.mobile) {
         document.getElementById("vsStyle").style.display = "none";
+    } else {
+        document.getElementById("Switch").style.opacity = "0.0";
     }
     
   var bgimage = document.getElementById("bgimage");
@@ -893,6 +1053,9 @@ document.getElementById("editor").style.width = window.innerWidth + "px"
       document.body.style.backgroundColor = "black";
       
       document.getElementById("header").style.backgroundColor = "#424242";
+        
+              document.getElementById("menu").style.backgroundColor = "#424242";
+      document.getElementById("menuItems").style.backgroundColor = "#424242";
       
       document.getElementById("Test").style.backgroundColor = "#424242";
       document.getElementById("goHome").style.backgroundColor = "#424242";
@@ -969,6 +1132,9 @@ document.getElementById("editor").style.width = window.innerWidth + "px"
         
         document.getElementById("snap").style.backgroundColor = "#008dcd";
     document.getElementById("grid").style.backgroundColor = "#008dcd";
+        
+              document.getElementById("menu").style.backgroundColor = "#008dcd";
+      document.getElementById("menuItems").style.backgroundColor = "#008dcd";
 
       document.getElementById("add").style.backgroundColor = "#008dcd";
 
@@ -1027,15 +1193,42 @@ document.getElementById("editor").style.width = window.innerWidth + "px"
   settings.onclick = function () {
     document.getElementById("home").style.display = "none";
     document.getElementById("Settings").style.display = "block";
+      
+                  document.getElementById("reset").style.display = "block";
+    document.getElementById("goHome").style.display = "block";
+      
+                  document.getElementById("create").style.display = "none";
+    document.getElementById("settings").style.display = "none";
   };
 
   var goHome = document.getElementById("goHome");
 
   goHome.onclick = function () {
+                                  document.getElementById("reset").style.display = "none";
+    document.getElementById("goHome").style.display = "none";
+      
       if (project == "") {
     document.getElementById("home").style.display = "block";
     document.getElementById("Settings").style.display = "none";
+          
+                            document.getElementById("reset").style.display = "none";
+    document.getElementById("goHome").style.display = "none";
+      
+                  document.getElementById("create").style.display = "block";
+    document.getElementById("settings").style.display = "block";
+          
+                                  document.getElementById("ssetings").style.display = "none";
+    document.getElementById("GoHome2").style.display = "none";
+        document.getElementById("download").style.display = "none";
+        document.getElementById("Test").style.display = "none";
+        document.getElementById("upload").style.display = "none";
+      
+                  document.getElementById("create").style.display = "block";
+    document.getElementById("settings").style.display = "block";
+          
       } else { 
+          document.getElementById("menuItems").style.height = menuSize;
+          
               document.getElementById("blocklyContainer").style.display = "block";
     document.getElementById("Settings").style.display = "none";
           
@@ -1043,6 +1236,19 @@ document.getElementById("editor").style.width = window.innerWidth + "px"
         document.getElementById("projectName").style.display = "none";
         document.getElementById("projectIcon").style.display = "none";
           document.getElementById("delete").style.display = "none";
+          
+                        document.getElementById("ssetings").style.display = "block";
+    document.getElementById("GoHome2").style.display = "block";
+        document.getElementById("download").style.display = "block";
+        document.getElementById("Test").style.display = "block";
+        document.getElementById("upload").style.display = "block";
+          document.getElementById("Switch").style.display = "block";
+      
+                  document.getElementById("create").style.display = "none";
+    document.getElementById("settings").style.display = "none";
+          
+                            document.getElementById("reset").style.display = "none";
+    document.getElementById("goHome").style.display = "none";
       }
   };
 
@@ -1204,6 +1410,9 @@ function Dtheme() {
       document.getElementById("delete").style.backgroundColor = "#ad0e0e";
 
     document.getElementById("reset").style.backgroundColor = "#424242";
+      
+      document.getElementById("menu").style.backgroundColor = "#424242";
+      document.getElementById("menuItems").style.backgroundColor = "#424242";
   } else {
       document.getElementById("delete").style.backgroundColor = "#fc0303";
   }
@@ -1227,11 +1436,41 @@ function BGIfURL() {
 BGIfURL();
 
 function editor() {
+    var s = document.getElementById("Switch");
+    var cl = 0
+    s.onclick = function () {
+        if(cl == 0) {
+            cl = 1
+            s.style.backgroundImage = "url(Images/round_edit_white.png)";
+            document.getElementById("editor").style.display = "none";
+        } else {
+            cl = 0
+            s.style.backgroundImage = "url(Images/round_extension_white.png)";
+            document.getElementById("editor").style.display = "block";
+        }
+    }
   var goHome = document.getElementById("GoHome2");
 goHome.onclick = function () {
+        
+    document.getElementById("menuItems").style.height = "170px";
+    
   document.getElementById("home").style.display = "block";
   document.getElementById("blocklyContainer").style.display = "none";
   project = "";
+              document.getElementById("ssetings").style.display = "none";
+    document.getElementById("GoHome2").style.display = "none";
+        document.getElementById("download").style.display = "none";
+        document.getElementById("Test").style.display = "none";
+        document.getElementById("upload").style.display = "none";
+        document.getElementById("Switch").style.display = "none";
+      
+                  document.getElementById("create").style.display = "block";
+    document.getElementById("settings").style.display = "block";
+    
+                                document.getElementById("reset").style.display = "none";
+    document.getElementById("goHome").style.display = "none";
+    
+
 };
   var test = document.getElementById("Test");
   test.onclick = function () {
@@ -1249,9 +1488,15 @@ w.document.open();
     w.document.close();
       }
   }
-  var d = document.getElementById("download");
-  d.onclick = function () {
+  var d = document.getElementById("down");
+  d.onchange = function () {
+      if(d.value == "Project HTML") {
     downloadHTML();
+      } else {
+                  var dom = Blockly.Xml.workspaceToDom(workspace);
+                  var t = Blockly.Xml.domToText(dom);
+          download(window.localStorage.getItem("projectName" + project) + ".xml", t);
+          }
   }
     
     var se = document.getElementById("ssetings");
@@ -1266,6 +1511,18 @@ w.document.open();
         
         document.getElementById("project").innerHTML = window.localStorage.getItem("projectName" + project)
         document.getElementById("projectName").value = window.localStorage.getItem("projectName" + project)
+        
+                      document.getElementById("ssetings").style.display = "none";
+    document.getElementById("GoHome2").style.display = "none";
+        document.getElementById("download").style.display = "none";
+        document.getElementById("Test").style.display = "none";
+        document.getElementById("upload").style.display = "none";
+        document.getElementById("Switch").style.display = "none";
+      
+                  document.getElementById("reset").style.display = "block";
+    document.getElementById("goHome").style.display = "block";
+        
+        document.getElementById("menuItems").style.height = "170px";
     }
 }
 editor();
@@ -1451,8 +1708,12 @@ function registerFirstContextMenuOptions() {
 }
 
 const lClick = function () {
+    
+        document.getElementById("menuItems").style.height = menuSize;
+    
    document.getElementById("home").style.display = "none";
           document.getElementById("blocklyContainer").style.display = "block";
+    
           project = this.id
     workspace.clear();
     var xml = Blockly.Xml.textToDom(window.localStorage.getItem(window.localStorage.getItem("created" + project) + "blocks"));
@@ -1462,6 +1723,22 @@ document.getElementById("editor").style.width = window.innerWidth + "px"
         } else {
             document.getElementById("editor").style.width = "350px"
         }
+    
+        
+              document.getElementById("ssetings").style.display = "block";
+    document.getElementById("GoHome2").style.display = "block";
+        document.getElementById("download").style.display = "block";
+        document.getElementById("Test").style.display = "block";
+        document.getElementById("upload").style.display = "block";
+    document.getElementById("Switch").style.display = "block";
+    
+        
+        if(project == "Zero Two <3") {
+        document.body.style.backgroundImage = "url(Images/787c0db55da7773662b0d02d2420900d.jpg)";
+    }
+      
+                  document.getElementById("create").style.display = "none";
+    document.getElementById("settings").style.display = "none";
 }
 
 function download(filename, text) {
@@ -2002,7 +2279,10 @@ Blockly.Blocks['custom_events'] = {
             'mousedown')
             .appendField(
             new FieldParameterFlydown('MouseUp', true, FieldFlydown.DISPLAY_BELOW),
-            'mouseup');
+            'mouseup')
+                  .appendField(
+            new FieldParameterFlydown('MouseWheelScroll', true, FieldFlydown.DISPLAY_BELOW),
+            'mws');
     this.appendStatementInput("NAME")
         .setCheck(null)
         .appendField("do");
@@ -2023,6 +2303,7 @@ Blockly.Blocks['custom_events'] = {
         this.getFieldValue('mousey'),
         this.getFieldValue('mouseup'),
         this.getFieldValue('mousedown'),
+        this.getFieldValue('mws'),
     ];
   },
   blocksInScope: function() {
@@ -2039,6 +2320,7 @@ Blockly.Blocks['custom_events'] = {
         this.getFieldValue('mousey'),
         this.getFieldValue('mouseup'),
         this.getFieldValue('mousedown'),
+        this.getFieldValue('mws'),
     ];
   },
   renameVar: function(oldName, newName) {
@@ -2053,6 +2335,9 @@ Blockly.Blocks['custom_events'] = {
     }
           if (Blockly.Names.equals(oldName, this.getFieldValue('mousedown'))) {
       this.setFieldValue(newName, 'mousedown');
+    }
+                if (Blockly.Names.equals(oldName, this.getFieldValue('mws'))) {
+      this.setFieldValue(newName, 'mws');
     }
   },
   renameBound: function(boundSubstitution, freeSubstitution) {
@@ -2447,8 +2732,9 @@ Blockly.Blocks['create_elem'] = {
         .appendField(".createNew")
         .appendField(new Blockly.FieldDropdown([["Iframe","if"], ["Div","d"], ["Image","i"], ["Paragraph","p"], ["Button","b"], ["DropDownButton","ddb"], ["ColorPicker","cp"], ["DatePicker","dp"], ["TimePicker","tp"], ["TextField","tf2"], ["Canvas","c"], ["Slider","s"], ["ProgressBar","pb"], ["Checkbox","cb"], ["RadioButton","rb"]]), "e")
         .appendField("Element")
-             .appendField(new FieldGlobalFlydown(
-           'ElementId', true, FieldFlydown.DISPLAY_BELOW), 'eid');
+      .appendField(
+                  new FieldParameterFlydown('ElementId', true, FieldFlydown.DISPLAY_BELOW),
+            'eid');
     this.appendStatementInput("NAME")
         .setCheck(null)
         .appendField("do");
@@ -2458,18 +2744,54 @@ Blockly.Blocks['create_elem'] = {
  this.setTooltip("Creatte a new element");
  this.setHelpUrl("");
   },
+  withLexicalVarsAndPrefix: function(child, proc) {
+            if (this.getInputTargetBlock('NAME') === child) {
+                const params = this.declaredNames();
+                // not arguments_ instance var
+                for (let i = 0; i < params.length; i++) {
+                    proc(params[i], '');
+                }
+            }
+        },
   getVars: function() {
-    const field = this.getField('eid');
-    return field ? [field.getText()] : [];
+    return [
+      this.getFieldValue('eid'),
+    ];
   },
-  getGlobalNames: function() {
-    return this.getVars();
+  blocksInScope: function() {
+    const doBlock = this.getInputTargetBlock('NAME');
+    if (doBlock) {
+      return [doBlock];
+    } else {
+      return [];
+    }
+  },
+  declaredNames: function() {
+    return [
+      this.getFieldValue('eid'),
+    ];
   },
   renameVar: function(oldName, newName) {
     if (Blockly.Names.equals(oldName, this.getFieldValue('eid'))) {
       this.setFieldValue(newName, 'eid');
     }
   },
+  renameBound: function(boundSubstitution, freeSubstitution) {
+    const paramSubstitution = boundSubstitution.restrictDomain(
+        this.declaredNames());
+    this.renameVars(paramSubstitution);
+    const newFreeSubstitution = freeSubstitution.extend(paramSubstitution);
+    LexicalVariable.renameFree(
+        this.getInputTargetBlock(this.bodyInputName), newFreeSubstitution);
+  },
+  renameFree: function(freeSubstitution) {
+    // There shouldn't be any free variables
+  },
+  freeVariables: function() { // return the free variables of this block
+    // There shouldn't be any free variables, so this should return an empty set.
+    // Should return the empty set: something is wrong if it doesn't!
+    return new Blockly.NameSet();
+  }
 };
 
 Blockly.Blocks['apppend_elem'] = {
@@ -2582,7 +2904,8 @@ Blockly.Blocks['switch_case'] = {
         .setCheck(null)
         .appendField("case");
     this.appendStatementInput("case")
-        .setCheck(null);
+        .setCheck(null)
+              .appendField("do");
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
     this.setColour(270);
@@ -2599,19 +2922,26 @@ Blockly.Blocks['switch_case'] = {
 
     // Observe how it is looking at the `this.elseifCount_` property
     for (let i = 1; i <= this.caseCount_; i++) {
-      this.appendValueInput('c' + i).appendField(
-          Msg['CONTROLS_IF_MSG_ELSEIF']);
-      this.appendStatementInput('DO' + i).appendField(
-          Msg['CONTROLS_IF_MSG_THEN']);
+      this.appendValueInput('c' + i).appendField("case").setAlign(Blockly.ALIGN_RIGHT);
+      this.appendStatementInput('DO' + i).appendField("do");
     }
     },
-    decompose: function(workspace) {
+decompose: function(workspace) {
   var topBlock = workspace.newBlock('switch');
   topBlock.initSvg();
+  var connection = topBlock.getInput('case').connection;
+  for (var i = 0; i < this.caseCount_; i++) {
+    var c = workspace.newBlock('case');
+    c.initSvg();
+    connection.connect(c.previousConnection);
+    connection = c.nextConnection;
+  }
   return topBlock;
 },
     compose: function(topBlock) {
-         let toppBlock = topBlock.nextConnection.targetBlock();
+         // This line changed. Now you should actually be accessing the first case min-block
+         let toppBlock = topBlock.getInputTargetBlock('case');
+
     // Count number of inputs.
     this.caseCount_ = 0;
     const valueConnections = [null];
@@ -2632,6 +2962,8 @@ Blockly.Blocks['switch_case'] = {
 
     // Observe how it calls `updateShape_`
     this.updateShape_();
+            this.reconnectChildBlocks_(
+        valueConnections, statementConnections);
 },
     mutationToDom: function() {
   // You *must* create a <mutation></mutation> element.
@@ -2645,7 +2977,24 @@ domToMutation: function(xmlElement) {
   this.caseCount_ = parseInt(xmlElement.getAttribute('items'), 10);
   // This is a helper function which adds or removes inputs from the block.
   this.updateShape_();
-},
+},  
+      /**
+   * Reconnects child blocks.
+   * @param {!Array<?RenderedConnection>} valueConnections List of
+   * value connections for 'if' input.
+   * @param {!Array<?RenderedConnection>} statementConnections List of
+   * statement connections for 'do' input.
+   * @param {?RenderedConnection} elseStatementConnection Statement
+   * connection for else input.
+   * @this {Block}
+   */
+    reconnectChildBlocks_: function(
+      valueConnections, statementConnections) {
+    for (let i = 1; i <= this.caseCount_; i++) {
+      Blockly.Mutator.reconnect(valueConnections[i], this, 'c' + i);
+      Blockly.Mutator.reconnect(statementConnections[i], this, 'DO' + i);
+    }
+  },
 };
 
 //mutator block
@@ -2657,7 +3006,7 @@ Blockly.Blocks['case'] = {
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
     this.setColour(270);
- this.setTooltip("");
+ this.setTooltip("If the case value matches the switch value run the blocks");
  this.setHelpUrl("");
   }
 };
@@ -2672,7 +3021,6 @@ Blockly.Blocks['switch'] = {
         .setCheck(null);
     this.setInputsInline(true);
     this.setColour(270);
-        this.setNextStatement(true);
  this.setTooltip("");
  this.setHelpUrl("");
   }
@@ -2684,7 +3032,8 @@ Blockly.Blocks['switch2'] = {
         .setCheck(null)
         .appendField("switch");
     this.appendStatementInput("case")
-        .setCheck("switch_case");
+        .setCheck("switch_case")
+        .appendField("do");
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
     this.setColour(270);
@@ -2703,9 +3052,21 @@ Blockly.Blocks['load_asset'] = {
  this.setHelpUrl("");
   },
     getAssets: function () {
-        return assetsBlockDropdown.length == 0 ? [["NoAssetUploadedYet","OPTIONNAME"]] : assetsBlockDropdown
+        return assetsBlockDropdown
     }
 };
+
+function pickAssets (e) {
+if(e.type == Blockly.Events.SELECTED) {
+    if(workspace.getBlockById(e.newElementId).type == "load_asset") {
+        if(workspace.getBlockById(e.newElementId).getFieldValue("NAME") == "OPTIONNAME") {
+            as.click();
+        }
+       }
+}
+}
+
+workspace.addChangeListener(pickAssets);
 
 Blockly.Blocks['create_listener'] = {
   init: function() {
@@ -2788,6 +3149,18 @@ Blockly.Blocks['new_line'] = {
     this.setOutput(true, null);
     this.setColour("#DF6078");
  this.setTooltip("Return a newline string, used as a delimeter");
+ this.setHelpUrl("");
+  }
+};
+
+Blockly.Blocks['remove_duplicates'] = {
+  init: function() {
+    this.appendValueInput("NAME")
+        .setCheck(null)
+        .appendField("remove duplicates of");
+    this.setOutput(true, null);
+    this.setColour("#76afc9");
+ this.setTooltip("Removes all duplicates from an list");
  this.setHelpUrl("");
   }
 };
