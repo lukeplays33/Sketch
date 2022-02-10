@@ -103,6 +103,37 @@ p {
   box-sizing: border-box;
 }
 
+.libs {
+    width: 100%;
+    padding: 0px;
+  color: #FFFFFF;
+  text-align: center;
+  font-size: 20px;
+  font-family: Sans-serif;
+    float: left;
+    text-align: center;
+      -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+
+  -moz-box-sizing: border-box; /* Firefox, other Gecko */
+
+  box-sizing: border-box;
+}
+
+a {
+    width: 100%;
+    padding: 0px;
+  text-align: center;
+  font-size: 20px;
+  font-family: Sans-serif;
+    float: left;
+    text-align: center;
+      -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+
+  -moz-box-sizing: border-box; /* Firefox, other Gecko */
+
+  box-sizing: border-box;
+}
+
 .header {
   background-color: #008dcd;
   height: 50px;
@@ -497,7 +528,7 @@ div#blocklyDiv .blocklyFlyout {
 }
 
  @media only screen and (min-width: 600px) {
-#welcome {
+.welcome {
       position: fixed;
   top: 50%;
   left: 50%;
@@ -538,4 +569,32 @@ select{
   -moz-box-sizing: border-box; /* Firefox, other Gecko */
 
   box-sizing: border-box;
+}
+
+#thunkable {
+  object-fit: contain;
+  position: fixed;
+  right: -90px;
+  bottom: 50%;
+  animation: MoveUpDown 1s linear infinite, MoveRight 6s linear infinite;
+}
+
+@keyframes MoveUpDown {
+  0%, 100% {
+    bottom:40%;
+    right: 100%;
+  }
+  50% {
+    bottom: 550px;
+    right: -90px;
+  }
+}
+
+@keyframes MoveRight {
+  0%, 100% {
+    right: 100%;
+  }
+  50% {
+  right: -90px;
+  }
 }

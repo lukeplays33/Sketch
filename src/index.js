@@ -53,6 +53,14 @@ if (roll == 10) {
     window.location.href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
 }
 }
+// Thunkable is da best
+
+let thunkers = Math.floor(Math.random() * 350) + 1
+if(thunkers == 1) {
+window.setTimeout( function () {document.getElementById("thunkable").style.display = "none";}, 4500 );
+} else {
+document.getElementById("thunkable").style.display = "none";
+}
 
 //create menu
 var icon = 1
@@ -73,6 +81,332 @@ menu.onclick = function () {
 }
 
 //define generators
+
+Blockly.JavaScript['get_propo'] = function(block) {
+  var dropdown_name = block.getFieldValue('NAME');
+  var value_name = Blockly.JavaScript.valueToCode(block, 'NAME', Blockly.JavaScript.ORDER_ATOMIC);
+  var dropdown_name2 = block.getFieldValue('NAME2');
+  // TODO: Assemble JavaScript into code variable.
+  var code = value_name + "." + dropdown_name2
+  // TODO: Change ORDER_NONE to the correct strength.
+  return [code, Blockly.JavaScript.ORDER_NONE];
+};
+
+Blockly.JavaScript['api'] = function(block) {
+  var dropdown_name = block.getFieldValue('NAME');
+  var dropdown_t = block.getFieldValue('t');
+  var value_url = Blockly.JavaScript.valueToCode(block, 'url', Blockly.JavaScript.ORDER_ATOMIC);
+  var value_h = Blockly.JavaScript.valueToCode(block, 'h', Blockly.JavaScript.ORDER_ATOMIC);
+  var value_b = Blockly.JavaScript.valueToCode(block, 'b', Blockly.JavaScript.ORDER_ATOMIC);
+  var statements_name = Blockly.JavaScript.statementToCode(block, 'NAME');
+    var e = Blockly.JavaScript.nameDB_.getName(
+      block.getFieldValue('e'), Blockly.VARIABLE_CATEGORY_NAME);
+        var r = Blockly.JavaScript.nameDB_.getName(
+      block.getFieldValue('r'), Blockly.VARIABLE_CATEGORY_NAME);
+        var s = Blockly.JavaScript.nameDB_.getName(
+      block.getFieldValue('s'), Blockly.VARIABLE_CATEGORY_NAME);
+  // TODO: Assemble JavaScript into code variable.
+  if(dropdown_t == "GET") {
+  var code = "{\nlet " + r + " = 'No Data' \n let " + s + " = 'No Status'\n\nlet " + e + " = 'No Error'\nfetch(" + value_url + ")\n.then(async response => {\n " + r + " = response.json();\n  " + s + " = response.status; \n" + statements_name + "\n})\n.catch(error => {\n " + e + " = error\n});"
+  }
+  return code;
+};
+
+Blockly.JavaScript['set_prop'] = function(block) {
+  var dropdown_name = block.getFieldValue('NAME');
+  var value_name = Blockly.JavaScript.valueToCode(block, 'NAME', Blockly.JavaScript.ORDER_ATOMIC);
+  var dropdown_name2 = block.getFieldValue('NAME2');
+  var value_e = Blockly.JavaScript.valueToCode(block, 'e', Blockly.JavaScript.ORDER_ATOMIC);
+  // TODO: Assemble JavaScript into code variable.
+  if(dropdown_name2 == "style.backgroundImage" ) {
+  var code = value_name + "." + dropdown_name2 + " = `url(" + value_e + ")`;\n"
+  } else if (dropdown_name2 == "opt") {
+  var code = "var ddb = " + value_name + " \nfor (var i of ddb) { \nddb.remove(i);\n}\nfor (var i of" + value_e + ") {\n var opt = document.createElement('option');\nopt.innerHTML = i;\n" + value_name + ".appendChild(opt);\n}\n" 
+  } else if (dropdown_name2 == "l") {
+  var code = value_name + ".innerHTML = '';\nfor (var i of " + value_e + ") {\n var l = document.createElement('li');\nl.innerHTML = i;\n" + value_name + ".appendChild(l);\n}\n"
+  } else {
+  var code = value_name + "." + dropdown_name2 + " = " + value_e + ";\n"
+  }
+  return code;
+};
+
+Blockly.JavaScript['add_object'] = function(block) {
+  var value_i = Blockly.JavaScript.valueToCode(block, 'i', Blockly.JavaScript.ORDER_ATOMIC);
+  var value_t = Blockly.JavaScript.valueToCode(block, 't', Blockly.JavaScript.ORDER_ATOMIC);
+  var value_to = Blockly.JavaScript.valueToCode(block, 'to', Blockly.JavaScript.ORDER_ATOMIC);
+  // TODO: Assemble JavaScript into code variable.
+  var code = value_to + "[" + value_i + "] = " + value_t + "\n"
+  return code;
+};
+
+Blockly.JavaScript['set_object_prop'] = function(block) {
+  var value_i = Blockly.JavaScript.valueToCode(block, 'i', Blockly.JavaScript.ORDER_ATOMIC);
+  var value_t = Blockly.JavaScript.valueToCode(block, 't', Blockly.JavaScript.ORDER_ATOMIC);
+  var value_to = Blockly.JavaScript.valueToCode(block, 'to', Blockly.JavaScript.ORDER_ATOMIC);
+  // TODO: Assemble JavaScript into code variable.
+  var code = value_t + "[" + value_i + "] = " + value_to + "\n"
+  return code;
+};
+
+Blockly.JavaScript['get_object_prop'] = function(block) {
+  var value_i = Blockly.JavaScript.valueToCode(block, 'i', Blockly.JavaScript.ORDER_ATOMIC);
+  var value_t = Blockly.JavaScript.valueToCode(block, 't', Blockly.JavaScript.ORDER_ATOMIC);
+  // TODO: Assemble JavaScript into code variable.
+  var code = value_t + "[" + value_i + "]"
+  // TODO: Change ORDER_NONE to the correct strength.
+  return [code, Blockly.JavaScript.ORDER_ATOMIC];
+};
+
+Blockly.JavaScript['get_of_json'] = function(block) {
+  var value_i = Blockly.JavaScript.valueToCode(block, 'i', Blockly.JavaScript.ORDER_ATOMIC);
+  // TODO: Assemble JavaScript into code variable.
+  var code = "JSON.parse(" + value_i + ")"
+  // TODO: Change ORDER_NONE to the correct strength.
+  return [code, Blockly.JavaScript.ORDER_ATMOIC];
+};
+
+Blockly.JavaScript['object_to_json'] = function(block) {
+  var value_i = Blockly.JavaScript.valueToCode(block, 'i', Blockly.JavaScript.ORDER_ATOMIC);
+  // TODO: Assemble JavaScript into code variable.
+  var code = "JSON.stringify(" + value_i + ")"
+  // TODO: Change ORDER_NONE to the correct strength.
+  return [code, Blockly.JavaScript.ORDER_ATOMIC];
+};
+
+Blockly.JavaScript['create_object'] = function(block) {
+  // TODO: Assemble JavaScript into code variable.
+  var code = "{"
+  for (var i = 1; i < this.objectCount_ + 1; i++) {
+  var c = Blockly.JavaScript.valueToCode(block, 'o' + i, Blockly.JavaScript.ORDER_ATOMIC);
+  code = code + "\n" + c
+  }
+  code = code + "\n}"
+  // TODO: Change ORDER_NONE to the correct strength.
+  return [code, Blockly.JavaScript.ORDER_ATOMIC];
+};
+
+Blockly.JavaScript['get_list_of_objects'] = function(block) {
+  var dropdown_name = block.getFieldValue('NAME');
+  var value_name = Blockly.JavaScript.valueToCode(block, 'NAME', Blockly.JavaScript.ORDER_ATOMIC);
+  // TODO: Assemble JavaScript into code variable.
+  if(dropdown_name == "p") {
+  var code = "Object.values(" + value_name + ")"
+  } else {
+  var code = "Object.keys(" + value_name + ")"
+  }
+  // TODO: Change ORDER_NONE to the correct strength.
+  return [code, Blockly.JavaScript.ORDER_ATOMIC];
+};
+
+Blockly.JavaScript['object_key_val'] = function(block) {
+  var value_k = Blockly.JavaScript.valueToCode(block, 'k', Blockly.JavaScript.ORDER_ATOMIC);
+  var value_v = Blockly.JavaScript.valueToCode(block, 'v', Blockly.JavaScript.ORDER_ATOMIC);
+  // TODO: Assemble JavaScript into code variable.
+  var code = value_k + ":" + value_v
+  // TODO: Change ORDER_NONE to the correct strength.
+  return [code, Blockly.JavaScript.ORDER_ATOMIC];
+};
+
+Blockly.JavaScript['before_unload'] = function(block) {
+  var dropdown_name = block.getFieldValue('NAME');
+  var statements_name = Blockly.JavaScript.statementToCode(block, 'NAME');
+  // TODO: Assemble JavaScript into code variable.
+  var code = "window.addEventListener('beforeunload', e => { \ne.preventDefault();\n" + statements_name + "\ne.returnValue = 'only old browser have this';\n});\n"
+  return code;
+};
+
+Blockly.JavaScript['save_item'] = function(block) {
+  var dropdown_name = block.getFieldValue('NAME');
+  var value_key = Blockly.JavaScript.valueToCode(block, 'key', Blockly.JavaScript.ORDER_ATOMIC);
+  var value_name = Blockly.JavaScript.valueToCode(block, 'NAME', Blockly.JavaScript.ORDER_ATOMIC);
+  // TODO: Assemble JavaScript into code variable.
+  var code =  "window.localStorage.setItem(" + value_key + ", " + value_name + ");\n"
+  return code;
+};
+
+Blockly.JavaScript['emove_item'] = function(block) {
+  var dropdown_name = block.getFieldValue('NAME');
+  var value_key = Blockly.JavaScript.valueToCode(block, 'key', Blockly.JavaScript.ORDER_ATOMIC);
+  // TODO: Assemble JavaScript into code variable.
+  var code = "window.localStorage.removeItem(" + value_key + ");\n"
+  return code;
+};
+
+Blockly.JavaScript['clear_storage'] = function(block) {
+  var dropdown_name = block.getFieldValue('NAME');
+  // TODO: Assemble JavaScript into code variable.
+  var code = "window.localStorage.clear();\n"
+  return code;
+};
+
+Blockly.JavaScript['get_item'] = function(block) {
+  var dropdown_name = block.getFieldValue('NAME');
+  var value_name = Blockly.JavaScript.valueToCode(block, 'NAME', Blockly.JavaScript.ORDER_ATOMIC);
+  // TODO: Assemble JavaScript into code variable.
+  var code = "window.localStorage.getItem(" + value_name + ")"
+  // TODO: Change ORDER_NONE to the correct strength.
+  return [code, Blockly.JavaScript.ORDER_NONE];
+};
+
+Blockly.JavaScript['device_manager'] = function(block) {
+  var dropdown_name = block.getFieldValue('NAME');
+  var dropdown_p = block.getFieldValue('p');
+  // TODO: Assemble JavaScript into code variable.
+  if(dropdown_p == "d") {
+  var code = "navigator.platform"
+  } 
+  if(dropdown_p == "imd") {
+  var code = "/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)"
+  }
+  if(dropdown_p == "hde") {
+  var code = "window.matchMedia('(prefers-color-scheme: dark)').matches"
+  }  if(dropdown_p == "ictan") {
+  var code = "navigator.onLine"
+  } else if (dropdown_p == "l") {
+  var code = "navigator.language"
+  }
+  // TODO: Change ORDER_NONE to the correct strength.
+  return [code, Blockly.JavaScript.ORDER_NONE];
+};
+
+Blockly.JavaScript['get_permison_staet'] = function(block) {
+  var dropdown_name = block.getFieldValue('NAME');
+  var dropdown_p = block.getFieldValue('p');
+  var statements_name = Blockly.JavaScript.statementToCode(block, 'NAME');
+  var eid = Blockly.JavaScript.nameDB_.getName(
+      block.getFieldValue('eid'), Blockly.VARIABLE_CATEGORY_NAME);
+  // TODO: Assemble JavaScript into code variable.
+  var code = "navigator.permissions.query({name:'" + dropdown_p + "'}).then(function(result) {\nvar " + eid + " = result.state\n" + statements_name + "\n});\n"
+  return code;
+};
+
+Blockly.JavaScript['get_elapsed_time'] = function(block) {
+  var dropdown_name = block.getFieldValue('NAME');
+  // TODO: Assemble JavaScript into code variable.
+  var code = "end - start"
+  // TODO: Change ORDER_NONE to the correct strength.
+  return [code, Blockly.JavaScript.ORDER_NONE];
+};
+
+Blockly.JavaScript['stop_start_timer'] = function(block) {
+  var dropdown_name = block.getFieldValue('NAME');
+  var dropdown_t = block.getFieldValue('t');
+  // TODO: Assemble JavaScript into code variable.
+  if(dropdown_t == "start") {
+  var code = "start = new Date();\n"
+  } else {
+  var code = "end = new Date();\n"
+  }
+  return code;
+};
+
+Blockly.JavaScript['date_get_now'] = function(block) {
+  var dropdown_name = block.getFieldValue('NAME');
+  // TODO: Assemble JavaScript into code variable.
+  var code = "dateManager = new Date();\n"
+  return code;
+};
+
+Blockly.JavaScript['date'] = function(block) {
+  var dropdown_name = block.getFieldValue('NAME');
+  var dropdown_p = block.getFieldValue('p');
+  // TODO: Assemble JavaScript into code variable.
+  var code = "dateManager.get" + dropdown_p + "()"
+  // TODO: Change ORDER_NONE to the correct strength.
+  return [code, Blockly.JavaScript.ORDER_ATOMIC];
+};
+
+Blockly.JavaScript['screen'] = function(block) {
+  var dropdown_name = block.getFieldValue('NAME');
+  var dropdown_p = block.getFieldValue('p');
+  // TODO: Assemble JavaScript into code variable.
+  var code = "screen." + dropdown_p
+  // TODO: Change ORDER_NONE to the correct strength.
+  return [code, Blockly.JavaScript.ORDER_ATOMIC];
+};
+
+Blockly.JavaScript['title_favicon'] = function(block) {
+  var dropdown_name = block.getFieldValue('NAME');
+  var dropdown_t = block.getFieldValue('t');
+  var value_name = Blockly.JavaScript.valueToCode(block, 'NAME', Blockly.JavaScript.ORDER_ATOMIC);
+  // TODO: Assemble JavaScript into code variable.
+  if(dropdown_t == "t") {
+  var code = "document.title = " + value_name +  ";\n"
+  } else {
+    var code = `var link = document.querySelector("link[rel~='icon']");
+if (!link) {
+    link = document.createElement('link');
+    link.rel = 'icon';
+    document.getElementsByTagName('head')[0].appendChild(link);
+}
+link.href = ` + value_name + `;`
+  }
+  return code;
+};
+
+Blockly.JavaScript['console'] = function(block) {
+  var dropdown_name = block.getFieldValue('NAME');
+  var dropdown_y = block.getFieldValue('y');
+  var value_name = Blockly.JavaScript.valueToCode(block, 'NAME', Blockly.JavaScript.ORDER_ATOMIC);
+  // TODO: Assemble JavaScript into code variable.
+  var code = "console." + dropdown_y + "(" + value_name +  ");\n"
+  return code;
+};
+
+Blockly.JavaScript['windew_height_width'] = function(block) {
+  var dropdown_name = block.getFieldValue('NAME');
+  var dropdown_y = block.getFieldValue('y');
+  var dropdown_w = block.getFieldValue('w');
+  // TODO: Assemble JavaScript into code variable.
+  var code = "window." + dropdown_y + dropdown_w
+  // TODO: Change ORDER_NONE to the correct strength.
+  return [code, Blockly.JavaScript.ORDER_NONE];
+};
+
+Blockly.JavaScript['alert'] = function(block) {
+  var dropdown_name = block.getFieldValue('NAME');
+  var value_name = Blockly.JavaScript.valueToCode(block, 'NAME', Blockly.JavaScript.ORDER_ATOMIC);
+  // TODO: Assemble JavaScript into code variable.
+  var code = "alert(" + value_name + ")\n"
+  return code;
+};
+
+Blockly.JavaScript['show_propmt'] = function(block) {
+  var dropdown_name = block.getFieldValue('NAME');
+  var value_name = Blockly.JavaScript.valueToCode(block, 'NAME', Blockly.JavaScript.ORDER_ATOMIC);
+  // TODO: Assemble JavaScript into code variable.
+  var code = "prompt(" + value_name + ")"
+  // TODO: Change ORDER_NONE to the correct strength.
+  return [code, Blockly.JavaScript.ORDER_NONE];
+};
+
+Blockly.JavaScript['show_confirm'] = function(block) {
+  var dropdown_name = block.getFieldValue('NAME');
+  var value_name = Blockly.JavaScript.valueToCode(block, 'NAME', Blockly.JavaScript.ORDER_ATOMIC);
+  // TODO: Assemble JavaScript into code variable.
+  var code = "confirm(" + value_name + ")"
+  // TODO: Change ORDER_NONE to the correct strength.
+  return [code, Blockly.JavaScript.ORDER_NONE];
+};
+
+Blockly.JavaScript['repplace_text'] = function(block) {
+  var value_i = Blockly.JavaScript.valueToCode(block, 'i', Blockly.JavaScript.ORDER_ATOMIC);
+  var value_t = Blockly.JavaScript.valueToCode(block, 't', Blockly.JavaScript.ORDER_ATOMIC);
+  var value_w = Blockly.JavaScript.valueToCode(block, 'w', Blockly.JavaScript.ORDER_ATOMIC);
+  // TODO: Assemble JavaScript into code variable.
+  var code = value_i + ".replace(" + value_t + ", " + value_w + ")"
+  // TODO: Change ORDER_NONE to the correct strength.
+  return [code, Blockly.JavaScript.ORDER_NONE];
+};
+
+Blockly.JavaScript['tet_contains'] = function(block) {
+  var value_i = Blockly.JavaScript.valueToCode(block, 'i', Blockly.JavaScript.ORDER_ATOMIC);
+  var value_t = Blockly.JavaScript.valueToCode(block, 't', Blockly.JavaScript.ORDER_ATOMIC);
+  // TODO: Assemble JavaScript into code variable.
+  var code = value_i + ".includes(" + value_t + ")"
+  // TODO: Change ORDER_NONE to the correct strength.
+  return [code, Blockly.JavaScript.ORDER_NONE];
+};
 
 Blockly.JavaScript['remove_duplicates'] = function(block) {
   var value_name = Blockly.JavaScript.valueToCode(block, 'NAME', Blockly.JavaScript.ORDER_ATOMIC);
@@ -219,11 +553,21 @@ Blockly.JavaScript['create_elem'] = function(block) {
     } else if (dropdown_e == "s") {
         var code = "{\nlet " + eid + " = document.createElement('input');\n" + eid + ".type = 'range';\n" + eid + ".max = 100;\n" + eid + ".value = 50;\n"
     } else if ( dropdown_e == "pb") {
-        var code = "{\nlet " + eid + " = document.createElement('input');\n" + eid + ".type = 'range';\n" + eid + ".max = 100;\n" + eid + ".value = 50;\n" + eid + ".disabled = true;\n"
+        var code = "{\nlet " + eid + " = document.createElement('progress');\n"
     } else if ( dropdown_e == "cb") {
         var code = "{\nlet " + eid + " = document.createElement('input');\n" + eid + ".type = 'checkbox';\n"
     } else if ( dropdown_e == "rb") {
         var code = "{\nlet " + eid + " = document.createElement('input');\n" + eid + ".type = 'radio';\n"
+    } else if( dropdown_e == "li") {
+    var code = "{\nlet " + eid + " = document.createElement('div');\n"
+    } else if (dropdown_e == "fab") {
+    var code = "{\nlet " + eid + " = document.createElement('div');\n"
+    } else if ( dropdown_e == "ul") {
+    var code = "{\nlet " + eid + " = document.createElement('ul');\n"
+    }else if ( dropdown_e == "ol") {
+    var code = "{\nlet " + eid + " = document.createElement('ol');\n"
+    } else if (dropdown_e == "a") {
+    var code = "{\nlet " + eid + " = document.createElement('a');\n" + eid + ".href = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'\n" + eid + ".innerHTML = 'This Is A HyperLink' \n"
     }
     
     var code = code + eid + ".className = '" + dropdown_e + "'\n" + statements_name + "\n}\n"
@@ -473,11 +817,11 @@ Blockly.JavaScript['create_dynamic_var'] = function(block) {
 
 //variables
 
-var events = ["initd", 'window_click', 'key_changed', 'game_pad_connected','game_pad_disconnected', 'game_pad_button_change', 'create_listener'];
+var events = ["initd", 'window_click', 'key_changed', 'game_pad_connected','game_pad_disconnected', 'game_pad_button_change', 'before_unload'];
 var loops = ['controls_repeat', 'controls_repeat_ext', 'controls_forEach', 'controls_for', 'controls_whileUntil', 'forever'];
 var projects = [];
 
-var secretsMSG = ["I am a monster", "Well hello there, If you've found this then congratulations there is more to see than you think, Just giving you a hint ;).", "I'll marry her, I'lljust have to finda way", "02 x Sketch", "I'm in love with a fairytale, even tho it hurts, but I don't care if I lose my mind, I'm already cursed.","Hentai", "Hello There", "What is this?, I hate this feeling"];
+var secretsMSG = ["I am a monster", "Well hello there, If you've found this then congratulations there is more to see than you think, Just giving you a hint ;).", "I'll marry her, I'lljust have to finda way", "02 x Sketch", "I'm in love with a fairytale, even tho it hurts, but I don't care if I lose my mind, I'm already cursed.","Hentai", "Hello There", "What is this?, I hate this feeling", "I think Sketch would make a great Game Theory episode","Zero Two is kinda Hot"];
 
 var project = "";
 
@@ -493,11 +837,62 @@ margin: 0px;
   height: 100%;
 width: 100%;
 }
+
+.li {
+  border: 8px solid #f3f3f3; /* Light grey */
+  border-top: 8px solid #008dcd; /* Blue */
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1.5s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.fab {
+  width: 58px;
+  height: 58px;
+  background-color: #008dcd;
+  border-radius: 50%;
+  font-size: 50px;
+  color: white;
+  text-align: center;
+
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+
+  -moz-box-sizing: border-box; /* Firefox, other Gecko */
+
+  box-sizing: border-box;
+    z-index: 1;
+}
+
 <\/style>
 <body>
 <\/body>
 <script type="module">
+let spalsh = document.createElement('img');
+spalsh.src = "https://media.discordapp.net/attachments/898978597996466189/900743720905900032/60d473a38f959300118b9c10.png";
+spalsh.style.width = '35px';
+spalsh.style.height = '35px';
+spalsh.style.margin = '8px';
+spalsh.style.position = 'fixed';
+document.body.appendChild(spalsh);
+spalsh.onclick = function () {
+window.open("https://lukeplays33.github.io/Sketch/");
+}
 var kccb = '';
+var dateManager = new Date();
+var start, end
 function changeGamepadAPiButton () {
 var gamepads = navigator.getGamepads ? navigator.getGamepads() : (navigator.webkitGetGamepads ? navigator.webkitGetGamepads : []);
 var gp = gamepads[0];
@@ -726,6 +1121,7 @@ function start() {
   document.getElementById("home").style.display = "none";
     
   window.setTimeout(function () {
+      
       document.getElementById("menu").style.display = "block";
           if(window.localStorage.getItem("welcome") == "" || window.localStorage.getItem("welcome") == null) {
         document.getElementById("welcome").style.display = "block";
@@ -740,8 +1136,23 @@ function start() {
           window.open("https://discord.gg/r4jMcw7H4g");
       }
       
+            var dis = document.getElementById("dis");
+      dis.onclick=function () {
+          window.open("https://discord.gg/r4jMcw7H4g");
+      }
+      
+                  var diss = document.getElementById("dismisss");
+      diss.onclick=function () {
+          document.getElementById("creditsss").style.display = "none";
+      }
+      
             var docs = document.getElementById("docs");
       docs.onclick=function () {
+          window.open("https://lukehoogenboom.gitbook.io/sketch-docs/");
+      }
+      
+                  var docss = document.getElementById("docss");
+      docss.onclick=function () {
           window.open("https://lukehoogenboom.gitbook.io/sketch-docs/");
       }
       
@@ -985,6 +1396,10 @@ search();
 
 // add settings page
 function settings() {
+var credits = document.getElementById("credits");
+credits.onclick = function () {
+document.getElementById("creditsss").style.display = "block";
+}
     var vs = document.getElementById("vsStyle");
     vs.onclick = function () {
         if(window.localStorage.getItem("vsStyle") == null || window.localStorage.getItem("vsStyle") == "" ) {
@@ -1059,10 +1474,15 @@ document.getElementById("editor").style.width = window.innerWidth + "px"
       
       document.getElementById("Test").style.backgroundColor = "#424242";
       document.getElementById("goHome").style.backgroundColor = "#424242";
+      
+      document.getElementById("dis").style.backgroundColor = "#424242";
+      document.getElementById("docss").style.backgroundColor = "#424242";
 
       document.getElementById("GoHome2").style.backgroundColor = "#424242";
 
       document.getElementById("open").style.backgroundColor = "#424242";
+      
+            document.getElementById("credits").style.backgroundColor = "#424242";
     
     document.getElementById("e").style.color = "white";
         
@@ -1107,11 +1527,22 @@ document.getElementById("editor").style.width = window.innerWidth + "px"
       document.getElementById("projectIcon").style.backgroundColor = "#424242";
         
         document.getElementById("delete").style.backgroundColor = "#ad0e0e";
+        
+        document.getElementById("yt").style.backgroundColor = "#424242";
+      document.getElementById("twitter").style.backgroundColor = "#424242";
     } else {
       window.localStorage.setItem("DarkMode", "");
       document.body.style.backgroundColor = "white";
       
       document.getElementById("open").style.backgroundColor = "#008dcd";
+      
+            document.getElementById("dis").style.backgroundColor = "#008dcd";
+      document.getElementById("docss").style.backgroundColor = "#008dcd";
+      
+      document.getElementById("yt").style.backgroundColor = "#008dcd";
+      document.getElementById("twitter").style.backgroundColor = "#008dcd";
+      
+      document.getElementById("credits").style.backgroundColor = "#008dcd";
     
     document.getElementById("e").style.color = "#008dcd";
       
@@ -1175,6 +1606,7 @@ document.getElementById("editor").style.width = window.innerWidth + "px"
             window.localStorage.setItem("snap", "false");
             snap.innerHTML = "Snap To Place: Off"
         }
+        window.location.reload();
     }
 
     var grid = document.getElementById("grid");
@@ -1186,11 +1618,14 @@ document.getElementById("editor").style.width = window.innerWidth + "px"
             window.localStorage.setItem("grid", 0);
             grid.innerHTML = "Grid: Off"
         }
+        window.location.reload();
     }
 
   var settings = document.getElementById("settings");
 
   settings.onclick = function () {
+  document.getElementById("goHome").style.backgroundImage = "url(Images/round_home_white_24dp.png)";
+  
     document.getElementById("home").style.display = "none";
     document.getElementById("Settings").style.display = "block";
       
@@ -1204,10 +1639,14 @@ document.getElementById("editor").style.width = window.innerWidth + "px"
   var goHome = document.getElementById("goHome");
 
   goHome.onclick = function () {
+      
                                   document.getElementById("reset").style.display = "none";
     document.getElementById("goHome").style.display = "none";
       
       if (project == "") {
+          
+                    document.getElementById("goHome").style.backgroundImage = "url(Images/round_home_white_24dp.png)";
+          
     document.getElementById("home").style.display = "block";
     document.getElementById("Settings").style.display = "none";
           
@@ -1226,7 +1665,11 @@ document.getElementById("editor").style.width = window.innerWidth + "px"
                   document.getElementById("create").style.display = "block";
     document.getElementById("settings").style.display = "block";
           
+          
       } else { 
+          
+          document.getElementById("goHome").style.backgroundImage = "url(Images/round_edit_white.png)";
+          
           document.getElementById("menuItems").style.height = menuSize;
           
               document.getElementById("blocklyContainer").style.display = "block";
@@ -1250,7 +1693,18 @@ document.getElementById("editor").style.width = window.innerWidth + "px"
                             document.getElementById("reset").style.display = "none";
     document.getElementById("goHome").style.display = "none";
       }
+      
   };
+  
+  var yt = document.getElementById("yt");
+  yt.onclick = function () {
+  window.open("https://www.youtube.com/channel/UCdI5Lpnho7khE1DnDyrD6Ig");
+  }
+  
+    var twitter = document.getElementById("twitter");
+  twitter.onclick = function () {
+  window.open("https://twitter.com/Sketch27295830");
+  }
 
   var reset = (document.getElementById("reset").onclick = function () {
     if (confirm("WARNING: If you continue all data will be reset.")) {
@@ -1365,8 +1819,13 @@ function Dtheme() {
     
     document.getElementById("download").style.backgroundColor = "#424242";
     
+    document.getElementById("credits").style.backgroundColor = "#424242";
+    
     document.getElementById("Test").style.backgroundColor = "#424242";
     document.getElementById("goHome").style.backgroundColor = "#424242";
+    
+    document.getElementById("yt").style.backgroundColor = "#424242";
+      document.getElementById("twitter").style.backgroundColor = "#424242";
       
       document.getElementById("snap").style.backgroundColor = "#424242";
     document.getElementById("grid").style.backgroundColor = "#424242";
@@ -1398,6 +1857,9 @@ function Dtheme() {
       
       document.getElementById("project").style.color = "white";
       document.getElementById("projectIcon").style.backgroundColor = "#424242";
+      
+            document.getElementById("dis").style.backgroundColor = "#424242";
+      document.getElementById("docss").style.backgroundColor = "#424242";
 
     document.getElementById("refrence").style.color = "white";
     document.getElementById("challange").style.color = "white";
@@ -1523,6 +1985,12 @@ w.document.open();
     document.getElementById("goHome").style.display = "block";
         
         document.getElementById("menuItems").style.height = "170px";
+        
+            if(project == "") {
+       document.getElementById("goHome").style.backgroundImage = "url(Images/round_home_white_24dp.png)";
+       } else {
+           document.getElementById("goHome").style.backgroundImage = "url(Images/round_edit_white.png)";
+    }
     }
 }
 editor();
@@ -1867,19 +2335,20 @@ workspace.addChangeListener(check);
 
 // loop errors
 
+
 function loop_errors () {
     var blocks = workspace.getAllBlocks();
     for (var i of blocks) {
-        if(i.type == "break_and_continue") {
-            var parent = String(i.getSurroundParent())
-            for (var item of loops) {
-                if (parent.includes(item)) {
-                    i.setWarningText(null);
-                } else {
-                    i.setWarningText("This block can only be placed inside of a loop");
-                }
-            }
-        }
+    if ( i.type == "break_and_continue") {
+    } else if (i.type == "clearint") {
+    
+    } else if (i.type == "get_d_var") {
+    if(i.getRootBlock().type == "global_declaration" || i.getRootBlock().type == "create_dynamic_var") {
+    i.setWarningText("This block cannot be in a definition");
+    } else {
+    i.setWarningText(null);
+    }
+    }
     }
 }
     
@@ -2730,7 +3199,7 @@ Blockly.Blocks['create_elem'] = {
         .appendField("call")
         .appendField(new Blockly.FieldDropdown([[window.localStorage.getItem("projectName" + project),"OPTIONNAME"]]), "NAME")
         .appendField(".createNew")
-        .appendField(new Blockly.FieldDropdown([["Iframe","if"], ["Div","d"], ["Image","i"], ["Paragraph","p"], ["Button","b"], ["DropDownButton","ddb"], ["ColorPicker","cp"], ["DatePicker","dp"], ["TimePicker","tp"], ["TextField","tf2"], ["Canvas","c"], ["Slider","s"], ["ProgressBar","pb"], ["Checkbox","cb"], ["RadioButton","rb"]]), "e")
+        .appendField(new Blockly.FieldDropdown([["Iframe","if"], ["Div","d"], ["Image","i"], ["Paragraph","p"], ["Button","b"], ["DropDownButton","ddb"], ["ColorPicker","cp"], ["DatePicker","dp"], ["TimePicker","tp"], ["TextField","tf2"], ["Canvas","c"], ["Slider","s"], ["ProgressBar","pb"], ["Checkbox","cb"], ["RadioButton","rb"], ["LoadignIcon","li"], ["FAB", "fab"], ["UnorderedList", "ul"], ["OrderedList", "ol"], ["HyperLink", "a"]]), "e")
         .appendField("Element")
       .appendField(
                   new FieldParameterFlydown('ElementId', true, FieldFlydown.DISPLAY_BELOW),
@@ -2887,7 +3356,7 @@ Blockly.Blocks['all_elements'] = {
         .appendField("call")
         .appendField(new Blockly.FieldDropdown([[window.localStorage.getItem("projectName" + project),"OPTIONNAME"]]), "NAME")
         .appendField(".getAll")
-        .appendField(new Blockly.FieldDropdown([["Iframe","if"], ["Div","d"], ["Image","i"], ["Paragraph","p"], ["Button","b"], ["DropDownButton","ddb"], ["ColorPicker","cp"], ["DatePicker","dp"], ["TimePicker","tp"], ["TextField","tf2"], ["Canvas","c"], ["Slider","s"], ["ProgressBar","pb"], ["Checkbox","cb"], ["RadioButton","rb"]]), "e")
+.appendField(new Blockly.FieldDropdown([["Iframe","if"], ["Div","d"], ["Image","i"], ["Paragraph","p"], ["Button","b"], ["DropDownButton","ddb"], ["ColorPicker","cp"], ["DatePicker","dp"], ["TimePicker","tp"], ["TextField","tf2"], ["Canvas","c"], ["Slider","s"], ["ProgressBar","pb"], ["Checkbox","cb"], ["RadioButton","rb"], ["LoadignIcon","li"], ["FAB", "fab"], ["UnorderedList", "ul"], ["OrderedList", "ol"], ["HyperLink", "a"]]), "e")
         .appendField("Elements");
     this.setOutput(true, null);
     this.setColour(210);
@@ -2995,6 +3464,28 @@ domToMutation: function(xmlElement) {
       Blockly.Mutator.reconnect(statementConnections[i], this, 'DO' + i);
     }
   },
+     saveConnections: function(topBlock) {
+    let clauseBlock = topBlock.getInputTargetBlock('case');
+    let i = 1;
+    while (clauseBlock) {
+      switch (clauseBlock.type) {
+        case 'case': {
+          const inputIf = this.getInput('c' + i);
+          const inputDo = this.getInput('DO' + i);
+          clauseBlock.valueConnection_ =
+              inputIf && inputIf.connection.targetConnection;
+          clauseBlock.statementConnection_ =
+              inputDo && inputDo.connection.targetConnection;
+          i++;
+          break;
+        }
+        default:
+          throw TypeError('Unknown block type: ' + clauseBlock.type);
+      }
+      clauseBlock = clauseBlock.nextConnection &&
+          clauseBlock.nextConnection.targetBlock();
+    }
+  },
 };
 
 //mutator block
@@ -3072,14 +3563,12 @@ Blockly.Blocks['create_listener'] = {
   init: function() {
     this.appendDummyInput()
         .appendField("when")
-        .appendField(new Blockly.FieldDropdown([[window.localStorage.getItem("projectName" + project),"OPTIONNAME"]]), "e")
-        .appendField(".anyElementEventFires")
-      .appendField(
-                  new FieldParameterFlydown('ElementID', true, FieldFlydown.DISPLAY_BELOW),
-            'eid')
-      .appendField(
-                  new FieldParameterFlydown('EventType', true, FieldFlydown.DISPLAY_BELOW),
-            'et');
+        .appendField(new Blockly.FieldDropdown([["Iframe","if"], ["Div","d"], ["Image","i"], ["Paragraph","p"], ["Button","b"], ["DropDownButton","ddb"], ["ColorPicker","cp"], ["DatePicker","dp"], ["TimePicker","tp"], ["TextField","tf2"], ["Canvas","c"], ["Slider","s"], ["ProgressBar","pb"], ["Checkbox","cb"], ["RadioButton","rb"], ["LoadignIcon","li"], ["FAB", "fab"], ["UnorderedList", "ul"], ["OrderedList", "ol"], ["HyperLink", "a"]]), "e")
+        .appendField(".")
+        .appendField(new Blockly.FieldDropdown([["option","OPTIONNAME"], ["option","OPTIONNAME"], ["option","OPTIONNAME"]]), "e")
+        .appendField(
+                  new FieldParameterFlydown('ElementId', true, FieldFlydown.DISPLAY_BELOW),
+            'eid');
     this.appendStatementInput("s")
         .setCheck(null)
         .appendField("do");
@@ -3088,22 +3577,19 @@ Blockly.Blocks['create_listener'] = {
  this.setHelpUrl("");
   },
   withLexicalVarsAndPrefix: function(child, proc) {
-            if (this.getInputTargetBlock('s') === child) {
-                const params = this.declaredNames();
-                // not arguments_ instance var
-                for (let i = 0; i < params.length; i++) {
-                    proc(params[i], '');
-                }
-            }
-        },
+    const params = this.declaredNames();
+    // not arguments_ instance var
+    for (let i = 0; i < params.length; i++) {
+      proc(params[i], '');
+    }
+  },
   getVars: function() {
     return [
       this.getFieldValue('eid'),
-        this.getFieldValue('et'),
     ];
   },
   blocksInScope: function() {
-    const doBlock = this.getInputTargetBlock('s');
+    const doBlock = this.getInputTargetBlock('NAME');
     if (doBlock) {
       return [doBlock];
     } else {
@@ -3112,16 +3598,12 @@ Blockly.Blocks['create_listener'] = {
   },
   declaredNames: function() {
     return [
-      this.getFieldValue('eid'),
-        this.getFieldValue('et'),
+            this.getFieldValue('eid'),
     ];
   },
   renameVar: function(oldName, newName) {
     if (Blockly.Names.equals(oldName, this.getFieldValue('eid'))) {
       this.setFieldValue(newName, 'eid');
-    }
-          if (Blockly.Names.equals(oldName, this.getFieldValue('et'))) {
-      this.setFieldValue(newName, 'et');
     }
   },
   renameBound: function(boundSubstitution, freeSubstitution) {
@@ -3162,5 +3644,825 @@ Blockly.Blocks['remove_duplicates'] = {
     this.setColour("#76afc9");
  this.setTooltip("Removes all duplicates from an list");
  this.setHelpUrl("");
+  }
+};
+
+Blockly.Blocks['repplace_text'] = {
+  init: function() {
+    this.appendValueInput("i")
+        .setCheck("String")
+        .appendField("in text");
+    this.appendValueInput("t")
+        .setCheck("String")
+        .appendField("replace");
+    this.appendValueInput("w")
+        .setCheck("String")
+        .appendField("with");
+    this.setInputsInline(true);
+    this.setOutput(true, null);
+    this.setColour("#DF6078");
+ this.setTooltip("Replace the given text string with a new piece of text");
+ this.setHelpUrl("");
+  }
+};
+
+Blockly.Blocks['tet_contains'] = {
+  init: function() {
+    this.appendValueInput("i")
+        .setCheck("String")
+        .appendField("does");
+    this.appendValueInput("t")
+        .setCheck("String")
+        .appendField("contain");
+    this.setInputsInline(true);
+    this.setOutput(true, "Boolean");
+    this.setColour("#DF6078");
+ this.setTooltip("Reeturn true if the given piece of text is inside of a string");
+ this.setHelpUrl("");
+  }
+};
+
+Blockly.Blocks['set_object_prop'] = {
+  init: function() {
+    this.appendValueInput("i")
+        .setCheck("String")
+        .appendField("set key")
+        .setAlign(Blockly.ALIGN_RIGHT);
+    this.appendValueInput("t")
+        .setCheck(null)
+        .appendField("of object")
+      .setAlign(Blockly.ALIGN_RIGHT);
+    this.appendValueInput("to")
+        .setCheck(null)
+        .appendField("to")
+      .setAlign(Blockly.ALIGN_RIGHT);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour("#F99EA3");
+ this.setTooltip("Set a property of an object");
+ this.setHelpUrl("");
+  }
+};
+
+Blockly.Blocks['get_object_prop'] = {
+  init: function() {
+    this.appendValueInput("i")
+        .setCheck("String")
+        .appendField("get key")
+        .setAlign(Blockly.ALIGN_RIGHT);
+    this.appendValueInput("t")
+        .setCheck("String")
+        .appendField("of object")
+      .setAlign(Blockly.ALIGN_RIGHT);
+    this.setOutput(true, null);
+    this.setColour("#F99EA3");
+ this.setTooltip("Get a property of an objects field");
+ this.setHelpUrl("");
+  }
+};
+
+Blockly.Blocks['get_of_json'] = {
+  init: function() {
+    this.appendValueInput("i")
+        .setCheck("String")
+        .appendField("get object or list from JSON");
+    this.setOutput(true, null);
+    this.setColour("#F99EA3");
+ this.setTooltip("Get a object or list from a JSON string");
+ this.setHelpUrl("");
+  }
+};
+
+Blockly.Blocks['object_to_json'] = {
+  init: function() {
+    this.appendValueInput("i")
+      .setCheck(null)
+        .appendField("generate JSON from object or list");
+    this.setOutput(true, null);
+    this.setColour("#F99EA3");
+ this.setTooltip("Trun an object or list into an JSON string");
+ this.setHelpUrl("");
+  }
+};
+
+Blockly.Blocks['create_object'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("create object");
+    this.setOutput(true, null);
+    this.setColour("#F99EA3");
+ this.setTooltip("Create a new object with some value's (optionally) ");
+ this.setHelpUrl("");
+      this.setMutator(new Blockly.Mutator(['object']));
+  },
+    updateShape_: function() {
+    for (let i = 1; this.getInput('o' + i); i++) {
+      this.removeInput('o' + i);
+    }
+    // Rebuild block.
+
+    // Observe how it is looking at the `this.elseifCount_` property
+    for (let i = 1; i <= this.objectCount_; i++) {
+      this.appendValueInput('o' + i).appendField("").setAlign(Blockly.ALIGN_RIGHT);
+    }
+    },
+decompose: function(workspace) {
+  var topBlock = workspace.newBlock('object_top_block');
+  topBlock.initSvg();
+    var connection =  topBlock.getInput('NAME').connection;
+  for (var i = 0; i < this.objectCount_; i++) {
+    var o = workspace.newBlock('object');
+    o.initSvg();
+    connection.connect(o.previousConnection);
+    connection = o.nextConnection;
+  }
+  return topBlock;
+},
+    compose: function(topBlock) {
+         // This line changed. Now you should actually be accessing the first case min-block
+         let toppBlock = topBlock.getInputTargetBlock('NAME');
+
+    // Count number of inputs.
+    this.objectCount_ = 0;
+    const valueConnections = [null];
+    while (toppBlock && !toppBlock.isInsertionMarker()) {
+      switch (toppBlock.type) {
+        case 'object':
+          this.objectCount_++;
+          valueConnections.push(toppBlock.valueConnection_);
+          break;
+        default:
+          throw TypeError('Unknown block type: ' + toppBlock.type);
+      }
+      toppBlock = toppBlock.nextConnection &&
+          toppBlock.nextConnection.targetBlock();
+    }
+
+    // Observe how it calls `updateShape_`
+    this.updateShape_();
+            this.reconnectChildBlocks_(
+        valueConnections);
+},
+    mutationToDom: function() {
+  // You *must* create a <mutation></mutation> element.
+  // This element can have children.
+  var container = Blockly.utils.xml.createElement('mutation');
+  container.setAttribute('items', this.objectCount_);
+  return container;
+},
+
+domToMutation: function(xmlElement) {
+  this.objectCount_ = parseInt(xmlElement.getAttribute('items'), 10);
+  // This is a helper function which adds or removes inputs from the block.
+  this.updateShape_();
+},  
+      /**
+   * Reconnects child blocks.
+   * @param {!Array<?RenderedConnection>} valueConnections List of
+   * value connections for 'if' input.
+   * @param {!Array<?RenderedConnection>} statementConnections List of
+   * statement connections for 'do' input.
+   * @param {?RenderedConnection} elseStatementConnection Statement
+   * connection for else input.
+   * @this {Block}
+   */
+    reconnectChildBlocks_: function(
+      valueConnections ) {
+    for (let i = 1; i <= this.objectCount_; i++) {
+      Blockly.Mutator.reconnect(valueConnections[i], this, 'o' + i);
+    }
+  },
+     saveConnections: function(topBlock) {
+    let clauseBlock = topBlock.getInputTargetBlock('NAME');
+    let i = 1;
+    while (clauseBlock) {
+      switch (clauseBlock.type) {
+        case 'object': {
+          const inputIff = this.getInput('o' + i);
+          clauseBlock.valueConnection_ =
+              inputIff && inputIff.connection.targetConnection;
+          i++;
+          break;
+        }
+        default:
+          throw TypeError('Unknown block type: ' + clauseBlock.type);
+      }
+      clauseBlock = clauseBlock.nextConnection &&
+          clauseBlock.nextConnection.targetBlock();
+    }
+  },
+};
+
+Blockly.Blocks['get_list_of_objects'] = {
+  init: function() {
+    this.appendValueInput("NAME")
+        .setCheck(null)
+        .appendField("get list of ")
+        .appendField(new Blockly.FieldDropdown([["Values","p"], ["Keys","k"]]), "NAME")
+        .appendField("of object");
+    this.setOutput(true, null);
+    this.setColour("#F99EA3");
+ this.setTooltip("Return a list of an objects properties or keys");
+ this.setHelpUrl("");
+  }
+};
+
+Blockly.Blocks['object'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("object");
+    this.setInputsInline(true);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour("#F99EA3");
+ this.setTooltip("");
+ this.setHelpUrl("");
+  }
+};
+
+Blockly.Blocks['object_top_block'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("object");
+    this.appendStatementInput("NAME")
+        .setCheck(null);
+    this.setInputsInline(true);
+    this.setColour("#F99EA3");
+ this.setTooltip("");
+ this.setHelpUrl("");
+  }
+};
+
+Blockly.Blocks['object_key_val'] = {
+  init: function() {
+    this.appendValueInput("k")
+        .setCheck("String")
+        .appendField("key");
+    this.appendValueInput("v")
+        .setCheck(null)
+        .appendField("value");
+    this.setOutput(true, null);
+    this.setInputsInline(true);
+    this.setColour("#F99EA3");
+ this.setTooltip("Add a pair to the object");
+ this.setHelpUrl("");
+  }
+};
+
+Blockly.Blocks['alert'] = {
+  init: function() {
+    this.appendValueInput("NAME")
+        .setCheck(null)
+        .appendField("call")
+        .appendField(new Blockly.FieldDropdown([[window.localStorage.getItem("projectName" + project),"OPTIONNAME"]]), "NAME")
+        .appendField(".showAlert");
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour("#9596EB");
+ this.setTooltip("Show a pop up dialog with the given massage");
+ this.setHelpUrl("");
+  }
+};
+
+Blockly.Blocks['show_propmt'] = {
+  init: function() {
+    this.appendValueInput("NAME")
+        .setCheck(null)
+        .appendField("call")
+        .appendField(new Blockly.FieldDropdown([[window.localStorage.getItem("projectName" + project),"OPTIONNAME"]]), "NAME")
+        .appendField(".showPrompt");
+    this.setOutput(true, null);
+    this.setColour("#9596EB");
+ this.setTooltip("Show a pop up dailog requesting the user to input some text");
+ this.setHelpUrl("");
+  }
+};
+
+Blockly.Blocks['show_confirm'] = {
+  init: function() {
+    this.appendValueInput("NAME")
+        .setCheck(null)
+        .appendField("call")
+        .appendField(new Blockly.FieldDropdown([[window.localStorage.getItem("projectName" + project),"OPTIONNAME"]]), "NAME")
+        .appendField(".confrim");
+    this.setOutput(true, null);
+    this.setColour("#9596EB");
+ this.setTooltip("Shows a popup asking the user to confirm a decision");
+ this.setHelpUrl("");
+  }
+};
+
+Blockly.Blocks['console'] = {
+  init: function() {
+    this.appendValueInput("NAME")
+        .setCheck(null)
+        .appendField("call")
+        .appendField(new Blockly.FieldDropdown([[window.localStorage.getItem("projectName" + project),"OPTIONNAME"]]), "NAME")
+        .appendField(".console")
+        .appendField(new Blockly.FieldDropdown([["Log","log"], ["Warn","warn"], ["Error","error"]]), "y");
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour("#9596EB");
+ this.setTooltip("Log a message to the browsers console");
+ this.setHelpUrl("");
+  }
+};
+
+Blockly.Blocks['windew_height_width'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("call")
+        .appendField(new Blockly.FieldDropdown([[window.localStorage.getItem("projectName" + project),"OPTIONNAME"]]), "NAME")
+        .appendField(".getWindow")
+        .appendField(new Blockly.FieldDropdown([["Outer","outer"], ["Inner","inner"]]), "y")
+        .appendField(new Blockly.FieldDropdown([["Width","Width"], ["Height","Height"]]), "w");
+    this.setOutput(true, null);
+    this.setColour("#9596EB");
+ this.setTooltip("return the windows inner or outerwidth or height");
+ this.setHelpUrl("");
+  }
+};
+
+Blockly.Blocks['title_favicon'] = {
+  init: function() {
+    this.appendValueInput("NAME")
+        .setCheck(null)
+        .appendField("call")
+        .appendField(new Blockly.FieldDropdown([[window.localStorage.getItem("projectName" + project),"OPTIONNAME"]]), "NAME")
+        .appendField(".set")
+        .appendField(new Blockly.FieldDropdown([["Title","t"], ["FavIcon","f"]]), "t")
+        .appendField("to");
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour("#9596EB");
+ this.setTooltip("Set either the project title or favIcon");
+ this.setHelpUrl("");
+  }
+};
+
+Blockly.Blocks['screen'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("call")
+        .appendField(new Blockly.FieldDropdown([["ScreenManger","OPTIONNAME"]]), "NAME")
+        .appendField(".get")
+        .appendField(new Blockly.FieldDropdown([["Width","width"], ["Height","height"], ["AvaibleWidth","availWidth"], ["AvaibleHeight","availHeight"], ["ColorDepth","colorDepth"], ["PixelDepth","pixelDepth"]]), "p");
+    this.setOutput(true, null);
+    this.setColour("#9596EB");
+ this.setTooltip("Call the ScreenManager to return the value of the given property");
+ this.setHelpUrl("");
+  }
+};
+
+Blockly.Blocks['date'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("call")
+        .appendField(new Blockly.FieldDropdown([["DateManager","OPTIONNAME"]]), "NAME")
+        .appendField(".get")
+        .appendField(new Blockly.FieldDropdown([["Date","Date"], ["Day","Day"], ["FullYear","FullYear"], ["Hour","Hours"], ["MilliSeconds","Milliseconds"], ["Minute","Minutes"], ["Month","Month"], ["Seconds","Seconds"]]), "p");
+    this.setOutput(true, null);
+    this.setColour("#9596EB");
+ this.setTooltip("Call the DateManager to return the given propry it's value");
+ this.setHelpUrl("");
+  }
+};
+
+Blockly.Blocks['date_get_now'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("call")
+        .appendField(new Blockly.FieldDropdown([["DateManager","OPTIONNAME"]]), "NAME")
+        .appendField(".getNow");
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour("#9596EB");
+ this.setTooltip("Call the DateManger to get the current date");
+ this.setHelpUrl("");
+  }
+};
+
+Blockly.Blocks['stop_start_timer'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("call")
+        .appendField(new Blockly.FieldDropdown([["DateManager","OPTIONNAME"]]), "NAME")
+        .appendField(".")
+        .appendField(new Blockly.FieldDropdown([["Start","start"], ["Stop","stop"]]), "t")
+        .appendField("Timer");
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour("#9596EB");
+ this.setTooltip("Start or stop the timer");
+ this.setHelpUrl("");
+  }
+};
+
+Blockly.Blocks['get_elapsed_time'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("call")
+        .appendField(new Blockly.FieldDropdown([["DateManager","OPTIONNAME"]]), "NAME")
+        .appendField(".getElapsedTime");
+    this.setOutput(true, null);
+    this.setColour("#9596EB");
+ this.setTooltip("Return the time that has been elapsed after the timer is stopped(in Milliseconds)");
+ this.setHelpUrl("");
+  }
+};
+
+Blockly.Blocks['get_permison_staet'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("call")
+        .appendField(new Blockly.FieldDropdown([["PermisionsManager","OPTIONNAME"]]), "NAME")
+        .appendField(".get")
+        .appendField(new Blockly.FieldDropdown([["Accelerometer","accelerometer"], ["Camera","camera"], ["ReadClipboard","clipboard-read"], ["WriteClipboard", "clipboard-write"], ["GeoLocation", "geolocation"], ["Notifications", "notifications"], ["Magnetometer", "magnetometer"], ["Microphone", "microphone"]]), "p")
+        .appendField("PermisionState")
+              .appendField(
+                  new FieldParameterFlydown('State', true, FieldFlydown.DISPLAY_BELOW),
+            'eid');
+    this.appendStatementInput("NAME")
+        .setCheck(null)
+        .appendField("do");
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour("#9596EB");
+ this.setTooltip("Check the granted state of a permison(return either prompt, granted or denied)");
+ this.setHelpUrl("");
+  },
+  withLexicalVarsAndPrefix: function(child, proc) {
+            if (this.getInputTargetBlock('NAME') === child) {
+                const params = this.declaredNames();
+                // not arguments_ instance var
+                for (let i = 0; i < params.length; i++) {
+                    proc(params[i], '');
+                }
+            }
+        },
+  getVars: function() {
+    return [
+      this.getFieldValue('eid'),
+    ];
+  },
+  blocksInScope: function() {
+    const doBlock = this.getInputTargetBlock('NAME');
+    if (doBlock) {
+      return [doBlock];
+    } else {
+      return [];
+    }
+  },
+  declaredNames: function() {
+    return [
+      this.getFieldValue('eid'),
+    ];
+  },
+  renameVar: function(oldName, newName) {
+    if (Blockly.Names.equals(oldName, this.getFieldValue('eid'))) {
+      this.setFieldValue(newName, 'eid');
+    }
+  },
+  renameBound: function(boundSubstitution, freeSubstitution) {
+    const paramSubstitution = boundSubstitution.restrictDomain(
+        this.declaredNames());
+    this.renameVars(paramSubstitution);
+    const newFreeSubstitution = freeSubstitution.extend(paramSubstitution);
+    LexicalVariable.renameFree(
+        this.getInputTargetBlock(this.bodyInputName), newFreeSubstitution);
+  },
+  renameFree: function(freeSubstitution) {
+    // There shouldn't be any free variables
+  },
+  freeVariables: function() { // return the free variables of this block
+    // There shouldn't be any free variables, so this should return an empty set.
+    // Should return the empty set: something is wrong if it doesn't!
+    return new Blockly.NameSet();
+  }
+};
+
+Blockly.Blocks['device_manager'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("call")
+        .appendField(new Blockly.FieldDropdown([["DeviceManager","OPTIONNAME"]]), "NAME")
+        .appendField(".get")
+        .appendField(new Blockly.FieldDropdown([["DeviceOS","d"], ["IsMobileDevice","imd"], ["HasDarkModeEnabled","hde"], ["IsConnectedToANetwork","ictan"], ["DeviceLanguage","l"]]), "p");
+    this.setOutput(true, null);
+    this.setColour("#9596EB");
+ this.setTooltip("Calls the device manager to return the status of the property");
+ this.setHelpUrl("");
+  }
+};
+
+Blockly.Blocks['save_item'] = {
+  init: function() {
+    this.appendValueInput("key")
+        .setCheck(null)
+        .appendField("call")
+        .appendField(new Blockly.FieldDropdown([["StorageManager","OPTIONNAME"]]), "NAME")
+        .appendField(".saveKey");
+    this.appendValueInput("NAME")
+        .setCheck(null)
+        .appendField("WithValue");
+    this.setInputsInline(true);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour("#9596EB");
+ this.setTooltip("Store the given value for the given key to local storage");
+ this.setHelpUrl("");
+  }
+};
+
+Blockly.Blocks['emove_item'] = {
+  init: function() {
+    this.appendValueInput("key")
+        .setCheck(null)
+        .appendField("call")
+        .appendField(new Blockly.FieldDropdown([["StorageManager","OPTIONNAME"]]), "NAME")
+        .appendField(".removeKey");
+    this.setInputsInline(true);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour("#9596EB");
+ this.setTooltip("Remove the key from local storage");
+ this.setHelpUrl("");
+  }
+};
+
+Blockly.Blocks['clear_storage'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("call")
+        .appendField(new Blockly.FieldDropdown([["StorageManager","OPTIONNAME"]]), "NAME")
+        .appendField(".clearStorage");
+    this.setInputsInline(true);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour("#9596EB");
+ this.setTooltip("Delete all stored data stored in the application WARNING: using this block while live testing will delete all data from Sketch aswel USE AT OWN RISK");
+ this.setHelpUrl("");
+  }
+};
+
+Blockly.Blocks['get_item'] = {
+  init: function() {
+    this.appendValueInput("NAME")
+        .setCheck(null)
+        .appendField("call")
+        .appendField(new Blockly.FieldDropdown([["StorageManager","OPTIONNAME"]]), "NAME")
+        .appendField(".getKey");
+    this.setOutput(true, null);
+    this.setColour("#9596EB");
+ this.setTooltip("GEt the value of the given key");
+ this.setHelpUrl("");
+  }
+};
+
+Blockly.Blocks['before_unload'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("when")
+        .appendField(new Blockly.FieldDropdown([[window.localStorage.getItem("projectName" + project),"OPTIONNAME"]]), "NAME")
+        .appendField(".beforeUnload");
+    this.appendStatementInput("NAME")
+        .setCheck(null)
+        .appendField("do");
+    this.setColour("#F3AA44");
+ this.setTooltip("Do some statements when the page it's contents are about to be unloaded  (ask the user if he wants to leave the page +  will fire on both cancel and confirm) ");
+ this.setHelpUrl("");
+  }
+};
+
+Blockly.Blocks['add_object'] = {
+  init: function() {
+    this.appendValueInput("i")
+        .setCheck("String")
+        .appendField("add key")
+        .setAlign(Blockly.ALIGN_RIGHT);
+    this.appendValueInput("t")
+        .setCheck("String")
+        .appendField("with value")
+        .setAlign(Blockly.ALIGN_RIGHT);
+    this.appendValueInput("to")
+        .setCheck(null)
+        .appendField("to object")
+        .setAlign(Blockly.ALIGN_RIGHT);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour("#F99EA3");
+ this.setTooltip("Add a new key with a value to an object");
+ this.setHelpUrl("");
+  }
+};
+
+  var options = [["Body", "body"],["Iframe","if"], ["Div","d"], ["Image","i"], ["Paragraph","p"], ["Button","b"], ["DropDownButton","ddb"], ["ColorPicker","cp"], ["DatePicker","dp"], ["TimePicker","tp"], ["TextField","tf2"], ["Canvas","c"], ["Slider","s"], ["ProgressBar","pb"], ["Checkbox","cb"], ["RadioButton","rb"], ["LoadignIcon","li"], ["FAB", "fab"], ["UnorderedList", "ul"], ["OrderedList", "ol"], ["HyperLink", "a"]];
+  
+  var opt = [["BackgroundColor", "style.backgroundColor"], ["BackgroundImage", "style.backgroundImage"], ["BackgroundImagePosition", "style.backgroundPosition"], ["BackgroundImageRepeat", "style.backgroundRepeat"], ["Width", "style.width"], ["Height", "style.height"], ["Margin", "style.margin"], ["MarginLeft", "style.marginLeft"], ["MarginRight", "style.marginRight"],["MarginTop", "style.marginTop"], ["MarginBottom", "style.marginBottom"], ["Padding", "style.padding"], ["PaddingLeft", "style.paddingLeft"],["PaddingRight", "style.paddingRight"], ["PaddingTop", "style.paddingTop"], ["PaddingBottom", "style.paddingBottom"], ["Top", "style.top"], ["Bottom", "style.bottom"], ["Left", "style.left"], ["Right", "style.right"],["BorderColor", "style.borderColor"], ["BorderWidth", "style.borderWidth"], ["BorderRadius", "style.borderRadius"], ["BorderStyle", "style.borderStyle"], ["Position", "style.position"]];
+  
+  var p = [["MaxValue", "max"], ["MinVlaue", "min"], ["Value", "value"]];
+  
+  
+  var text = [["Text", "innerHTML"], ["TextColor", "style.color"], ["TextSize", "style.fontSize"], ["FontFamily", "style.fontFamily"], ["TextAlign", "style.textAlign"]];
+
+Blockly.Blocks['set_prop'] = {
+  init: function() {
+    this.appendValueInput("NAME")
+        .setCheck(null)
+        .appendField("set")
+        .appendField(new Blockly.FieldDropdown(options, this.validate), "NAME");
+    this.appendValueInput("e")
+        .setCheck(null)
+        .appendField(new Blockly.FieldDropdown(opt), "NAME2")
+        .appendField("to");
+    this.setInputsInline(true);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(210);
+ this.setTooltip("Sets the propety its value for the element");
+ this.setHelpUrl("");
+  },
+  validate: function(newValue) {
+  this.getSourceBlock().updateConnections(newValue);
+  return newValue;
+},
+updateConnections: function(newValue) {
+  this.removeInput('e', /* no error */ true);
+  if ( newValue == "if") {
+  var opti = opt.concat([["AllowFeaturePolicy", "allow"], ["AllowFullscreen", "allowfullscreen"], ["AllowPaymentRequest", "allowpaymentrequest"], ["URL", "src"], ["HTMLFile", "srcdoc"], ["FrameBorder", "frameBorder"]]);
+  }else if (newValue == "i") {
+  var opti = opt.concat([["Image", "src"], ["ImagePosition", "style.objectFit"]]);
+  }else if (newValue == "p" || newValue == "b") {
+  var opti = opt.concat(text);
+  } else if (newValue == "ddb") {
+  var opti = opt.concat(text).concat([["Options", "opt"]]);
+  } else if ( newValue == "tf2") {
+  var opti = opt.concat([["Text", "value"], ["TextColor", "style.color"], ["TextSize", "style.fontSize"], ["FontFamily", "style.fontFamily"], ["TextAlign", "style.textAlign"]]).concat([["Hint", "placeholder"]]);
+  } else if ( newValue == "s"|| newValue == "pb") { 
+  var opti = opt.concat(p);
+  } else if (newValue == "cb" || newValue == "rb") {
+  var opti = opt.concat(text).concat([["Checked" , "checked"]]);
+  } else if ( newValue == "li") {
+  var opti = opt.concat([["BorderBackgroundColor", "style.borderTop"]])
+  }else if (newValue == "ul" || newValue == "ol") {
+  var opti = opt.concat([["TextColor", "style.color"], ["TextSize", "style.fontSize"], ["FontFamily", "style.fontFamily"], ["TextAlign", "style.textAlign"]]).concat([["Options", "l"]]);
+  } else if (newValue == "a") {
+  var opti = opt.concat(text).concat([["Link", "href"]]);
+  } else {
+  var opti = opt
+  }
+    this.appendValueInput("e")
+        .setCheck(null)
+        .appendField(new Blockly.FieldDropdown(opti), "NAME2")
+        .appendField("to");
+}
+};
+
+Blockly.Blocks['get_propo'] = {
+  init: function() {
+    this.appendValueInput("NAME")
+        .setCheck(null)
+        .appendField("get")
+                .appendField(new Blockly.FieldDropdown(options, this.validate), "NAME");
+    this.appendDummyInput("e")
+        .appendField(new Blockly.FieldDropdown(opt), "NAME2");
+    this.setInputsInline(true);
+    this.setOutput(true, null);
+    this.setColour(210);
+ this.setTooltip("Return the propety its value for the element");
+ this.setHelpUrl("");
+  },
+  validate: function(newValue) {
+  this.getSourceBlock().updateConnections(newValue);
+  return newValue;
+},
+updateConnections: function(newValue) {
+  this.removeInput('e', /* no error */ true);
+  if ( newValue == "if") {
+  var opti = opt.concat([["AllowFeaturePolicy", "allow"], ["AllowFullscreen", "allowfullscreen"], ["AllowPaymentRequest", "allowpaymentrequest"], ["URL", "src"], ["HTMLFile", "srcdoc"], ["FrameBorder", "frameBorder"]]);
+  }else if (newValue == "i") {
+  var opti = opt.concat([["Image", "src"], ["ImagePosition", "style.objectFit"]]);
+  }else if (newValue == "p" || newValue == "b") {
+  var opti = opt.concat(text);
+  } else if (newValue == "ddb") {
+  var opti = opt.concat(text).concat([["Value", "value"]]);
+  } else if ( newValue == "tf2") {
+  var opti = opt.concat([["Text", "value"], ["TextColor", "style.color"], ["TextSize", "style.fontSize"], ["FontFamily", "style.fontFamily"], ["TextAlign", "style.textAlign"]]).concat([["Hint", "placeholder"]]);
+  } else if ( newValue == "s"|| newValue == "pb") { 
+  var opti = opt.concat(p);
+  } else if (newValue == "cb" || newValue == "rb") {
+  var opti = opt.concat(text).concat([["Checked" , "checked"]]);
+  } else if ( newValue == "li") {
+  var opti = opt.concat([["BorderBackgroundColor", "style.borderTop"]])
+  }else if (newValue == "ul" || newValue == "ol") {
+  var opti = opt.concat([["TextColor", "style.color"], ["TextSize", "style.fontSize"], ["FontFamily", "style.fontFamily"], ["TextAlign", "style.textAlign"]]).concat([["Options", "l"]]);
+  } else if (newValue == "a") {
+  var opti = opt.concat(text).concat([["Link", "href"]]);
+  } else {
+  var opti = opt
+  }
+    this.appendDummyInput("e")
+    .appendField(new Blockly.FieldDropdown(opti), "NAME2");
+}
+};
+
+Blockly.Blocks['api'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("call")
+        .appendField(new Blockly.FieldDropdown([[window.localStorage.getItem("projectName" + project),"OPTIONNAME"]]), "NAME")
+        .appendField(".makeApi")
+        .appendField(new Blockly.FieldDropdown([["Get","GET"], ["Post","POST"], ["Patch","PATCH"], ["Put","PUT"], ["Delete","DELETE"]]), "t")
+        .appendField("Request");
+    this.appendValueInput("url")
+        .setCheck(null)
+        .appendField("URL")
+        .setAlign(Blockly.ALIGN_RIGHT);
+    this.appendValueInput("h")
+        .setCheck(null)
+        .appendField("header")
+        .setAlign(Blockly.ALIGN_RIGHT);
+    this.appendValueInput("b")
+        .setCheck(null)
+        .appendField("body")
+        .setAlign(Blockly.ALIGN_RIGHT);
+                this.appendDummyInput()
+              .appendField(
+                  new FieldParameterFlydown('Response', true, FieldFlydown.DISPLAY_BELOW),
+            'r')
+                  .appendField(
+                  new FieldParameterFlydown('Status', true, FieldFlydown.DISPLAY_BELOW),
+            's')
+                  .appendField(
+                  new FieldParameterFlydown('Error', true, FieldFlydown.DISPLAY_BELOW),
+            'e')
+            .setAlign(Blockly.ALIGN_RIGHT);
+            this.setInputsInline(false);
+    this.appendStatementInput("NAME")
+        .setCheck(null)
+        .appendField("do");
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour("9596EB");
+ this.setTooltip("Make a apio Get, Put, Post, Patch and Delete request");
+ this.setHelpUrl("");
+  },
+  withLexicalVarsAndPrefix: function(child, proc) {
+            if (this.getInputTargetBlock('NAME') === child) {
+                const params = this.declaredNames();
+                // not arguments_ instance var
+                for (let i = 0; i < params.length; i++) {
+                    proc(params[i], '');
+                }
+            }
+        },
+  getVars: function() {
+    return [
+      this.getFieldValue('r'),
+      this.getFieldValue('s'),
+      this.getFieldValue('e'),
+    ];
+  },
+  blocksInScope: function() {
+    const doBlock = this.getInputTargetBlock('NAME');
+    if (doBlock) {
+      return [doBlock];
+    } else {
+      return [];
+    }
+  },
+  declaredNames: function() {
+    return [
+            this.getFieldValue('r'),
+      this.getFieldValue('s'),
+      this.getFieldValue('e'),
+    ];
+  },
+  renameVar: function(oldName, newName) {
+    if (Blockly.Names.equals(oldName, this.getFieldValue('r'))) {
+      this.setFieldValue(newName, 'r');
+    }
+        if (Blockly.Names.equals(oldName, this.getFieldValue('s'))) {
+      this.setFieldValue(newName, 's');
+    }
+        if (Blockly.Names.equals(oldName, this.getFieldValue('e'))) {
+      this.setFieldValue(newName, 'e');
+    }
+  },
+  renameBound: function(boundSubstitution, freeSubstitution) {
+    const paramSubstitution = boundSubstitution.restrictDomain(
+        this.declaredNames());
+    this.renameVars(paramSubstitution);
+    const newFreeSubstitution = freeSubstitution.extend(paramSubstitution);
+    LexicalVariable.renameFree(
+        this.getInputTargetBlock(this.bodyInputName), newFreeSubstitution);
+  },
+  renameFree: function(freeSubstitution) {
+    // There shouldn't be any free variables
+  },
+  freeVariables: function() { // return the free variables of this block
+    // There shouldn't be any free variables, so this should return an empty set.
+    // Should return the empty set: something is wrong if it doesn't!
+    return new Blockly.NameSet();
   }
 };

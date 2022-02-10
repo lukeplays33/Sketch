@@ -7,7 +7,8 @@
         <meta name="google-site-verification" content="3YpzZmQGfAWLdmWTVwuIodvcCQe7ZRlzQmbOl2zcPUM" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Sketch is the platform where anyone can create games or websites.\nBuild,Design and Test your projects and deploy them anywhere.">
+    <meta name="description" content="Sketch is the platform where anyone can create games or websites.
+    Build,Design and Test your projects and deploy them anywhere.">
     
 <link rel="stylesheet" href="src/css.css">
 
@@ -15,15 +16,18 @@
 
 <body>
 
+<img src="Images/Thunkable (1).png" id="thunkable" width="300" height="80">
+
 <div class="logo" id="div">
   <img src="Images/Untitled183_20210624211409-1.png" id="logo" width="300" height="80">
   <div class="loader" id="loading"></div>
 </div>
 
-<p id="challange">Well hello there, If you've found this then congratulations there is more to see than you think, Just giving you a hint ;).</p>
+<p id="challange">Sketch is the platform where anyone can create games or websites.
+Build,Design and Test your projects and deploy them anywhere.</p>
 <!-- MatPat ;) --->
 
-    <div id="welcome">
+    <div id="welcome" class="welcome">
         <p id="MSG">Welcome To Sketch</p>
         <p id="MSG2">Welcome to Sketch new user or if you've already been here welcome back.
             Sketch is currently in a public beta phase weach means that you may find bugs, not working futures etc.
@@ -31,6 +35,23 @@
         <button id="dismiss">Dismiss</button>
         <button id="join">Join Discord</button>
         <button id="docs">Open Docs</button>
+    </div>
+    
+    <div id="creditsss" class="welcome" style="display: none;" >
+    <p id="MSG">Credits</p>
+    <p id="MSG2">Sketch wasn't made possible without the help of the following people or libaries.</p>
+    <p id="MSG2">So THANK YOU for the people helping me and making these awesome libaries.</p>
+    <p class="libs">Blockly</p>
+    <a href="https://developers.google.com/blockly/">https://developers.google.com/blockly/</a>
+    <p class="libs">Random Quote Api</p>
+    <a href="https://github.com/lukePeavey/quotable">https://github.com/lukePeavey/quotable</a>
+    <p class="libs">Blockly Mutators</p>
+    <a href="http://bekawestberg.me/">http://bekawestberg.me/</a>
+        <p class="libs">Blockly Lexical Variables</p>
+    <a href="https://twitter.com/mark_s_friedman">https://twitter.com/mark_s_friedman</a>
+            <p class="libs">Images And Fonts</p>
+    <a href="https://fonts.google.com/">https://fonts.google.com/</a>
+    <button id="dismisss">Dismiss</button>
     </div>
     
 <div class="header" id="header">
@@ -206,8 +227,6 @@ background-image: url(../Images/61818b07d54ef50010e42587-1.png);
   <button id="BGImage">Select Background Image</button>
   <button id="bgimage">Custom Background Image: Off</button>
   <button id="theme">Dark Theme: Off </button>
-  <p id="refrence">Refrence</p>
-  <button id='share'>Share Sketch</button>
   <p id="e">Editor</p>
     <button id="vsStyle">Use Fullscreen Visual Editor: Off</button>
   <button id="open">Open editor after new project has been created: Off</button>
@@ -217,6 +236,13 @@ background-image: url(../Images/61818b07d54ef50010e42587-1.png);
     <button id="delete">Delete Project</button>
         <button id="projectIcon">Change FavIcon</button>
     <input type="text" id="projectName" placeholder="Project Name"><br><br>
+      <p id="refrence">Other</p>
+  <button id='share'>Share Sketch</button>
+  <button id='credits'>Credits</button>
+  <button id='docss'>Go to Docs</button>
+  <button id='dis'>Join Discord</button>
+  <button id='twitter'>Twitter</button>
+  <button id='yt'>YouTube</button>
 </div>
 
 <section id="blocklyContainer">
@@ -257,6 +283,9 @@ background-image: url(../Images/61818b07d54ef50010e42587-1.png);
     <block type="create_listener">
       <field name="e">OPTIONNAME</field>
     </block>
+    <block type="before_unload">
+      <field name="NAME">OPTIONNAME</field>
+    </block>
   </category>
   <category name="Elements" colour="#5D98D3">
     <block type="body"></block>
@@ -277,8 +306,82 @@ background-image: url(../Images/61818b07d54ef50010e42587-1.png);
       <field name="NAME">OPTIONNAME</field>
       <field name="e">if</field>
     </block>
+    <block type="set_prop">
+      <field name="NAME">OPTIONNAME</field>
+      <field name="NAME2">OPTIONNAME</field>
+    </block>
+    <block type="get_propo">
+      <field name="NAME">OPTIONNAME</field>
+      <field name="NAME">OPTIONNAME</field>
+    </block>
     <block type="create_listener">
       <field name="e">OPTIONNAME</field>
+    </block>
+  </category>
+  <category name="Components" colour="#9596EB">
+    <block type="alert">
+      <field name="NAME">OPTIONNAME</field>
+    </block>
+    <block type="show_propmt">
+      <field name="NAME">OPTIONNAME</field>
+    </block>
+    <block type="show_confirm">
+      <field name="NAME">OPTIONNAME</field>
+    </block>
+    <block type="console">
+      <field name="NAME">OPTIONNAME</field>
+      <field name="y">log</field>
+    </block>
+    <block type="windew_height_width">
+      <field name="NAME">OPTIONNAME</field>
+      <field name="y">outer</field>
+      <field name="w">Height</field>
+    </block>
+    <block type="title_favicon">
+      <field name="NAME">OPTIONNAME</field>
+      <field name="t">t</field>
+    </block>
+    <block type="api">
+      <field name="NAME">OPTIONNAME</field>
+      <field name="t">GET</field>
+    </block>
+    <block type="screen">
+      <field name="NAME">OPTIONNAME</field>
+      <field name="p">width</field>
+    </block>
+    <block type="date">
+      <field name="NAME">OPTIONNAME</field>
+      <field name="p">Date</field>
+    </block>
+    <block type="date_get_now">
+      <field name="NAME">OPTIONNAME</field>
+    </block>
+    <block type="stop_start_timer">
+      <field name="NAME">OPTIONNAME</field>
+      <field name="t">start</field>
+    </block>
+    <block type="get_elapsed_time">
+      <field name="NAME">OPTIONNAME</field>
+    </block>
+    <block type="get_permison_staet">
+      <field name="NAME">OPTIONNAME</field>
+      <field name="p">OPTIONNAME</field>
+    </block>
+    <block type="device_manager">
+      <field name="NAME">OPTIONNAME</field>
+      <field name="p">d</field>
+    </block>
+    <block type="save_item">
+      <field name="NAME">OPTIONNAME</field>
+    </block>
+    <block type="emove_item">
+      <field name="NAME">OPTIONNAME</field>
+    </block>
+    <block type="clear_storage">
+      <field name="NAME">OPTIONNAME</field>
+    </block>
+    <block type="get_item">
+      <field name="NAME">OPTIONNAME</field>
     </block>
   </category>
   <category name="Other" colour="0">
@@ -399,12 +502,9 @@ background-image: url(../Images/61818b07d54ef50010e42587-1.png);
     <block type="text_trim">
       <field name="MODE">BOTH</field>
     </block>
-    <block type="text_print"></block>
-    <block type="text_prompt_ext">
-      <mutation type="TEXT"></mutation>
-      <field name="TYPE">TEXT</field>
-    </block>
     <block type="new_line"></block>
+    <block type="repplace_text"></block>
+    <block type="tet_contains"></block>
   </category>
   <category name="Lists" colour="#76afc9">
     <block type="lists_create_with">
@@ -444,9 +544,33 @@ background-image: url(../Images/61818b07d54ef50010e42587-1.png);
       <field name="DIRECTION">1</field>
     </block>
   </category>
+  <category name="Objects" colour="#F99EA3">
+    <block type="set_object_prop"></block>
+    <block type="add_object"></block>
+    <block type="get_object_prop"></block>
+    <block type="get_of_json"></block>
+    <block type="object_to_json"></block>
+    <block type="get_list_of_objects">
+      <field name="NAME">p</field>
+    </block>
+    <block type="create_object"></block>
+    <block type="object_key_val"></block>
+  </category>
   <category name="Colour" colour="#7F7F7F">
     <block type="colour_picker">
-      <field name="COLOUR">#ff0000</field>
+      <field name="COLOUR">#33ffff</field>
+    </block>
+    <block type="colour_picker">
+      <field name="COLOUR">#c0c0c0</field>
+    </block>
+    <block type="colour_picker">
+      <field name="COLOUR">#3366ff</field>
+    </block>
+    <block type="colour_picker">
+      <field name="COLOUR">#ffcccc</field>
+    </block>
+    <block type="colour_picker">
+      <field name="COLOUR">#ffff66</field>
     </block>
     <block type="colour_random"></block>
     <block type="colour_rgb"></block>

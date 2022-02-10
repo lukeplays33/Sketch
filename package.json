@@ -13,6 +13,8 @@
     "@blockly/plugin-scroll-options": "^1.0.4",
     "@mit-app-inventor/blockly-block-lexical-variables": "^0.0.10",
     "blockly": "^7.20211209.1",
+    "firebase": "^9.6.6",
+    "firebaseui": "^6.0.0",
     "fireworks": "^2.2.7",
     "google-closure-library": "^20211201.0.0",
     "holidayapi": "^5.0.0"
