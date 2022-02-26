@@ -422,13 +422,7 @@ button {
 .blocklySvg {
   background-color: TRANSPARENT !important;
 }
-div#blocklyDiv .blocklyTreeRow {
-  border-radius: 5px;
-  padding: 3px;
-  margin-bottom: 8px;
-  color: white;
-}
-        
+
         div#blocklyDiv .blocklyToolboxDiv {
     border-radius: 10px;
   background: rgba(155, 155, 155, 0.5);
@@ -441,6 +435,13 @@ div#blocklyDiv .blocklyTreeRow {
   -moz-box-sizing: border-box; /* Firefox, other Gecko */
 
   box-sizing: border-box;
+}
+
+div#blocklyDiv .blocklyTreeRow {
+  border-radius: 5px;
+  padding: 3px;
+  margin-bottom: 8px;
+  color: white;
 }
         @media only screen and (max-width: 600px) {
             div#blocklyDiv .blocklyFlyout {
@@ -475,7 +476,7 @@ div#blocklyDiv .blocklyFlyout {
         }
         @media only screen and (min-width: 600px) {
         #editor {
-            background-color: #FFFFFF;
+            background: rgb(238,238,238);
             width: 400px;
             position: absolute; 
             z-index: 400;
@@ -491,7 +492,7 @@ div#blocklyDiv .blocklyFlyout {
         
                 @media only screen and (max-width: 600px) {
         #editor {
-            background-color: #FFFFFF;
+            background: rgb(238,238,238);
             width: 100%;
             position: absolute; 
             z-index: 400;
@@ -597,4 +598,27 @@ select{
   50% {
   right: -90px;
   }
+}
+
+#dropdownMenu {
+border-radius: 10px;
+background-color: #008dcd;
+position: fixed;
+padding: 8px;
+padding-bottom: 0px;
+z-index: 600;
+}
+
+#CloseMenu {
+width: 100%;
+height: 100%;
+display: none;
+position: fixed;
+z-index: 590;
+}
+
+.customIcon {
+  color: white;
+  margin-right: 8px;
+  margin-left: 8px;
 }

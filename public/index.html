@@ -12,6 +12,8 @@
     
 <link rel="stylesheet" href="src/css.css">
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 </head>
 
 <body>
@@ -35,6 +37,11 @@ Build,Design and Test your projects and deploy them anywhere.</p>
         <button id="dismiss">Dismiss</button>
         <button id="join">Join Discord</button>
         <button id="docs">Open Docs</button>
+    </div>
+    
+    <div id="CloseMenu">
+    <div id= "dropdownMenu">
+    </div>
     </div>
     
     <div id="creditsss" class="welcome" style="display: none;" >
@@ -61,10 +68,6 @@ Build,Design and Test your projects and deploy them anywhere.</p>
     <div class="menu" id="menu"></div>
     <div class="menuItems" id="menuItems" style="display: none;">
     <div class="create" id="add">
-                        <select name="c" id="c">
-          <option value="Create New Project">Create New Project</option>
-  <option value="Import New Project">Import New Project</option>
-                </select>
         </div>
         <div class="settings" id="settings">
         </div>
@@ -159,10 +162,6 @@ background-image: url(../Images/61818b07d54ef50010e42587-1.png);
   -moz-box-sizing: border-box; /* Firefox, other Gecko */
 
   box-sizing: border-box;" id="download">
-                <select name="down" id="down">
-          <option value="Project HTML">Project HTML</option>
-  <option value="Project XML">Project XML</option>
-                </select>
     </div>
         
         <div style="position: absolute; z-index: 500;
@@ -257,7 +256,7 @@ background-image: url(../Images/61818b07d54ef50010e42587-1.png);
 </section>\
     
 <xml xmlns="https://developers.google.com/blockly/xml" id="toolbox" style="display: none">
-  <category name="Events" colour="#F3AA44">
+  <category name="Events" colour="#F3AA44" css-icon="customIcon fa fa-calendar">
     <block type="initd">
       <field name="NAME">I'll always do</field>
     </block>
@@ -282,12 +281,13 @@ background-image: url(../Images/61818b07d54ef50010e42587-1.png);
     </block>
     <block type="create_listener">
       <field name="e">OPTIONNAME</field>
+      <field name="NAME2">OPTIONNAME</field>
     </block>
     <block type="before_unload">
       <field name="NAME">OPTIONNAME</field>
     </block>
   </category>
-  <category name="Elements" colour="#5D98D3">
+  <category name="Elements" colour="#5D98D3" css-icon="customIcon fa fa-clone">
     <block type="body"></block>
     <block type="create_elem">
       <field name="NAME">OPTIONNAME</field>
@@ -300,6 +300,9 @@ background-image: url(../Images/61818b07d54ef50010e42587-1.png);
       <field name="NAME">OPTIONNAME</field>
     </block>
     <block type="remove">
+      <field name="NAME">OPTIONNAME</field>
+    </block>
+    <block type="click">
       <field name="NAME">OPTIONNAME</field>
     </block>
     <block type="all_elements">
@@ -316,9 +319,10 @@ background-image: url(../Images/61818b07d54ef50010e42587-1.png);
     </block>
     <block type="create_listener">
       <field name="e">OPTIONNAME</field>
+      <field name="NAME2">OPTIONNAME</field>
     </block>
   </category>
-  <category name="Components" colour="#9596EB">
+  <category name="Components" colour="#9596EB" css-icon="customIcon fa fa-code">
     <block type="alert">
       <field name="NAME">OPTIONNAME</field>
     </block>
@@ -326,6 +330,9 @@ background-image: url(../Images/61818b07d54ef50010e42587-1.png);
       <field name="NAME">OPTIONNAME</field>
     </block>
     <block type="show_confirm">
+      <field name="NAME">OPTIONNAME</field>
+    </block>
+    <block type="toast">
       <field name="NAME">OPTIONNAME</field>
     </block>
     <block type="console">
@@ -340,6 +347,9 @@ background-image: url(../Images/61818b07d54ef50010e42587-1.png);
     <block type="title_favicon">
       <field name="NAME">OPTIONNAME</field>
       <field name="t">t</field>
+    </block>
+    <block type="share">
+      <field name="NAME">OPTIONNAME</field>
     </block>
     <block type="api">
       <field name="NAME">OPTIONNAME</field>
@@ -383,14 +393,23 @@ background-image: url(../Images/61818b07d54ef50010e42587-1.png);
     <block type="get_item">
       <field name="NAME">OPTIONNAME</field>
     </block>
-  </category>
-  <category name="Other" colour="0">
-    <block type="load_asset">
+    <block type="download_file">
+      <field name="NAME">OPTIONNAME</field>
+    </block>
+    <block type="pick_file">
       <field name="NAME">OPTIONNAME</field>
     </block>
   </category>
+  <category name="Other" colour="0" css-icon="customIcon fa fa-object-group">
+    <block type="load_asset">
+      <field name="NAME">OPTIONNAME</field>
+    </block>
+    <block type="comment">
+      <field name="NAME">Just clownin' around</field>
+    </block>
+  </category>
   <sep></sep>
-  <category name="Control" colour="#F3AA44">
+  <category name="Control" colour="#F3AA44" css-icon="customIcon fa fa-gears">
     <block type="controls_repeat_ext"></block>
     <block type="controls_whileUntil">
       <field name="MODE">WHILE</field>
@@ -430,7 +449,7 @@ background-image: url(../Images/61818b07d54ef50010e42587-1.png);
     <block type="switch2"></block>
     <block type="switch_case"></block>
   </category>
-  <category name="Logic" colour="#45B4A9">
+  <category name="Logic" colour="#45B4A9" css-icon="customIcon fa fa-cog">
     <block type="logic_compare">
       <field name="NAME">==</field>
     </block>
@@ -443,7 +462,7 @@ background-image: url(../Images/61818b07d54ef50010e42587-1.png);
     </block>
     <block type="logic_null"></block>
   </category>
-  <category name="Math" colour="#6789cc">
+  <category name="Math" colour="#6789cc" css-icon="customIcon fa fa-calculator">
     <block type="math_number">
       <field name="NUM">0</field>
     </block>
@@ -475,7 +494,7 @@ background-image: url(../Images/61818b07d54ef50010e42587-1.png);
     <block type="math_random_int"></block>
     <block type="math_random_float"></block>
   </category>
-  <category name="Text" colour="#DF6078">
+  <category name="Text" colour="#DF6078" css-icon="customIcon fa fa-italic">
     <block type="text">
       <field name="TEXT"></field>
     </block>
@@ -506,10 +525,11 @@ background-image: url(../Images/61818b07d54ef50010e42587-1.png);
     <block type="repplace_text"></block>
     <block type="tet_contains"></block>
   </category>
-  <category name="Lists" colour="#76afc9">
+  <category name="Lists" colour="#76afc9" css-icon="customIcon fa fa-list">
     <block type="lists_create_with">
       <mutation items="0"></mutation>
     </block>
+    <block type="create_list_with"></block>
     <block type="lists_create_with">
       <mutation items="3"></mutation>
     </block>
@@ -544,7 +564,7 @@ background-image: url(../Images/61818b07d54ef50010e42587-1.png);
       <field name="DIRECTION">1</field>
     </block>
   </category>
-  <category name="Objects" colour="#F99EA3">
+  <category name="Objects" colour="#F99EA3" css-icon="customIcon fa fa-object-group">
     <block type="set_object_prop"></block>
     <block type="add_object"></block>
     <block type="get_object_prop"></block>
@@ -556,7 +576,7 @@ background-image: url(../Images/61818b07d54ef50010e42587-1.png);
     <block type="create_object"></block>
     <block type="object_key_val"></block>
   </category>
-  <category name="Colour" colour="#7F7F7F">
+  <category name="Colour" colour="#7F7F7F" css-icon="customIcon fa fa-pencil">
     <block type="colour_picker">
       <field name="COLOUR">#33ffff</field>
     </block>
@@ -577,7 +597,7 @@ background-image: url(../Images/61818b07d54ef50010e42587-1.png);
     <block type="colour_blend"></block>
   </category>
   <sep></sep>
-  <category name="Variables" colour="#CD5E94">
+  <category name="Variables" colour="#CD5E94" css-icon="customIcon fa fa-usd">
     <block type="global_declaration"></block>
     <block type="local_declaration_statement"></block>
     <block type="local_declaration_expression"></block>
@@ -586,18 +606,16 @@ background-image: url(../Images/61818b07d54ef50010e42587-1.png);
     <block type="change">
       <field name="NAME">OPTIONNAME</field>
     </block>
-    <block type="create_dynamic_var"></block>
-    <block type="change_d_var"></block>
-    <block type="get_d_var"></block>
   </category>
-  <category name="Functions" colour="#7560A4">
+  <category name="Functions" colour="#7560A4" css-icon="customIcon fa fa-microchip">
     <block type="procedures_defnoreturn"></block>
     <block type="procedures_defreturn"></block>
     <block type="procedures_callnoreturn"></block>
     <block type="procedures_callreturn"></block>
+    <block type="function_var"></block>
   </category>
   <sep></sep>
-  <category name="JavaScript" colour="#985DD3">
+  <category name="JavaScript" colour="#985DD3" css-icon="customIcon fa fa-code">
     <block type="asd">
       <field name="js">alert("Hi There");</field>
     </block>
