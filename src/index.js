@@ -51,7 +51,9 @@ import { HolidayAPI } from 'holidayapi';
 // refresh page when size changes
 
 window.onresize = function () {
+if(window.location.href == 'http://localhost:3000/index.html') {
 window.location.reload();
+}
 }
 
 // cheat code
@@ -172,7 +174,102 @@ document.getElementById("CloseMenu").style.display = "none"
 }
 }
 
+function createContextMenuI(x, y, options) {
+document.getElementById("CloseMenu").style.display = "block"
+for(var i = 0; i < child; i++) {
+document.getElementById(i).remove(true);
+}
+document.getElementById("CloseMenu").style.display = "none"
+child = 0
+for(var i of options) {
+var e = document.createElement("p");
+e.innerHTML = i
+e.id = child
+e.style.color = "white";
+e.style.textAlign = "left";
+e.style.fontSize = "20px"
+e.style.margin = "0px"
+e.style.marginBottom = "8px"
+child = child + 1
+document.getElementById("dropdownMenu").appendChild(e);
+}
+
+document.getElementById("dropdownMenu").style.top = y
+document.getElementById("dropdownMenu").style.left = x
+
+document.getElementById("CloseMenu").style.display = "block"
+document.getElementById("CloseMenu").onclick = function () {
+document.getElementById("CloseMenu").style.display = "none"
+}
+}
+
 //define generators
+
+Blockly.JavaScript['writeclipboard'] = function(block) {
+  var dropdown_name = block.getFieldValue('NAME');
+  var value_name = Blockly.JavaScript.valueToCode(block, 'NAME', Blockly.JavaScript.ORDER_ATOMIC);
+  // TODO: Assemble JavaScript into code variable.
+  var code = 'navigator.clipboard.writeText(' + value_name + ');\n'
+  return code;
+};
+
+var px = ['blur', 'translateX','translateY','translateZ']
+var deg = ['rotateX','rotateY','rotateZ', 'skewX','skewY']
+var per = ['saturate', 'grayscale']
+
+Blockly.JavaScript['trans_etc'] = function(block) {
+  var dropdown_name = block.getFieldValue('NAME');
+  var dropdown_ee = block.getFieldValue('ee');
+  var value_name = Blockly.JavaScript.valueToCode(block, 'NAME', Blockly.JavaScript.ORDER_ATOMIC);
+    // TODO: Assemble JavaScript into code variable.
+  var code = "'" + dropdown_ee
+  if(block.getField('NAME')) {
+  if(px.includes(dropdown_ee)){
+  code = code + '(' + value_name + "px)"
+  } else if(deg.includes(dropdown_ee)) {
+  code = code + '(' + value_name + "deg)"
+  } else if(per.includes(dropdown_ee)) {
+  code = code + '(' + value_name + "%)"
+  } else if(dropdown_ee.includes('scale')) {
+  code = code + '(' + value_name + ")"
+  }
+  }
+  code = code + "'"
+  // TODO: Change ORDER_NONE to the correct strength.
+  return [code, Blockly.JavaScript.ORDER_ATOMIC];
+};
+
+Blockly.JavaScript['istestting'] = function(block) {
+  var dropdown_name = block.getFieldValue('NAME');
+  // TODO: Assemble JavaScript into code variable.
+  var code = ' window.location.href == "http://localhost:3000/index.html" || window.location.href == "https://lukeplays33.github.io/Sketch/" ? true : false'
+  // TODO: Change ORDER_NONE to the correct strength.
+  return [code, Blockly.JavaScript.ORDER_NONE];
+};
+
+Blockly.JavaScript['to_string'] = function(block) {
+  var value_name = Blockly.JavaScript.valueToCode(block, 'NAME', Blockly.JavaScript.ORDER_ATOMIC);
+  // TODO: Assemble JavaScript into code variable.
+  var code = 'String(' + value_name + ')'
+  // TODO: Change ORDER_NONE to the correct strength.
+  return [code, Blockly.JavaScript.ORDER_NONE];
+};
+
+Blockly.JavaScript['to_number'] = function(block) {
+  var value_name = Blockly.JavaScript.valueToCode(block, 'NAME', Blockly.JavaScript.ORDER_ATOMIC);
+  // TODO: Assemble JavaScript into code variable.
+  var code = 'Number(' + value_name + ')'
+  // TODO: Change ORDER_NONE to the correct strength.
+  return [code, Blockly.JavaScript.ORDER_NONE];
+};
+
+Blockly.JavaScript['typeof'] = function(block) {
+var v = getVariableName(block.getFieldValue('VAR'));
+  // TODO: Assemble JavaScript into code variable.
+  var code = 'typeof ' + v
+  // TODO: Change ORDER_NONE to the correct strength.
+  return [code, Blockly.JavaScript.ORDER_NONE];
+};
 
 Blockly.JavaScript['speed_loop'] = function(block) {
   var dropdown_name = block.getFieldValue('NAME');
@@ -252,6 +349,8 @@ Blockly.JavaScript['click'] = function(block) {
   // TODO: Assemble JavaScript into code variable.
   if(dropdown_d == "ce") {
   var code = value_name + ".click();"
+  } else if(dropdown_d == 'ri') {
+  var code = value_name + '.src = ' + value_name + '.src'
   } else {
   var code = value_name + ".focus();"
   }
@@ -386,10 +485,12 @@ Blockly.JavaScript['get_propo'] = function(block) {
   var value_name = Blockly.JavaScript.valueToCode(block, 'NAME', Blockly.JavaScript.ORDER_ATOMIC);
   var dropdown_name2 = block.getFieldValue('NAME2');
   // TODO: Assemble JavaScript into code variable.
-  if(dropdown_name2 == "tooltip") {
-  var code = "document.getElementById('" + value_name + "toolTip').innerHTML"
+  if(dropdown_name2 == 's' || dropdown_name2 == 'd' || dropdown_name2 == 'R' || dropdown_name2 == 'lo' || dropdown_name2 == 'a' || dropdown_name2 == 'p') {
+  var code = value_name + 'LP' + dropdown_name2
+  } else if(dropdown_name2 == 'dd') {
+  var code = value_name + 'LP.getDuration(true)'
   } else {
-  var code = value_name + "." + dropdown_name2
+  var code = value_name + '.'+ dropdown_name2
   }
   // TODO: Change ORDER_NONE to the correct strength.
   return [code, Blockly.JavaScript.ORDER_ATOMIC];
@@ -432,6 +533,19 @@ Blockly.JavaScript['set_prop'] = function(block) {
   var code = "var ddb = " + value_name + " \nfor (var i of ddb) { \nddb.remove(i);\n}\nfor (var i of" + value_e + ") {\n var opt = document.createElement('option');\nopt.innerHTML = i;\n" + value_name + ".appendChild(opt);\n}\n" 
   } else if (dropdown_name2 == "l") {
   var code = value_name + ".innerHTML = '';\nfor (var i of " + value_e + ") {\n var l = document.createElement('li');\nl.innerHTML = i;\n" + value_name + ".appendChild(l);\n}\n"
+  } else if (dropdown_name2 == 'R' || dropdown_name2 == 'lo' || dropdown_name2 == 'a' || dropdown_name2 == 'p') {
+  var code = value_name + 'LP' + dropdown_name2 + ' = ' + value_e + '\n' + `\nvar p = ` + value_name + `.parentNode\n` + value_name + `.remove(true);\n` + value_name + ` = document.createElement('div');\nvar ` + value_name + `LP = lottieWeb.loadAnimation({
+  container: ` + value_name + `, // the dom element that will contain the animation
+  renderer: ` + value_name + `LPR,
+  loop: ` + value_name + `LPlo,
+  autoplay: ` + value_name + `LPa,
+  path: ` + value_name + `LPp // the path to the animation json
+});
+` + value_name + `LP.setSpeed(` + value_name + `LPs);
+` + value_name + `LP.setDirection(` + value_name + `LPd);
+p.appendChild(` + value_name + `);\n`
+  } else if(dropdown_name2 == 'style.transform') {
+  var code = value_name + "." + dropdown_name2 + " += " + value_e + ";\n"
   } else {
   var code = value_name + "." + dropdown_name2 + " = " + value_e + ";\n"
   }
@@ -566,11 +680,15 @@ Blockly.JavaScript['device_manager'] = function(block) {
   var code = "/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)"
   }
   if(dropdown_p == "hde") {
-  var code = "window.matchMedia('(prefers-color-scheme: dark)').matches"
+  var code = "window.matchMedia('(prefers-color-scheme: dark)').matches ? 'DarkMode' : 'LightMode'"
   }  if(dropdown_p == "ictan") {
   var code = "navigator.onLine"
   } else if (dropdown_p == "l") {
   var code = "navigator.language"
+  } else if(dropdown_p == "dm") {
+  var code = 'navigator.deviceMemory'
+  } else if(dropdown_p == 'o') {
+  var code = 'window.matchMedia("(orientation: portrait)").matches ? "Portrait" : "Landscape"'
   }
   // TODO: Change ORDER_NONE to the correct strength.
   return [code, Blockly.JavaScript.ORDER_NONE];
@@ -792,9 +910,20 @@ Blockly.JavaScript['body'] = function(block) {
 
 Blockly.JavaScript['clone'] = function(block) {
   var dropdown_name = block.getFieldValue('NAME');
+  var dropdown_d = block.getFieldValue('d');
   var value_name = Blockly.JavaScript.valueToCode(block, 'NAME', Blockly.JavaScript.ORDER_ATOMIC);
   // TODO: Assemble JavaScript into code variable.
+  if(dropdown_d == 'c') {
   var code = value_name + ".cloneNode(true)"
+  } else if(dropdown_d == 'p') {
+  var code = value_name + ".parentNode"
+  } else if(dropdown_d == 'fc' ) {
+  var code = value_name + ".firstChild"
+  } else if(dropdown_d == 'lc') {
+  var code = value_name + ".lastChild"
+  } else if (dropdown_d == 'ac') {
+  var code = value_name + ".childNodes"
+  }
   // TODO: Change ORDER_NONE to the correct strength.
   return [code, Blockly.JavaScript.ORDER_ATOMIC];
 };
@@ -863,6 +992,16 @@ Blockly.JavaScript['create_elem'] = function(block) {
     var code = "{\nlet " + eid + " = document.createElement('ol');\n"
     } else if (dropdown_e == "a") {
     var code = "{\nlet " + eid + " = document.createElement('a');\n" + eid + ".href = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'\n" + eid + ".innerHTML = 'This Is A HyperLink' \n"
+    } else if(dropdown_e == 'lp') {
+    var code = "{\nlet " + eid + " = document.createElement('div');\n" + `var ` + eid + `LP = lottieWeb.loadAnimation({
+  container: ` + eid + `, // the dom element that will contain the animation
+  renderer: 'svg',
+  loop: true,
+  autoplay: true,
+  path: 'https://assets4.lottiefiles.com/packages/lf20_jtbfg2nb.json' // the path to the animation json
+});\nlet ` + eid + `LPR = 'svg'\nlet ` + eid + `LPlo = true\nlet ` + eid + `LPa = true\nlet ` + eid + `LPp = 'https://assets4.lottiefiles.com/packages/lf20_jtbfg2nb.json'\nlet `  + eid + `LPs = 1\nlet `  + eid + `LPd = 1\n`
+    } else if(dropdown_e == 'fv') {
+    var code = "{\nlet " + eid + " = document.createElement('object');\n" + eid + '.data = `https://image.winudf.com/v2/image1/Y29tLnRodW5rYWJsZS5saXZlX2ljb25fMTU1NDk3OTQzOF8wMzc/icon.png?w=&fakeurl=1`\n'
     }
     
     var code = code + eid + ".className = '" + dropdown_e + "'\n" + statements_name + "\n}\n"
@@ -976,9 +1115,9 @@ Blockly.JavaScript['clearint'] = function(block) {
   var dropdown_t = block.getFieldValue('t');
   // TODO: Assemble JavaScript into code variable.
             if (dropdown_t == "int") {
-                var code = "window.open(" + value_name + ");"
+                var code = "window.open(" + value_name + ");\n"
                 } else {
-                    var code = "window.location.href = " + value_name
+                    var code = "window.location.href = " + value_name + '\n'
                     }
   return code;
 };
@@ -1130,8 +1269,6 @@ function tooltip () {
 let e = ""
 for(var i of t) {
 e = e + `.` + i + ` {
-  position: relative;
-  display: inline-block;
         -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
 
   -moz-box-sizing: border-box; /* Firefox, other Gecko */
@@ -1322,7 +1459,7 @@ src="https://media.discordapp.net/attachments/898978597996466189/946430018463105
 <script type="module">
 ` + assets + `
 
-import teamhiveLottiePlayer from 'https://cdn.skypack.dev/@teamhive/lottie-player';
+import lottieWeb from 'https://cdn.skypack.dev/lottie-web';
 
 const reader = new FileReader();
 let spalsh = document.createElement('img');
@@ -1366,6 +1503,16 @@ function download(filename, text) {
 
   document.body.removeChild(element);
 }
+
+function readClip () {
+navigator.clipboard.readText()
+  .then(text => {
+  return text
+  })
+  .catch(err => {
+return err
+  });
+}
 `
   return gen
 }
@@ -1402,6 +1549,9 @@ Blockly.HSV_VALUE = 0.83;
 
 document.getElementById("blocklyContainer").style.height = (String((window.innerHeight) - 50) + 'px');
 document.getElementById("editor").style.height = (String((window.innerHeight) - 50) + 'px');
+document.getElementById("blocklyDiv").style.width = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+    navigator.userAgent
+  ) ? String(window.innerWidth) + 'px' : (String((window.innerWidth) - 300) + 'px');
 Blockly.Scrollbar.scrollbarThickness = 0.0
 
 registerFirstContextMenuOptions();
@@ -1444,7 +1594,7 @@ const workspace2 = Blockly.inject("blocklyDiv2", {
       },
       'componentStyles' : {
                    'flyoutOpacity': '0.0'
-      }
+      },
    },
 
   toolbox: document.getElementById("toolbox"),
@@ -1536,7 +1686,8 @@ const workspace = Blockly.inject("blocklyDiv", {
       'componentStyles' : {
                    'flyoutOpacity': '0.0',
           'scrollbarOpacity' : '0.0',
-      }
+      },
+      'startHats': true
    },
 
   toolbox: document.getElementById("toolbox"),
@@ -1568,7 +1719,7 @@ const workspace = Blockly.inject("blocklyDiv", {
 
     startScale: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
     navigator.userAgent
-  ) ? 0.7 : 0.9,
+  ) ? 0.75 : 0.9,
 
     maxScale: 3,
 
@@ -1597,7 +1748,9 @@ LexicalVariables.init(workspace);
 
 const scrollOptionsPlugin = new ScrollOptions(workspace);
 
-scrollOptionsPlugin.init({ enableWheelScroll: true, enableEdgeScroll: true });
+scrollOptionsPlugin.init({ enableWheelScroll: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+    navigator.userAgent
+  ) ? false : true, enableEdgeScroll: true });
 
 // Add the disableOrphans event handler. This is not done automatically by
 // the plugin and should be handled by your application.
@@ -1645,6 +1798,13 @@ function start() {
     
   document.getElementById("GoHome2").style.backgroundImage =
     "url(Images/round_home_white_24dp.png)";
+    
+    document.getElementById("fullscreen").style.backgroundImage =
+    "url(Images/outline_fullscreen_white_24dp.png)";
+    
+    document.getElementById("fullscreen").style.backgroundRepeat = 'no-repeat';
+    document.getElementById("fullscreen").style.backgroundSize = 'contain';
+    document.getElementById("fullscreen").style.backgroundPosition = 'center';
     
     document.getElementById("upload").style.backgroundImage =
     "url(Images/round_create_new_folder_white_24dp.png)";
@@ -1764,8 +1924,14 @@ icon = 0
     d.onclick = function () {
     var oo = this.id
     
-    createContextMenu(String(window.innerWidth / 2 - 85) + "px", String(window.innerHeight / 2 - 85) + "px", ["Delete Asset", "Rename asset", "Replace Asset"]);
+    createContextMenuI(String(x) + "px", String(y) + "px", ["Delete Asset", "Rename asset", "Replace Asset", 'View Asset']);
     
+    document.getElementById('3').onclick = function () {
+    var vv = window.open('');
+    vv.document.write(`<!DOCTYPE html>
+<object data="` + base64[assetsBase64.indexOf(oo)] + `" width="100%" height="100%"></object>
+`);
+    }
     
     document.getElementById('2').onclick = function () {
       let input = document.createElement("input");
@@ -2663,7 +2829,60 @@ function BGIfURL() {
 }
 BGIfURL();
 
+var x, y
+
+window.addEventListener('mousemove', e => {
+x = e.x;
+y = e.y;
+});
+
 function editor() {
+var t = 0
+var f = document.getElementById('fullscreen');
+f.onclick = function (e) {
+e.stopPropagation();
+if(t == 0) {
+document.getElementById("blocklyContainer").style.height = (String(window.innerHeight) + 'px');
+document.getElementById("editor").style.height = (String(window.innerHeight) + 'px');
+
+document.getElementById('blocklyContainer').style.transform = 'translateY(0px)'
+
+document.getElementById("editor").style.width = window.innerWidth + "px"
+
+document.getElementById("fullscreen").style.backgroundImage =
+    "url(Images/outline_fullscreen_exit_white_24dp.png)";
+    document.getElementById('header').style.display = 'none'
+    t = 1
+} else {
+document.getElementById("blocklyContainer").style.height = (String((window.innerHeight) - 50) + 'px');
+document.getElementById("editor").style.height = (String((window.innerHeight) - 50) + 'px');
+
+document.getElementById('blocklyContainer').style.transform = 'translateY(50px)'
+
+if(!window.localStorage.getItem("vsStyle") == null || !window.localStorage.getItem("vsStyle") == "" || navigator.userAgentData.mobile) {
+document.getElementById("editor").style.width = window.innerWidth + "px"
+        } else {
+            document.getElementById("editor").style.width = "350px"
+        }
+
+document.getElementById("fullscreen").style.backgroundImage =
+    "url(Images/outline_fullscreen_white_24dp.png)";
+    document.getElementById('header').style.display = 'block'
+    t = 0
+}
+}
+var e = document.getElementById('editor');
+e.onclick = function () {
+createContextMenuI(String(x) + "px", String(y) + "px", ["Edit Element", "Add New Element"]);
+document.getElementById('1').onclick = function () {
+window.setTimeout(function () {
+createContextMenuI(String(x) + "px", String(y) + "px", ["Iframe", "Div", 'Image', 'Paragraph', 'Button', 'DropDownButton', 'ColorPicker', 'TimePicker', 'DatePicker', 'TextField', 'Canvas', 'Slider', 'ProgressBar', 'CheckBox', 'RadioButton', 'LoadingIcon', 'FAB', 'UnorderedList', 'OrderedList', 'HyperLink', 'LottiePlayer']);
+}, 0);
+}
+document.getElementById('0').onclick = function () {
+}
+}
+
     var s = document.getElementById("Switch");
     var cl = 0
     s.onclick = function () {
@@ -3052,6 +3271,7 @@ workspace.addChangeListener(save);
 // upload assets
   var as = document.getElementById("pick");
   as.onclick = function () {
+  window.sessionStorage.setItem('o', 'ii');
     let input = document.createElement("input");
     input.type = "file";
     input.onchange = (_) => {
@@ -3073,6 +3293,9 @@ workspace.addChangeListener(save);
              window.localStorage.setItem("assetsBlockDropdown", JSON.stringify(assetsBlockDropdown));
              
              document.getElementById("no_ass").style.display = "none";
+             if(window.sessionStorage.getItem('o') == 'ii') {
+             document.getElementById("assetFolder").style.display = "block";
+             }
              
     
         var p = document.createElement("p");
@@ -3090,7 +3313,14 @@ workspace.addChangeListener(save);
     d.onclick = function () {
     var oo = this.id
     
-    createContextMenu(String(window.innerWidth / 2 - 85) + "px", String(window.innerHeight / 2 - 85) + "px", ["Delete Asset", "Rename asset", "Replace Asset"]);
+    createContextMenuI(String(x) + "px", String(y) + "px", ["Delete Asset", "Rename asset", "Replace Asset", 'View Asset']);
+    
+        document.getElementById('3').onclick = function () {
+    var vv = window.open('');
+    vv.document.write(`<!DOCTYPE html>
+<object data="` + base64[assetsBase64.indexOf(oo)] + `" width="100%" height="100%"></object>
+`);
+    }
     
     document.getElementById('2').onclick = function () {
       let input = document.createElement("input");
@@ -3242,11 +3472,11 @@ function loop_errors () {
     if ( i.type == "break_and_continue") {
     } else if (i.type == "clearint") {
     
-    } else if (i.type == "get_d_var") {
-    if(i.getRootBlock().type == "global_declaration") {
-    i.setWarningText("This block cannot be in a definition");
-    } else {
+    } else if (i.type == "play_pause") {
+    if(i.getRootBlock().type == "create_listener") {
     i.setWarningText(null);
+    } else {
+    i.setWarningText("This block must be placed inside an element event");
     }
     } else if (i.type == "function_var") {
     var ee = String(i.getSurroundParent())
@@ -3254,6 +3484,13 @@ function loop_errors () {
     i.setWarningText(null);
     } else {
     i.setWarningText("This block can only be connected to a function with a return value");
+    }
+    } else if(i.type == 'switch_case') {
+    var ssss = String(i.getSurroundParent())
+    if(ssss.includes('switch') && ssss.includes('do')) {
+    i.setWarningText(null);
+    } else {
+    i.setWarningText('this block can only be used inside of a switch block');
     }
     }
     }
@@ -3286,7 +3523,7 @@ Blockly.Blocks['asd'] = {
     this.setNextStatement(true, null);
     this.setColour(270);
  this.setTooltip("Inject a piece of JavaScript code that doesn't exist in SKetch yet");
- this.setHelpUrl("");
+ this.setHelpUrl("https://app.gitbook.com/s/AR1GoZvc2Hq3eaRFIOdL/javascript#add-scource-directly");
   }
 };
 
@@ -3298,7 +3535,7 @@ Blockly.Blocks['asd_left_output'] = {
     this.setOutput(true, null);
     this.setColour(270);
  this.setTooltip("Inject a piece of JavaScript code that doesn't exist in SKetch yet");
- this.setHelpUrl("");
+ this.setHelpUrl("https://app.gitbook.com/s/AR1GoZvc2Hq3eaRFIOdL/javascript#add-scource-directly");
   }
 };
         
@@ -3320,7 +3557,7 @@ Blockly.Blocks['try_catch'] = {
     this.setNextStatement(true, null);
     this.setColour(270);
  this.setTooltip("Try to execute a piece of code, if it fails do some statements in the `catch` section");
- this.setHelpUrl("");
+ this.setHelpUrl("https://app.gitbook.com/s/AR1GoZvc2Hq3eaRFIOdL/javascript#try-catch");
   },
   withLexicalVarsAndPrefix: function(child, proc) {
             if (this.getInputTargetBlock('catch') === child) {
@@ -3381,7 +3618,7 @@ Blockly.Blocks['eval'] = {
     this.setNextStatement(true, null);
     this.setColour(270);
  this.setTooltip("Evaluate a piece of code");
- this.setHelpUrl("");
+ this.setHelpUrl("https://app.gitbook.com/s/AR1GoZvc2Hq3eaRFIOdL/javascript#eval");
   }
 };
 
@@ -3540,9 +3777,8 @@ Blockly.Blocks['set_timeout'] = {
         .setCheck("String")
         .appendField("call")
         .appendField(new Blockly.FieldDropdown([[window.localStorage.getItem("projectName" + project),"Zero Two is cute"]]), "NAME")
-        .appendField(".openLink");
-    this.appendDummyInput()
-        .appendField(new Blockly.FieldDropdown([["inNewTab","int"], ["inCurrentTab","ict"]]), "t");
+        .appendField(".openLink")
+        .appendField(new Blockly.FieldDropdown([["InNewTab","int"], ["InCurrentTab","ict"]]), "t");
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
     this.setColour("#F3AA44");
@@ -3562,6 +3798,7 @@ Blockly.Blocks['custom_events'] = {
         .setCheck(null)
         .appendField("do");
     this.setColour("#F3AA44");
+    this.setInputsInline(true);
  this.setTooltip("Do some statements when the given event fires");
  this.setHelpUrl("");
   }
@@ -3582,6 +3819,7 @@ Blockly.Blocks['custom_events'] = {
         .setCheck(null)
         .appendField("do");
     this.setColour("#F3AA44");
+    this.setInputsInline(true);
  this.setTooltip("Do some statements when a key on the keyboard is pressed");
  this.setHelpUrl("");
   },
@@ -3663,6 +3901,7 @@ Blockly.Blocks['custom_events'] = {
         .setCheck(null)
         .appendField("do");
     this.setColour("#F3AA44");
+    this.setInputsInline(true);
  this.setTooltip("Do some statements when the mouse changed");
  this.setHelpUrl("");
   },
@@ -3744,6 +3983,7 @@ Blockly.Blocks['custom_events'] = {
         .setCheck(null)
         .appendField("do");
     this.setColour("#F3AA44");
+    this.setInputsInline(true);
  this.setTooltip("Do some statements when the page finished loading.");
  this.setHelpUrl("https://app.gitbook.com/s/AR1GoZvc2Hq3eaRFIOdL/events#load-event");
   }
@@ -3869,7 +4109,7 @@ Blockly.Blocks['import'] = {
         .appendField(new Blockly.FieldTextInput(""), "l");
     this.setColour(270);
  this.setTooltip("Import any javascript libary from skypack");
- this.setHelpUrl("");
+ this.setHelpUrl("https://app.gitbook.com/s/AR1GoZvc2Hq3eaRFIOdL/javascript#custom-imports");
   }
 };
 
@@ -3954,6 +4194,7 @@ Blockly.Blocks['game_pad_connected'] = {
         .setCheck(null)
         .appendField("do");
     this.setColour("#F3AA44");
+    this.setInputsInline(true);
  this.setTooltip("Do some statements when a controler has been connected");
  this.setHelpUrl("");
   },
@@ -4015,6 +4256,7 @@ Blockly.Blocks['game_pad_disconnected'] = {
         .setCheck(null)
         .appendField("do");
     this.setColour("#F3AA44");
+    this.setInputsInline(true);
  this.setTooltip("Do some statements when a controler has been disconnected");
  this.setHelpUrl("");
   }
@@ -4039,6 +4281,7 @@ Blockly.Blocks['game_pad_button_change'] = {
         .setCheck(null)
         .appendField("do");
     this.setColour("#F3AA44");
+    this.setInputsInline(true);
  this.setTooltip("Do some statements when a button on the controller is pressed");
  this.setHelpUrl("");
   },
@@ -4106,7 +4349,7 @@ Blockly.Blocks['create_elem'] = {
         .appendField("call")
         .appendField(new Blockly.FieldDropdown([[window.localStorage.getItem("projectName" + project),"OPTIONNAME"]]), "NAME")
         .appendField(".createNew")
-        .appendField(new Blockly.FieldDropdown([["Iframe","if"], ["Div","d"], ["Image","i"], ["Paragraph","p"], ["Button","b"], ["DropDownButton","ddb"], ["ColorPicker","cp"], ["DatePicker","dp"], ["TimePicker","tp"], ["TextField","tf2"], ["Canvas","c"], ["Slider","s"], ["ProgressBar","pb"], ["Checkbox","cb"], ["RadioButton","rb"], ["LoadignIcon","li"], ["FAB", "fab"], ["UnorderedList", "ul"], ["OrderedList", "ol"], ["HyperLink", "a"]]), "e")
+        .appendField(new Blockly.FieldDropdown([["Iframe","if"], ["Div","d"], ["Image","i"], ["Paragraph","p"], ["Button","b"], ["DropDownButton","ddb"], ["ColorPicker","cp"], ["DatePicker","dp"], ["TimePicker","tp"], ["TextField","tf2"], ["Canvas","c"], ["Slider","s"], ["ProgressBar","pb"], ["Checkbox","cb"], ["RadioButton","rb"], ["LoadignIcon","li"], ["FAB", "fab"], ["UnorderedList", "ul"], ["OrderedList", "ol"], ["HyperLink", "a"],['LottiePlayer', 'lp'],['FileViewer', 'fv']]), "e")
         .appendField("Element")
       .appendField(
                   new FieldParameterFlydown('ElementId', true, FieldFlydown.DISPLAY_BELOW),
@@ -4211,10 +4454,12 @@ Blockly.Blocks['clone'] = {
         .setCheck(null)
         .appendField("call")
         .appendField(new Blockly.FieldDropdown([[window.localStorage.getItem("projectName" + project),"OPTIONNAME"]]), "NAME")
-        .appendField(".cloneElement");
+        .appendField(".")
+        .appendField(new Blockly.FieldDropdown([["Clone","c"], ["Parent","p"], ["FirstChild","fc"], ["LastChild","lc"], ["AllChild","ac"]]), "d")
+        .appendField("ElementOf");
     this.setOutput(true, null);
     this.setColour(210);
- this.setTooltip("Clones an element");
+ this.setTooltip("Clones an element or return it'sparent, first/last/all childeren");
  this.setHelpUrl("");
   }
 };
@@ -4262,7 +4507,7 @@ Blockly.Blocks['all_elements'] = {
         .appendField("call")
         .appendField(new Blockly.FieldDropdown([[window.localStorage.getItem("projectName" + project),"OPTIONNAME"]]), "NAME")
         .appendField(".getAll")
-.appendField(new Blockly.FieldDropdown([["Iframe","if"], ["Div","d"], ["Image","i"], ["Paragraph","p"], ["Button","b"], ["DropDownButton","ddb"], ["ColorPicker","cp"], ["DatePicker","dp"], ["TimePicker","tp"], ["TextField","tf2"], ["Canvas","c"], ["Slider","s"], ["ProgressBar","pb"], ["Checkbox","cb"], ["RadioButton","rb"], ["LoadignIcon","li"], ["FAB", "fab"], ["UnorderedList", "ul"], ["OrderedList", "ol"], ["HyperLink", "a"]]), "e")
+        .appendField(new Blockly.FieldDropdown([["Iframe","if"], ["Div","d"], ["Image","i"], ["Paragraph","p"], ["Button","b"], ["DropDownButton","ddb"], ["ColorPicker","cp"], ["DatePicker","dp"], ["TimePicker","tp"], ["TextField","tf2"], ["Canvas","c"], ["Slider","s"], ["ProgressBar","pb"], ["Checkbox","cb"], ["RadioButton","rb"], ["LoadignIcon","li"], ["FAB", "fab"], ["UnorderedList", "ul"], ["OrderedList", "ol"], ["HyperLink", "a"],['LottiePlayer', 'lp'],['FileViewer', 'fv']]), "e")
         .appendField("Elements");
     this.setOutput(true, null);
     this.setColour(210);
@@ -4286,7 +4531,7 @@ Blockly.Blocks['switch_case'] = {
     this.setColour(270);
       this.setMutator(new Blockly.Mutator(['case']));
  this.setTooltip("If the case value matches the switch value run the blocks");
- this.setHelpUrl("");
+ this.setHelpUrl("https://app.gitbook.com/s/AR1GoZvc2Hq3eaRFIOdL/javascript#siwtch-case-blocks");
   },
     updateShape_: function() {
     for (let i = 1; this.getInput('c' + i); i++) {
@@ -4405,6 +4650,7 @@ Blockly.Blocks['case'] = {
     this.setColour(270);
  this.setTooltip("If the case value matches the switch value run the blocks");
  this.setHelpUrl("");
+ this.contextMenu = false;
   }
 };
 
@@ -4418,8 +4664,10 @@ Blockly.Blocks['switch'] = {
         .setCheck(null);
     this.setInputsInline(true);
     this.setColour(270);
+    this.setInputsInline(true);
  this.setTooltip("");
  this.setHelpUrl("");
+ this.contextMenu = false;
   }
 };
 
@@ -4435,7 +4683,7 @@ Blockly.Blocks['switch2'] = {
     this.setNextStatement(true, null);
     this.setColour(270);
  this.setTooltip("If the case value matches the switch value run the blocks");
- this.setHelpUrl("");
+ this.setHelpUrl("https://app.gitbook.com/s/AR1GoZvc2Hq3eaRFIOdL/javascript#siwtch-case-blocks");
   }
 };
 
@@ -4446,7 +4694,7 @@ Blockly.Blocks['load_asset'] = {
     this.setOutput(true, null);
     this.setColour(0);
  this.setTooltip("Load an asset");
- this.setHelpUrl("");
+ this.setHelpUrl("https://app.gitbook.com/s/AR1GoZvc2Hq3eaRFIOdL/other#loading-assets");
   },
     getAssets: function () {
         return assetsBlockDropdown
@@ -4458,6 +4706,7 @@ Blockly.Blocks['load_asset'] = {
 updateConnections: function(newValue) {
 if(newValue == "OPTIONNAME" ) {
 as.click();
+window.sessionStorage.removeItem('o');
 }
 }
 };
@@ -4823,6 +5072,7 @@ Blockly.Blocks['object'] = {
     this.setColour("#F99EA3");
  this.setTooltip("");
  this.setHelpUrl("");
+ this.contextMenu = false;
   }
 };
 
@@ -4834,8 +5084,10 @@ Blockly.Blocks['object_top_block'] = {
         .setCheck(null);
     this.setInputsInline(true);
     this.setColour("#F99EA3");
+    this.setInputsInline(true);
  this.setTooltip("");
  this.setHelpUrl("");
+ this.contextMenu = false;
   }
 };
 
@@ -5092,7 +5344,7 @@ Blockly.Blocks['device_manager'] = {
         .appendField("call")
         .appendField(new Blockly.FieldDropdown([["DeviceManager","OPTIONNAME"]]), "NAME")
         .appendField(".get")
-        .appendField(new Blockly.FieldDropdown([["DeviceOS","d"], ["IsMobileDevice","imd"], ["HasDarkModeEnabled","hde"], ["IsConnectedToANetwork","ictan"], ["DeviceLanguage","l"]]), "p");
+        .appendField(new Blockly.FieldDropdown([["DeviceMemory", "dm"], ["DeviceOS","d"], ["DeviceType","imd"], ["ColorScheme","hde"], ["NetworkState","ictan"], ["DeviceLanguage","l"], ['Orientation', 'o']]), "p");
     this.setOutput(true, null);
     this.setColour("#9596EB");
  this.setTooltip("Calls the device manager to return the status of the property");
@@ -5201,9 +5453,9 @@ Blockly.Blocks['add_object'] = {
   }
 };
 
-  var options = [["Body", "body"],["Iframe","if"], ["Div","d"], ["Image","i"], ["Paragraph","p"], ["Button","b"], ["DropDownButton","ddb"], ["ColorPicker","cp"], ["DatePicker","dp"], ["TimePicker","tp"], ["TextField","tf2"], ["Canvas","c"], ["Slider","s"], ["ProgressBar","pb"], ["Checkbox","cb"], ["RadioButton","rb"], ["LoadignIcon","li"], ["FAB", "fab"], ["UnorderedList", "ul"], ["OrderedList", "ol"], ["HyperLink", "a"]];
+  var options = [["Body", "body"],["Iframe","if"], ["Div","d"], ["Image","i"], ["Paragraph","p"], ["Button","b"], ["DropDownButton","ddb"], ["ColorPicker","cp"], ["DatePicker","dp"], ["TimePicker","tp"], ["TextField","tf2"], ["Canvas","c"], ["Slider","s"], ["ProgressBar","pb"], ["Checkbox","cb"], ["RadioButton","rb"], ["LoadignIcon","li"], ["FAB", "fab"], ["UnorderedList", "ul"], ["OrderedList", "ol"], ["HyperLink", "a"], ['LottiePlayer', 'lp'], ['FileViewer', 'fv']];
   
-  var opt = [["BackgroundColor", "style.backgroundColor"], ["BackgroundImage", "style.backgroundImage"], ["BackgroundImagePosition", "style.backgroundPosition"], ["BackgroundImageRepeat", "style.backgroundRepeat"], ["Width", "style.width"], ["Height", "style.height"], ["Margin", "style.margin"], ["MarginLeft", "style.marginLeft"], ["MarginRight", "style.marginRight"],["MarginTop", "style.marginTop"], ["MarginBottom", "style.marginBottom"], ["Padding", "style.padding"], ["PaddingLeft", "style.paddingLeft"],["PaddingRight", "style.paddingRight"], ["PaddingTop", "style.paddingTop"], ["PaddingBottom", "style.paddingBottom"], ["Top", "style.top"], ["Bottom", "style.bottom"], ["Left", "style.left"], ["Right", "style.right"],["BorderColor", "style.borderColor"], ["BorderWidth", "style.borderWidth"], ["BorderRadius", "style.borderRadius"], ["BorderRadiusRightTop", "style.borderTopRightRadius"], ["BorderRadiusLeftTop", "style.borderTopLeftRadius"], ["BorderRadiusLeftBottom", "style.borderBottomLeftRadius"], ["BorderRadiusRightBottom", "style.borderBottomRightRadius"],  ["BorderStyle", "style.borderStyle"], ["Position", "style.position"], ["Visible", "style.display"], ["Transform", "style.transform"], ["Overflow", "style.overflow"]];
+  var opt = [["BackgroundColor", "style.backgroundColor"], ["BackgroundImage", "style.backgroundImage"], ["BackgroundImagePosition", "style.backgroundPosition"], ["BackgroundImageRepeat", "style.backgroundRepeat"], ["Width", "style.width"], ["Height", "style.height"], ["Margin", "style.margin"], ["MarginLeft", "style.marginLeft"], ["MarginRight", "style.marginRight"],["MarginTop", "style.marginTop"], ["MarginBottom", "style.marginBottom"], ["Padding", "style.padding"], ["PaddingLeft", "style.paddingLeft"],["PaddingRight", "style.paddingRight"], ["PaddingTop", "style.paddingTop"], ["PaddingBottom", "style.paddingBottom"], ["Top", "style.top"], ["Bottom", "style.bottom"], ["Left", "style.left"], ["Right", "style.right"],["BorderColor", "style.borderColor"], ["BorderWidth", "style.borderWidth"], ["BorderRadius", "style.borderRadius"], ["BorderRadiusRightTop", "style.borderTopRightRadius"], ["BorderRadiusLeftTop", "style.borderTopLeftRadius"], ["BorderRadiusLeftBottom", "style.borderBottomLeftRadius"], ["BorderRadiusRightBottom", "style.borderBottomRightRadius"],  ["BorderStyle", "style.borderStyle"], ["Position", "style.position"], ["Visible", "style.display"], ["Transform", "style.transform"], ["Overflow", "style.overflow"], ['Perspective', 'style.perspective'], ['TransformStyle','style.transformStyle']];
   
   var p = [["MaxValue", "max"], ["MinVlaue", "min"], ["Value", "value"]];
   
@@ -5234,7 +5486,7 @@ Blockly.Blocks['set_prop'] = {
 updateConnections: function(newValue) {
   this.removeInput('e', /* no error */ true);
   if ( newValue == "if") {
-  var opti = opt.concat([["AllowFeaturePolicy", "allow"], ["AllowFullscreen", "allowfullscreen"], ["AllowPaymentRequest", "allowpaymentrequest"], ["URL", "src"], ["HTMLFile", "srcdoc"], ["FrameBorder", "frameBorder"]]);
+  var opti = opt.concat([["AllowFeaturePolicy", "allow"], ["AllowFullscreen", "allowfullscreen"], ["AllowPaymentRequest", "allowpaymentrequest"], ["URL", "src"], ["FrameBorder", "frameBorder"]]);
   }else if (newValue == "i") {
   var opti = opt.concat([["Image", "src"], ["ImagePosition", "style.objectFit"], ["ImageFilter", "style.filter"]]);
   }else if (newValue == "p" || newValue == "b") {
@@ -5255,6 +5507,10 @@ updateConnections: function(newValue) {
   var opti = opt.concat(text).concat([["Link", "href"]]);
   } else if (newValue == "cp" || newValue == "dp" || newValue == "cp" || newValue == "tp") {
   var opti = opt.concat([["Value", "value"]]);
+  } else if(newValue == 'lp') {
+  var opti = opt.concat([["Render", "R"], ['Loop', 'lo'], ['AutoPlay', 'a'], ["Animation", 'p'], ['Speed', 's'], ['Direction', 'd']]);
+  } else if(newValue == 'fv') {
+  var opti = opt.concat([['File', 'data']]);
   } else {
   var opti = opt
   }
@@ -5286,7 +5542,7 @@ Blockly.Blocks['get_propo'] = {
 updateConnections: function(newValue) {
   this.removeInput('e', /* no error */ true);
   if ( newValue == "if") {
-  var opti = opt.concat([["AllowFeaturePolicy", "allow"], ["AllowFullscreen", "allowfullscreen"], ["AllowPaymentRequest", "allowpaymentrequest"], ["URL", "src"], ["HTMLFile", "srcdoc"], ["FrameBorder", "frameBorder"]]);
+  var opti = opt.concat([["AllowFeaturePolicy", "allow"], ["AllowFullscreen", "allowfullscreen"], ["AllowPaymentRequest", "allowpaymentrequest"], ["URL", "src"], ["FrameBorder", "frameBorder"]]);
   }else if (newValue == "i") {
   var opti = opt.concat([["Image", "src"], ["ImagePosition", "style.objectFit"], ["ImageFilter", "style.filter"]]);
   }else if (newValue == "p" || newValue == "b") {
@@ -5307,6 +5563,10 @@ updateConnections: function(newValue) {
   var opti = opt.concat(text).concat([["Link", "href"]]);
   }else if (newValue == "cp" || newValue == "dp" || newValue == "cp" || newValue == "tp") {
   var opti = opt.concat([["Value", "value"]]);
+  } else if(newValue == 'lp') {
+  var opti = opt.concat([["Render", "R"], ['Loop', 'l'], ['AutoPlay', 'a'], ["Animation", 'p'], ['Speed', 's'], ['Direction', 'd'], ['Duration', 'dd']]);
+  } else if(newValue == 'fv') {
+  var opti = opt.concat([['File', 'data']]);
   } else {
   var opti = opt
   }
@@ -5544,7 +5804,7 @@ Blockly.Blocks['comment'] = {
     this.setNextStatement(true, null);
     this.setColour(0);
  this.setTooltip("Adds a comment to your project");
- this.setHelpUrl("");
+ this.setHelpUrl("https://app.gitbook.com/s/AR1GoZvc2Hq3eaRFIOdL/other#commenting-on-blocks");
   }
 };
 
@@ -5674,6 +5934,7 @@ Blockly.Blocks['procedures_defnoreturn'] = {
     this.setMutator(new Blockly.Mutator(['procedures_mutatorarg']));
     this.setTooltip(Blockly.Msg.LANG_PROCEDURES_DEFNORETURN_TOOLTIP);
     this.setHelpUrl("https://app.gitbook.com/s/AR1GoZvc2Hq3eaRFIOdL/functions#defining-functions-without-a-return-value");
+    this.setInputsInline(true);
     // List of declared local variable names; has one
     // ("name") initially
     this.arguments_ = [];
@@ -6645,14 +6906,14 @@ Blockly.Blocks['click'] = {
     this.appendValueInput("NAME")
         .setCheck(null)
         .appendField("call")
-        .appendField(new Blockly.FieldDropdown([["DeviceManager","OPTIONNAME"]]), "NAME")
+        .appendField(new Blockly.FieldDropdown([[window.localStorage.getItem("projectName" + project),"OPTIONNAME"]]), 'NAME')
         .appendField(".")
-        .appendField(new Blockly.FieldDropdown([["ClickElement","ce"], ["RequestFocusOnElement","rfce"]]), "d");
+        .appendField(new Blockly.FieldDropdown([["ClickElement","ce"], ["RequestFocusOnElement","rfce"],['RefreshIframe','ri']]), "d");
     this.setInputsInline(true);
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
     this.setColour(210);
- this.setTooltip("Click or request focus on an elementon an element usefull if you need to open a file picker without user input");
+ this.setTooltip("Click or request focus on an element, usefull if you need to open a file picker without user input");
  this.setHelpUrl("");
   }
 };
@@ -6792,6 +7053,7 @@ Blockly.Blocks['list'] = {
     this.setColour("#76afc9");
  this.setTooltip("");
  this.setHelpUrl("");
+ this.contextMenu = false;
   }
 };
 
@@ -6802,8 +7064,10 @@ Blockly.Blocks['create_list_with_top_block'] = {
     this.appendStatementInput("NAME")
         .setCheck(null);
     this.setColour("#76afc9");
+    this.setInputsInline(true);
  this.setTooltip("");
  this.setHelpUrl("");
+ this.contextMenu = false;
   }
 };
 
@@ -6841,6 +7105,7 @@ Blockly.Blocks['window_resize'] = {
         .setCheck(null)
         .appendField("do");
     this.setColour("#F3AA44");
+    this.setInputsInline(true);
  this.setTooltip("Do some statements when the user changes the window size");
  this.setHelpUrl("");
   },
@@ -6902,7 +7167,7 @@ Blockly.Blocks['load_audio'] = {
     this.appendValueInput("NAME")
         .setCheck(null)
         .appendField("call")
-        .appendField(new Blockly.FieldDropdown([[window.localStorage.getItem("projectName" + project),"OPTIONNAME"]]), "NAME")
+        .appendField(new Blockly.FieldDropdown([['MediaPlayer' ,"OPTIONNAME"]]), "NAME")
         .appendField(".loadAudioFille");
     this.setOutput(true, null);
     this.setColour("9596EB");
@@ -6916,7 +7181,7 @@ Blockly.Blocks['play_pause'] = {
     this.appendValueInput("NAME")
         .setCheck(null)
         .appendField("call")
-        .appendField(new Blockly.FieldDropdown([[window.localStorage.getItem("projectName" + project),"OPTIONNAME"]]), "NAME")
+        .appendField(new Blockly.FieldDropdown([['MediaPlayer' ,"OPTIONNAME"]]), "NAME")
         .appendField(".")
         .appendField(new Blockly.FieldDropdown([["Play","play"], ["Pause","pause"]]), "t");
     this.setPreviousStatement(true, null);
@@ -6932,7 +7197,7 @@ Blockly.Blocks['speed_loop'] = {
     this.appendValueInput("NAME")
         .setCheck(null)
         .appendField("call")
-        .appendField(new Blockly.FieldDropdown([[window.localStorage.getItem("projectName" + project),"OPTIONNAME"]]), "NAME");
+        .appendField(new Blockly.FieldDropdown([['MediaPlayer' ,"OPTIONNAME"]]), "NAME");
     this.appendValueInput("NAME")
         .setCheck(null)
         .appendField(".")
@@ -6943,5 +7208,199 @@ Blockly.Blocks['speed_loop'] = {
     this.setColour("9596EB");
  this.setTooltip("Set the Speed or if the audio loops");
  this.setHelpUrl("");
+  }
+};
+
+Blockly.Blocks['typeof'] = {
+  init: function() {
+        this.fieldVar_ = new FieldLexicalVariable(' ');
+    this.fieldVar_.setBlock(this);
+    this.appendDummyInput()
+        .appendField("typeOf")
+        .appendField(this.fieldVar_, 'VAR');
+    this.setOutput(true, null);
+    this.setColour(330);
+ this.setTooltip("Returns the type of a variable e.g. String,  Array, Object, Boolean or Number");
+ this.setHelpUrl("");
+  this.errors = [
+      {func: WarningHandler.checkIsInDefinition},
+      {
+        func: WarningHandler.checkDropDownContainsValidValue,
+        dropDowns: ['VAR'],
+      },
+    ];
+    this.setOnChange(function(changeEvent) {
+      WarningHandler.checkErrors(this);
+    });
+  },
+  referenceResults: Blockly.Blocks.lexical_variable_get.referenceResults,
+  getVars: function() {
+    return [this.getFieldValue('VAR')];
+  },
+  renameLexicalVar: Blockly.Blocks.lexical_variable_get.renameLexicalVar,
+  renameFree: function(freeSubstitution) {
+    // potentially rename the set variable
+    const prefixPair = Blockly.unprefixName(this.getFieldValue('VAR'));
+    const prefix = prefixPair[0];
+    // Only rename lexical (nonglobal) names
+    if (prefix !== Blockly.Msg.LANG_VARIABLES_GLOBAL_PREFIX) {
+      const oldName = prefixPair[1];
+      const newName = freeSubstitution.apply(oldName);
+      if (newName !== oldName) {
+        this.renameLexicalVar(oldName, newName);
+      }
+    }
+    // [lyn, 06/26/2014] Don't forget to rename children!
+    this.getChildren().map(function(blk) {
+      LexicalVariable.renameFree(blk, freeSubstitution);
+    });
+  },
+  freeVariables: function() { // return the free lexical variables of this block
+    // [lyn, 06/27/2014] Find free vars of *all* children, including subsequent
+    // commands in NEXT slot.
+    const childrenFreeVars = this.getChildren().map(function(blk) {
+      return LexicalVariable.freeVariables(blk);
+    });
+    const result = Blockly.NameSet.unionAll(childrenFreeVars);
+    const prefixPair = Blockly.unprefixName(this.getFieldValue('VAR'));
+    const prefix = prefixPair[0];
+    // Only return lexical (nonglobal) names
+    if (prefix !== Blockly.Msg.LANG_VARIABLES_GLOBAL_PREFIX) {
+      const oldName = prefixPair[1];
+      result.insert(oldName);
+    }
+    return result;
+  }
+};
+
+Blockly.Blocks['to_string'] = {
+  init: function() {
+    this.appendValueInput("NAME")
+        .setCheck(null)
+        .appendField("toString");
+    this.setOutput(true, null);
+    this.setColour("#DF6078");
+ this.setTooltip("Turn an number to a string");
+ this.setHelpUrl("");
+  }
+};
+
+Blockly.Blocks['to_number'] = {
+  init: function() {
+    this.appendValueInput("NAME")
+        .setCheck(null)
+        .appendField("toNumber");
+    this.setOutput(true, null);
+    this.setColour("#6789cc");
+ this.setTooltip("Trun an numberString to a number");
+ this.setHelpUrl("");
+  }
+};
+
+Blockly.Blocks['istestting'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("call")
+        .appendField(new Blockly.FieldDropdown([[window.localStorage.getItem("projectName" + project),"OPTIONNAME"]]), "NAME")
+        .appendField(".isTesting");
+    this.setOutput(true, null);
+    this.setColour("9596EB");
+ this.setTooltip("Returns true if the project is run in testing mode");
+ this.setHelpUrl("");
+  }
+};
+
+Blockly.Blocks['trans_etc'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField(new Blockly.FieldDropdown([["Overflow","o"], ["Transform","t"], ["Position","p"], ["ImageFilter","if"], ["BackgroundImageRepeat","bir"], ["BackgroundImagePosition","bip"], ['BorderStyle', 'bs'],['TransformStyle','ts'], ['TextAlign','ta'],['Visible','v']],this.validate), "NAME")
+        .appendField(".");
+    this.appendDummyInput('dd')
+        .appendField(new Blockly.FieldDropdown([["option","OPTIONNAME"], ["option","OPTIONNAME"], ["option","OPTIONNAME"]]), "ee");
+    this.appendValueInput("NAME")
+    .setCheck("Number");
+    this.setInputsInline(true);
+    this.setOutput(true, null);
+    this.setColour(0);
+ this.setTooltip("Allows you to select a property for the property setters");
+ this.setHelpUrl("");
+  },
+  validate: function(newValue) {
+  this.getSourceBlock().updateConnections(newValue);
+  return newValue;
+},
+updateConnections: function(newValue) {
+  this.removeInput('dd', /* no error */ true);
+  this.removeInput('NAME', /* no error */ true);
+  if(newValue == 'o') {
+  var pp = [['Hidden', 'hidden'], ['Visible','visible'],['Scroll', 'scroll'],['Auto', 'auto']]
+  } else if(newValue == 't') {
+  var pp = [['TranslateX', 'translateX'],['TranslateY', 'translateY'], ['TranslateZ', 'translateZ'],['ScaleX', 'scaleX'], ['ScaleY', 'scaleY'], ['ScaleZ', 'scaleZ'] ,['RotateX','rotateX'], ['RotateY', 'rotateY'], ['RotateZ', 'rotateZ'], ['SkewX','skewX'],['SkewY','skewY']]
+  } else if (newValue == 'p') {
+  var pp = [['Absolute','absolute'],['Relative','relative'],['Fixed','fixed'],['Sticky','sticky']]
+  } else if(newValue == 'if') {
+  var pp = [['GrayScale', 'grayscale'], ['Blur', 'blur'],['Saturation','saturate']]
+  } else if(newValue == 'bir') {
+  var pp = [['Repeat', 'repeat'], ['No-Repeat', 'no-repeat']]
+  } else if (newValue == 'bip') {
+  var pp = [['Auto', 'auto'],['Center', 'center']]
+  } else if(newValue == 'bs') {
+  var pp = [['Hidden', 'hidden'],['Dotted','dotted'],['Dashed','dashed'], ['Solid','solid'],['Ridge','ridge'],['Inset','inset'], ['Outset','outset']]
+  } else if(newValue == 'ts') {
+  var pp = [['Flat','flat'],['Preserve3D','preserve3D']]
+  } else if(newValue == 'ta') {
+  var pp = [['Left','left'],['Right','right'],['Center','center'],['Justify','justify']]
+  } else if(newValue == 'v') {
+  var pp = [['Visible','block'],['Invisible','none']]
+  }
+  this.appendDummyInput('dd')
+        .appendField(new Blockly.FieldDropdown(pp), "ee");
+  if(newValue == 't' || newValue == 'if') {
+  this.appendValueInput("NAME")
+  .setCheck("Number");
+  }
+}
+};
+
+Blockly.Blocks['writeclipboard'] = {
+  init: function() {
+    this.appendValueInput("NAME")
+        .setCheck(null)
+        .appendField("call")
+        .appendField(new Blockly.FieldDropdown([["ClipBoardManager","OPTIONNAME"]]), "NAME")
+        .appendField(".writeText");
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour("9596EB");
+ this.setTooltip("Write some text to the clipboard");
+ this.setHelpUrl("");
+  }
+};
+
+Blockly.Blocks['text_create_join_container'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("join             ");
+    this.appendStatementInput("STACK")
+        .setCheck(null);
+    this.setInputsInline(true);
+    this.setColour('#DF6078');
+ this.setTooltip("");
+ this.setHelpUrl("");
+ this.contextMenu = false;
+  }
+};
+
+Blockly.Blocks['lists_create_with_container'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("list             ");
+    this.appendStatementInput("STACK")
+        .setCheck(null);
+    this.setInputsInline(true);
+    this.setColour('#76AFC9');
+ this.setTooltip("");
+ this.setHelpUrl("");
+ this.contextMenu = false;
   }
 };

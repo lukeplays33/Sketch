@@ -265,7 +265,10 @@ background-image: url(../Images/61818b07d54ef50010e42587-1.png);
 </div>
 
 <section id="blocklyContainer">
-    <div id="editor">
+
+    <div id="editor" class="editor">
+    <button id="fullscreen">
+</button>
     </div>
     <div id="blocklyDiv">
         
@@ -348,6 +351,9 @@ background-image: url(../Images/61818b07d54ef50010e42587-1.png);
     </block>
   </category>
   <category name="Components" colour="#9596EB" css-icon="customIcon fa fa-code">
+      <block type="istestting">
+      <field name="NAME">OPTIONNAME</field>
+    </block>
     <block type="alert">
       <field name="NAME">OPTIONNAME</field>
     </block>
@@ -366,17 +372,6 @@ background-image: url(../Images/61818b07d54ef50010e42587-1.png);
     <block type="console">
       <field name="NAME">OPTIONNAME</field>
       <field name="y">log</field>
-    </block>
-        <block type="play_pause">
-      <field name="NAME">OPTIONNAME</field>
-      <field name="t">play</field>
-    </block>
-    <block type="load_audio">
-      <field name="NAME">OPTIONNAME</field>
-    </block>
-    <block type="speed_loop">
-      <field name="NAME">OPTIONNAME</field>
-      <field name="t">playbackRate</field>
     </block>
     <block type="windew_height_width">
       <field name="NAME">OPTIONNAME</field>
@@ -438,6 +433,20 @@ background-image: url(../Images/61818b07d54ef50010e42587-1.png);
     <block type="pick_file">
       <field name="NAME">OPTIONNAME</field>
     </block>
+            <block type="play_pause">
+      <field name="NAME">OPTIONNAME</field>
+      <field name="t">play</field>
+    </block>
+    <block type="load_audio">
+      <field name="NAME">OPTIONNAME</field>
+    </block>
+    <block type="speed_loop">
+      <field name="NAME">OPTIONNAME</field>
+      <field name="t">playbackRate</field>
+    </block>
+    <block type="writeclipboard">
+      <field name="NAME">OPTIONNAME</field>
+    </block>
   </category>
   <category name="Other" colour="0" css-icon="customIcon fa fa-object-group">
     <block type="load_asset">
@@ -445,6 +454,10 @@ background-image: url(../Images/61818b07d54ef50010e42587-1.png);
     </block>
     <block type="comment">
       <field name="NAME">Just clownin' around</field>
+    </block>
+    <block type="trans_etc">
+      <field name="NAME">o</field>
+      <field name="ee">OPTIONNAME</field>
     </block>
   </category>
   <sep></sep>
@@ -532,6 +545,7 @@ background-image: url(../Images/61818b07d54ef50010e42587-1.png);
     <block type="math_constrain"></block>
     <block type="math_random_int"></block>
     <block type="math_random_float"></block>
+    <block type="to_number"></block>
   </category>
   <category name="Text" colour="#DF6078" css-icon="customIcon fa fa-italic">
     <block type="text">
@@ -563,6 +577,7 @@ background-image: url(../Images/61818b07d54ef50010e42587-1.png);
     <block type="new_line"></block>
     <block type="repplace_text"></block>
     <block type="tet_contains"></block>
+    <block type="to_string"></block>
   </category>
   <category name="Lists" colour="#76afc9" css-icon="customIcon fa fa-list">
     <block type="lists_create_with">
@@ -639,8 +654,8 @@ background-image: url(../Images/61818b07d54ef50010e42587-1.png);
   <category name="Variables" colour="#CD5E94" css-icon="customIcon fa fa-usd">
     <block type="global_declaration"></block>
     <block type="local_declaration_statement"></block>
-    <block type="local_declaration_expression"></block>
     <block type="lexical_variable_get"></block>
+    <block type="typeof"></block>
     <block type="lexical_variable_set"></block>
     <block type="change">
       <field name="NAME">OPTIONNAME</field>

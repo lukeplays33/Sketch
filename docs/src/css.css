@@ -193,7 +193,6 @@ a {
 
 .header {
   background-color: #008dcd;
-  overflow: scroll;
   position: absolute;
   z-index: 500;
   height: 50px;
@@ -467,7 +466,6 @@ button {
   position: relative;
   width: 100%;
   height: calc(100% - 50px);
-  overflow: scroll;
   transform: translateY(50px);
     
   -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
@@ -498,7 +496,9 @@ button {
   background-color: TRANSPARENT !important;
 }
 
-        div#blocklyDiv .blocklyToolboxDiv {
+@media only screen and (max-width: 600px) {
+div#blocklyDiv .blocklyToolboxDiv {
+        width: calc(100% - 18px);
     border-radius: 10px;
   background: rgba(155, 155, 155, 0.5);
   padding: 8px;
@@ -511,6 +511,24 @@ button {
 
   box-sizing: border-box;
 }
+}
+
+@media only screen and (min-width: 600px) {
+div#blocklyDiv .blocklyToolboxDiv {
+    border-radius: 10px;
+  background: rgba(155, 155, 155, 0.5);
+  padding: 8px;
+    margin: 8px;
+    margin-right: 8px;
+    
+      -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+
+  -moz-box-sizing: border-box; /* Firefox, other Gecko */
+
+  box-sizing: border-box;
+  height: 80%;
+}
+}
 
 div#blocklyDiv .blocklyTreeRow {
   border-radius: 5px;
@@ -518,18 +536,22 @@ div#blocklyDiv .blocklyTreeRow {
   margin-bottom: 8px;
   color: white;
 }
+
         @media only screen and (max-width: 600px) {
             div#blocklyDiv .blocklyFlyout {
     border-radius: 10px;
   background: rgba(155, 155, 155, 0.5);
-  padding: 8px;
+  padding: 0px;
     margin: 8px;
+    margin-top: -16px;
+    width: calc(100% - 18px);
     
       -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
 
   -moz-box-sizing: border-box; /* Firefox, other Gecko */
 
   box-sizing: border-box;
+  
 }
         }    
         
@@ -538,9 +560,10 @@ div#blocklyDiv .blocklyTreeRow {
 div#blocklyDiv .blocklyFlyout {
     border-radius: 10px;
   background: rgba(155, 155, 155, 0.5);
-  padding: 8px;
+  padding: 0px;
     margin: 8px;
-    margin-left: 16px;
+    margin-left: 21px;
+    height: calc(100% - 18px);
     
       -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
 
@@ -550,7 +573,7 @@ div#blocklyDiv .blocklyFlyout {
 }
         }
         @media only screen and (min-width: 600px) {
-        #editor {
+        .editor {
             background: rgb(238,238,238);
             width: 400px;
             position: absolute; 
@@ -566,7 +589,7 @@ div#blocklyDiv .blocklyFlyout {
         }
         
                 @media only screen and (max-width: 600px) {
-        #editor {
+        .editor {
             background: rgb(238,238,238);
             width: 100%;
             position: absolute; 
@@ -584,14 +607,14 @@ div#blocklyDiv .blocklyFlyout {
  @media only screen and (max-width: 600px) {
 .welcome {
 z-index: 810;
-height: 92%;
+max-height: 92%;
       position: fixed;
   top: 50%;
   left: 50%;
   /* bring your own prefixes */
   transform: translate(-50%, -50%);
     background: rgba(155, 155, 155, 0.5);
-    width: 92%;
+    max-width: 92%;
     border-radius: 10px;
     padding: 8px;
     padding-bottom: 0px;
@@ -682,11 +705,12 @@ position: fixed;
 padding: 8px;
 padding-bottom: 0px;
 z-index: 900;
+overflow: visible;
 }
 
 #CloseMenu {
-width: 100%;
-height: 100%;
+min-width: 100%;
+min-height: 100%;
 display: none;
 position: fixed;
 z-index: 890;
@@ -703,6 +727,7 @@ width:100%;
 height:100%;
 z-index:800;
 position: fixed;
+overflow: auto;
 }
 
 #pick {
@@ -721,4 +746,25 @@ z-index: 810;
   -moz-box-sizing: border-box; /* Firefox, other Gecko */
 
   box-sizing: border-box;
+}
+
+#fullscreen {
+  width: 35px;
+  height: 35px;
+  padding: 8px;
+  position: fixed;
+  background-image: url("../Images/outline_fullscreen_white_24dp.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  right: 0px;
+  top: 0px;
+  background: rgba(155, 155, 155, 0.5);
+  border-radius: 10px;
+  margin: 8px;
+   z-index: 410;
+}
+
+::-webkit-scrollbar {
+  width: 0px;
 }
