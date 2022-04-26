@@ -1,4 +1,4 @@
-
+"use strict";
 
 /**
  * @license
@@ -56,6 +56,9 @@ import { HolidayAPI } from 'holidayapi';
 
 import {loops as loop} from 'blockly/blocks';
 loop.loopTypes.add('forever');
+
+//custom .js file imports
+import {blockColors} from 'BlockColors';
 
 //get x, y values
 
@@ -288,25 +291,6 @@ document.getElementById("CloseMenu").onclick = function () {
 document.getElementById("CloseMenu").style.display = "none"
 }
 }
-
-// change hue
-Blockly.HSV_SATURATION = 0.50;
-Blockly.HSV_VALUE = 0.78;
-
-// block colors
-
-Blockly.EVENTS_CATEGORY_HUE = '0'
-Blockly.ELEMENTS_CATEGORY_HUE = '210'
-Blockly.COMPONENTS_CATEGORY_HUE = '200'
-Blockly.OTHER_CATEGORY_HUE = '180'
-Blockly.GAME_CATEGORY_HUE = '235'
-Blockly.CONTROL_CATEGORY_HUE = '50'
-Blockly.LOGIC_CATEGORY_HUE = '130'
-Blockly.MATH_CATEGORY_HUE = '245'
-Blockly.TEXT_CATEGORY_HUE = '335'
-Blockly.LIST_CATEGORY_HUE = '260'
-Blockly.OBJECT_CATEGORY_HUE = '305'
-Blockly.FUNCTIONS_CATEGORY_HUE = '255'
 
 //define generators
 
@@ -1781,19 +1765,19 @@ const workspace2 = Blockly.inject("blocklyDiv2", {
     theme: {
       'blockStyles' : {
           "logic_blocks": {
-            "colourPrimary": Blockly.CONTROL_CATEGORY_HUE
+            "colourPrimary": window.Blockly.CONTROL_CATEGORY_HUE
          },
                     "loop_blocks": {
-            "colourPrimary": Blockly.CONTROL_CATEGORY_HUE
+            "colourPrimary": window.Blockly.CONTROL_CATEGORY_HUE
          },
          "list_blocks": {
-            "colourPrimary": Blockly.LIST_CATEGORY_HUE
+            "colourPrimary": window.Blockly.LIST_CATEGORY_HUE
          },
                    "math_blocks": {
-            "colourPrimary": Blockly.MATH_CATEGORY_HUE
+            "colourPrimary": window.Blockly.MATH_CATEGORY_HUE
          },
                    "text_blocks": {
-            "colourPrimary": Blockly.TEXT_CATEGORY_HUE
+            "colourPrimary": window.Blockly.TEXT_CATEGORY_HUE
          },
                              "colour_blocks": {
             "colourPrimary": "#7F7F7F"
@@ -1802,7 +1786,7 @@ const workspace2 = Blockly.inject("blocklyDiv2", {
             "colourPrimary": "#CD5E94"
          },
                                                  "procedure_blocks": {
-            "colourPrimary": Blockly.FUNCTIONS_CATEGORY_HUE
+            "colourPrimary": window.Blockly.FUNCTIONS_CATEGORY_HUE
          }
       },
       'componentStyles' : {
@@ -1872,19 +1856,19 @@ const workspace = Blockly.inject("blocklyDiv", {
     theme: {
       'blockStyles' : {
           "logic_blocks": {
-            "colourPrimary": Blockly.CONTROL_CATEGORY_HUE
+            "colourPrimary": window.Blockly.CONTROL_CATEGORY_HUE
          },
                     "loop_blocks": {
-            "colourPrimary": Blockly.CONTROL_CATEGORY_HUE
+            "colourPrimary": window.Blockly.CONTROL_CATEGORY_HUE
          },
          "list_blocks": {
-            "colourPrimary": Blockly.LIST_CATEGORY_HUE
+            "colourPrimary": window.Blockly.LIST_CATEGORY_HUE
          },
                    "math_blocks": {
-            "colourPrimary": Blockly.MATH_CATEGORY_HUE
+            "colourPrimary": window.Blockly.MATH_CATEGORY_HUE
          },
                    "text_blocks": {
-            "colourPrimary": Blockly.TEXT_CATEGORY_HUE
+            "colourPrimary": window.Blockly.TEXT_CATEGORY_HUE
          },
                              "colour_blocks": {
             "colourPrimary": "#7F7F7F"
@@ -1893,7 +1877,7 @@ const workspace = Blockly.inject("blocklyDiv", {
             "colourPrimary": "#CD5E94"
          },
                                                  "procedure_blocks": {
-            "colourPrimary": Blockly.FUNCTIONS_CATEGORY_HUE
+            "colourPrimary": window.Blockly.FUNCTIONS_CATEGORY_HUE
          }
       },
       'componentStyles' : {
@@ -3905,7 +3889,7 @@ Blockly.Blocks['eval'] = {
         .setCheck(null);
     this.setInputsInline(true);
     this.setOutput(true, null);
-    this.setColour(Blockly.LOGIC_CATEGORY_HUE);
+    this.setColour(window.Blockly.LOGIC_CATEGORY_HUE);
  this.setTooltip("Returns true when the inputs are equals, greater or smaller from each other");
  this.setHelpUrl("");
   }
@@ -3920,7 +3904,7 @@ Blockly.Blocks['eval'] = {
         .setCheck(null);
     this.setInputsInline(true);
     this.setOutput(true, null);
-    this.setColour(Blockly.LOGIC_CATEGORY_HUE);
+    this.setColour(window.Blockly.LOGIC_CATEGORY_HUE);
  this.setTooltip("Returns true when either one or both inputs return true");
  this.setHelpUrl("");
   }
@@ -3931,7 +3915,7 @@ Blockly.Blocks['eval'] = {
         .setCheck(null)
         .appendField("not");
     this.setOutput(true, null);
-    this.setColour(Blockly.LOGIC_CATEGORY_HUE);
+    this.setColour(window.Blockly.LOGIC_CATEGORY_HUE);
  this.setTooltip("Returns true if the input is false, returns false if the input is true");
  this.setHelpUrl("");
   }
@@ -3941,7 +3925,7 @@ Blockly.Blocks['eval'] = {
     this.appendDummyInput()
         .appendField(new Blockly.FieldDropdown([["true","true"], ["false","false"]]), "NAME");
     this.setOutput(true, "Boolean");
-    this.setColour(Blockly.LOGIC_CATEGORY_HUE);
+    this.setColour(window.Blockly.LOGIC_CATEGORY_HUE);
  this.setTooltip("Returns either true or false");
  this.setHelpUrl("");
   }
@@ -3951,7 +3935,7 @@ Blockly.Blocks['eval'] = {
     this.appendDummyInput()
         .appendField("null");
     this.setOutput(true, null);
-    this.setColour(Blockly.LOGIC_CATEGORY_HUE);
+    this.setColour(window.Blockly.LOGIC_CATEGORY_HUE);
  this.setTooltip("Returns null");
  this.setHelpUrl("");
   }
@@ -3963,7 +3947,7 @@ Blockly.Blocks['clearint'] = {
         .setCheck(null)
         .appendField(new Blockly.FieldDropdown([["clearTimeout","ct"], ["cancelAnimationFrame","caf"]]), "NAME");
     this.setPreviousStatement(true, null);
-    this.setColour(Blockly.CONTROL_CATEGORY_HUE);
+    this.setColour(window.Blockly.CONTROL_CATEGORY_HUE);
  this.setTooltip("Stop the current timeout or animation frame requests");
  this.setHelpUrl("");
   }
@@ -3991,7 +3975,7 @@ Blockly.Blocks['set_timeout'] = {
       this.setInputsInline(false);
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour(Blockly.CONTROL_CATEGORY_HUE);
+    this.setColour(window.Blockly.CONTROL_CATEGORY_HUE);
  this.setTooltip("Wait the specified amount of time before performing the next action.");
  this.setHelpUrl("");
   },
@@ -4019,7 +4003,7 @@ Blockly.Blocks['set_timeout'] = {
         .appendField(new Blockly.FieldDropdown([["InNewTab","int"], ["InCurrentTab","ict"]]), "t");
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour(Blockly.COMPONENTS_CATEGORY_HUE);
+    this.setColour(window.Blockly.COMPONENTS_CATEGORY_HUE);
  this.setTooltip("Open a link in a new tab or current tab");
  this.setHelpUrl("");
   }
@@ -4035,7 +4019,7 @@ Blockly.Blocks['custom_events'] = {
     this.appendStatementInput("NAME")
         .setCheck(null)
         .appendField("do");
-    this.setColour(Blockly.EVENTS_CATEGORY_HUE);
+    this.setColour(window.Blockly.EVENTS_CATEGORY_HUE);
     this.setInputsInline(true);
  this.setTooltip("Do some statements when the given event fires");
  this.setHelpUrl("");
@@ -4056,7 +4040,7 @@ Blockly.Blocks['custom_events'] = {
     this.appendStatementInput("NAME")
         .setCheck(null)
         .appendField("do");
-    this.setColour(Blockly.EVENTS_CATEGORY_HUE);
+    this.setColour(window.Blockly.EVENTS_CATEGORY_HUE);
     this.setInputsInline(true);
  this.setTooltip("Do some statements when a key on the keyboard is pressed");
  this.setHelpUrl("");
@@ -4138,7 +4122,7 @@ Blockly.Blocks['custom_events'] = {
     this.appendStatementInput("NAME")
         .setCheck(null)
         .appendField("do");
-    this.setColour(Blockly.EVENTS_CATEGORY_HUE);
+    this.setColour(window.Blockly.EVENTS_CATEGORY_HUE);
     this.setInputsInline(true);
  this.setTooltip("Do some statements when the mouse changed");
  this.setHelpUrl("");
@@ -4220,7 +4204,7 @@ Blockly.Blocks['custom_events'] = {
     this.appendStatementInput("NAME")
         .setCheck(null)
         .appendField("do");
-    this.setColour(Blockly.EVENTS_CATEGORY_HUE);
+    this.setColour(window.Blockly.EVENTS_CATEGORY_HUE);
     this.setInputsInline(true);
  this.setTooltip("Do some statements when the page finished loading.");
  this.setHelpUrl("https://app.gitbook.com/s/AR1GoZvc2Hq3eaRFIOdL/events#load-event");
@@ -4319,7 +4303,7 @@ Blockly.Blocks['rnaf'] = {
         .appendField("do");
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour(Blockly.CONTROL_CATEGORY_HUE);
+    this.setColour(window.Blockly.CONTROL_CATEGORY_HUE);
  this.setTooltip("Do some statements when a Animation Frame Iis requested");
  this.setHelpUrl("");
   },
@@ -4350,7 +4334,7 @@ Blockly.Blocks['game_pad_connected'] = {
     this.appendStatementInput("NAME")
         .setCheck(null)
         .appendField("do");
-    this.setColour(Blockly.EVENTS_CATEGORY_HUE);
+    this.setColour(window.Blockly.EVENTS_CATEGORY_HUE);
     this.setInputsInline(true);
  this.setTooltip("Do some statements when a controler has been connected");
  this.setHelpUrl("");
@@ -4412,7 +4396,7 @@ Blockly.Blocks['game_pad_disconnected'] = {
     this.appendStatementInput("NAME")
         .setCheck(null)
         .appendField("do");
-    this.setColour(Blockly.EVENTS_CATEGORY_HUE);
+    this.setColour(window.Blockly.EVENTS_CATEGORY_HUE);
     this.setInputsInline(true);
  this.setTooltip("Do some statements when a controler has been disconnected");
  this.setHelpUrl("");
@@ -4437,7 +4421,7 @@ Blockly.Blocks['game_pad_button_change'] = {
     this.appendStatementInput("NAME")
         .setCheck(null)
         .appendField("do");
-    this.setColour(Blockly.EVENTS_CATEGORY_HUE);
+    this.setColour(window.Blockly.EVENTS_CATEGORY_HUE);
     this.setInputsInline(true);
  this.setTooltip("Do some statements when a button on the controller is pressed");
  this.setHelpUrl("");
@@ -4516,7 +4500,7 @@ Blockly.Blocks['create_elem'] = {
         .appendField("do");
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour(Blockly.ELEMENTS_CATEGORY_HUE);
+    this.setColour(window.Blockly.ELEMENTS_CATEGORY_HUE);
  this.setTooltip("Creatte a new element");
  this.setHelpUrl("");
   },
@@ -4547,7 +4531,7 @@ Blockly.Blocks['apppend_elem'] = {
     this.setInputsInline(true);
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour(Blockly.ELEMENTS_CATEGORY_HUE);
+    this.setColour(window.Blockly.ELEMENTS_CATEGORY_HUE);
  this.setTooltip("Add a newly created element to the body or element");
  this.setHelpUrl("");
   }
@@ -4563,7 +4547,7 @@ Blockly.Blocks['clone'] = {
         .appendField(new Blockly.FieldDropdown([["Clone","c"], ["Parent","p"], ["FirstChild","fc"], ["LastChild","lc"], ["AllChild","ac"]]), "d")
         .appendField("ElementOf");
     this.setOutput(true, null);
-    this.setColour(Blockly.ELEMENTS_CATEGORY_HUE);
+    this.setColour(window.Blockly.ELEMENTS_CATEGORY_HUE);
  this.setTooltip("Clones an element or return it'sparent, first/last/all childeren");
  this.setHelpUrl("");
   }
@@ -4574,7 +4558,7 @@ Blockly.Blocks['body'] = {
     this.appendDummyInput()
         .appendField("body");
     this.setOutput(true, null);
-    this.setColour(Blockly.ELEMENTS_CATEGORY_HUE);
+    this.setColour(window.Blockly.ELEMENTS_CATEGORY_HUE);
  this.setTooltip("Return the location of the documents body");
  this.setHelpUrl("");
   }
@@ -4588,7 +4572,7 @@ Blockly.Blocks['forever'] = {
         .setCheck(null);
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour(Blockly.CONTROL_CATEGORY_HUE);
+    this.setColour(window.Blockly.CONTROL_CATEGORY_HUE);
  this.setTooltip("Runs the blocks until there is a break block");
  this.setHelpUrl("");
   }
@@ -4600,7 +4584,7 @@ Blockly.Blocks['break_and_continue'] = {
         .appendField(new Blockly.FieldDropdown([["Break out of","break"], ["Continue with","continue"]]), "NAME")
         .appendField("loop");
 this.setPreviousStatement(true, null);
-    this.setColour(Blockly.CONTROL_CATEGORY_HUE);
+    this.setColour(window.Blockly.CONTROL_CATEGORY_HUE);
  this.setTooltip("Stop or continue with the current loop");
  this.setHelpUrl("");
   }
@@ -4615,7 +4599,7 @@ Blockly.Blocks['all_elements'] = {
         .appendField(new Blockly.FieldDropdown([["Iframe","if"], ["Div","d"], ["Image","i"], ["Paragraph","p"], ["Button","b"], ["DropDownButton","ddb"], ["ColorPicker","cp"], ["DatePicker","dp"], ["TimePicker","tp"], ["TextField","tf2"], ["Canvas","c"], ["Slider","s"], ["ProgressBar","pb"], ["CheckBox","cb"], ["RadioButton","rb"], ["LoadignIcon","li"], ["FAB", "fab"], ["UnorderedList", "ul"], ["OrderedList", "ol"], ["HyperLink", "a"],['LottiePlayer', 'lp'],['FileViewer', 'fv']]), "e")
         .appendField("Elements");
     this.setOutput(true, null);
-    this.setColour(Blockly.ELEMENTS_CATEGORY_HUE);
+    this.setColour(window.Blockly.ELEMENTS_CATEGORY_HUE);
  this.setTooltip("Return a list a all elements");
  this.setHelpUrl("");
   }
@@ -4797,7 +4781,7 @@ Blockly.Blocks['load_asset'] = {
     this.appendDummyInput()
         .appendField(new Blockly.FieldDropdown(this.getAssets), "NAME");
     this.setOutput(true, null);
-    this.setColour(Blockly.OTHER_CATEGORY_HUE);
+    this.setColour(window.Blockly.OTHER_CATEGORY_HUE);
  this.setTooltip("Load an asset");
  this.setHelpUrl("https://app.gitbook.com/s/AR1GoZvc2Hq3eaRFIOdL/other#loading-assets");
   },onchange: function (e) {
@@ -4828,7 +4812,7 @@ Blockly.Blocks['create_listener'] = {
     this.appendStatementInput("s")
         .setCheck(null)
         .appendField("do");
-    this.setColour(Blockly.EVENTS_CATEGORY_HUE);
+    this.setColour(window.Blockly.EVENTS_CATEGORY_HUE);
     this.setInputsInline(true);
  this.setTooltip("Do some statements when an event for an element fires");
  this.setHelpUrl("");
@@ -4938,7 +4922,7 @@ Blockly.Blocks['new_line'] = {
     this.appendDummyInput()
         .appendField("new line");
     this.setOutput(true, null);
-    this.setColour(Blockly.TEXT_CATEGORY_HUE);
+    this.setColour(window.Blockly.TEXT_CATEGORY_HUE);
  this.setTooltip("Return a newline string, used as a delimeter");
  this.setHelpUrl("");
   }
@@ -4950,7 +4934,7 @@ Blockly.Blocks['remove_duplicates'] = {
         .setCheck(null)
         .appendField("remove duplicates of");
     this.setOutput(true, null);
-    this.setColour(Blockly.LIST_CATEGORY_HUE);
+    this.setColour(window.Blockly.LIST_CATEGORY_HUE);
  this.setTooltip("Removes all duplicates from an list");
  this.setHelpUrl("");
   }
@@ -4969,7 +4953,7 @@ Blockly.Blocks['repplace_text'] = {
         .appendField("with");
     this.setInputsInline(true);
     this.setOutput(true, null);
-    this.setColour(Blockly.TEXT_CATEGORY_HUE);
+    this.setColour(window.Blockly.TEXT_CATEGORY_HUE);
  this.setTooltip("Replace the given text string with a new piece of text");
  this.setHelpUrl("");
   }
@@ -4985,7 +4969,7 @@ Blockly.Blocks['tet_contains'] = {
         .appendField("contain");
     this.setInputsInline(true);
     this.setOutput(true, "Boolean");
-    this.setColour(Blockly.TEXT_CATEGORY_HUE);
+    this.setColour(window.Blockly.TEXT_CATEGORY_HUE);
  this.setTooltip("Reeturn true if the given piece of text is inside of a string");
  this.setHelpUrl("");
   }
@@ -5007,7 +4991,7 @@ Blockly.Blocks['set_object_prop'] = {
       .setAlign(Blockly.ALIGN_RIGHT);
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour(Blockly.OBJECT_CATEGORY_HUE);
+    this.setColour(window.Blockly.OBJECT_CATEGORY_HUE);
  this.setTooltip("Set a property of an object");
  this.setHelpUrl("");
   }
@@ -5024,7 +5008,7 @@ Blockly.Blocks['get_object_prop'] = {
         .appendField("of object")
       .setAlign(Blockly.ALIGN_RIGHT);
     this.setOutput(true, null);
-    this.setColour(Blockly.OBJECT_CATEGORY_HUE);
+    this.setColour(window.Blockly.OBJECT_CATEGORY_HUE);
  this.setTooltip("Get a property of an objects field");
  this.setHelpUrl("");
   }
@@ -5036,7 +5020,7 @@ Blockly.Blocks['get_of_json'] = {
         .setCheck("String")
         .appendField("get object or list from JSON");
     this.setOutput(true, null);
-    this.setColour(Blockly.OBJECT_CATEGORY_HUE);
+    this.setColour(window.Blockly.OBJECT_CATEGORY_HUE);
  this.setTooltip("Get a object or list from a JSON string");
  this.setHelpUrl("");
   }
@@ -5048,7 +5032,7 @@ Blockly.Blocks['object_to_json'] = {
       .setCheck(null)
         .appendField("generate JSON from object or list");
     this.setOutput(true, null);
-    this.setColour(Blockly.OBJECT_CATEGORY_HUE);
+    this.setColour(window.Blockly.OBJECT_CATEGORY_HUE);
  this.setTooltip("Trun an object or list into an JSON string");
  this.setHelpUrl("");
   }
@@ -5059,7 +5043,7 @@ Blockly.Blocks['create_object'] = {
     this.appendDummyInput()
         .appendField("create object");
     this.setOutput(true, null);
-    this.setColour(Blockly.OBJECT_CATEGORY_HUE);
+    this.setColour(window.Blockly.OBJECT_CATEGORY_HUE);
  this.setTooltip("Create a new object with some value's (optionally) ");
  this.setHelpUrl("");
       this.setMutator(new Blockly.Mutator(['object']));
@@ -5170,7 +5154,7 @@ Blockly.Blocks['get_list_of_objects'] = {
         .appendField(new Blockly.FieldDropdown([["Values","p"], ["Keys","k"]]), "NAME")
         .appendField("of object");
     this.setOutput(true, null);
-    this.setColour(Blockly.OBJECT_CATEGORY_HUE);
+    this.setColour(window.Blockly.OBJECT_CATEGORY_HUE);
  this.setTooltip("Return a list of an objects properties or keys");
  this.setHelpUrl("");
   }
@@ -5183,7 +5167,7 @@ Blockly.Blocks['object'] = {
     this.setInputsInline(true);
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour(Blockly.OBJECT_CATEGORY_HUE);
+    this.setColour(window.Blockly.OBJECT_CATEGORY_HUE);
  this.setTooltip("");
  this.setHelpUrl("");
  this.contextMenu = false;
@@ -5197,7 +5181,7 @@ Blockly.Blocks['object_top_block'] = {
     this.appendStatementInput("NAME")
         .setCheck(null);
     this.setInputsInline(true);
-    this.setColour(Blockly.OBJECT_CATEGORY_HUE);
+    this.setColour(window.Blockly.OBJECT_CATEGORY_HUE);
     this.setInputsInline(true);
  this.setTooltip("");
  this.setHelpUrl("");
@@ -5214,7 +5198,7 @@ Blockly.Blocks['object_key_val'] = {
         .appendField("value");
     this.setInputsInline(true);
     this.setOutput(true, null);
-    this.setColour(Blockly.OBJECT_CATEGORY_HUE);
+    this.setColour(window.Blockly.OBJECT_CATEGORY_HUE);
  this.setTooltip("Add a pair to the object");
  this.setHelpUrl("");
   }
@@ -5229,7 +5213,7 @@ Blockly.Blocks['alert'] = {
         .appendField(".showAlert");
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour(Blockly.COMPONENTS_CATEGORY_HUE);
+    this.setColour(window.Blockly.COMPONENTS_CATEGORY_HUE);
  this.setTooltip("Show a pop up dialog with the given massage");
  this.setHelpUrl("");
   }
@@ -5243,7 +5227,7 @@ Blockly.Blocks['show_propmt'] = {
         .appendField(new Blockly.FieldDropdown([[window.localStorage.getItem("projectName" + project),"OPTIONNAME"]]), "NAME")
         .appendField(".showPrompt");
     this.setOutput(true, null);
-    this.setColour(Blockly.COMPONENTS_CATEGORY_HUE);
+    this.setColour(window.Blockly.COMPONENTS_CATEGORY_HUE);
  this.setTooltip("Show a pop up dailog requesting the user to input some text");
  this.setHelpUrl("");
   }
@@ -5257,7 +5241,7 @@ Blockly.Blocks['show_confirm'] = {
         .appendField(new Blockly.FieldDropdown([[window.localStorage.getItem("projectName" + project),"OPTIONNAME"]]), "NAME")
         .appendField(".confrim");
     this.setOutput(true, null);
-    this.setColour(Blockly.COMPONENTS_CATEGORY_HUE);
+    this.setColour(window.Blockly.COMPONENTS_CATEGORY_HUE);
  this.setTooltip("Shows a popup asking the user to confirm a decision");
  this.setHelpUrl("");
   }
@@ -5273,7 +5257,7 @@ Blockly.Blocks['console'] = {
         .appendField(new Blockly.FieldDropdown([["Log","log"], ["Warn","warn"], ["Error","error"]]), "y");
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour(Blockly.COMPONENTS_CATEGORY_HUE);
+    this.setColour(window.Blockly.COMPONENTS_CATEGORY_HUE);
  this.setTooltip("Log a message to the browsers console");
  this.setHelpUrl("");
   }
@@ -5288,7 +5272,7 @@ Blockly.Blocks['windew_height_width'] = {
         .appendField(new Blockly.FieldDropdown([["Outer","outer"], ["Inner","inner"]]), "y")
         .appendField(new Blockly.FieldDropdown([["Width","Width"], ["Height","Height"]]), "w");
     this.setOutput(true, null);
-    this.setColour(Blockly.COMPONENTS_CATEGORY_HUE);
+    this.setColour(window.Blockly.COMPONENTS_CATEGORY_HUE);
  this.setTooltip("return the windows inner or outerwidth or height");
  this.setHelpUrl("");
   }
@@ -5305,7 +5289,7 @@ Blockly.Blocks['title_favicon'] = {
         .appendField("to");
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour(Blockly.COMPONENTS_CATEGORY_HUE);
+    this.setColour(window.Blockly.COMPONENTS_CATEGORY_HUE);
  this.setTooltip("Set either the project title or favIcon");
  this.setHelpUrl("");
   }
@@ -5319,7 +5303,7 @@ Blockly.Blocks['screen'] = {
         .appendField(".get")
         .appendField(new Blockly.FieldDropdown([["Width","width"], ["Height","height"], ["AvaibleWidth","availWidth"], ["AvaibleHeight","availHeight"], ["ColorDepth","colorDepth"], ["PixelDepth","pixelDepth"]]), "p");
     this.setOutput(true, null);
-    this.setColour(Blockly.COMPONENTS_CATEGORY_HUE);
+    this.setColour(window.Blockly.COMPONENTS_CATEGORY_HUE);
  this.setTooltip("Call the ScreenManager to return the value of the given property");
  this.setHelpUrl("");
   }
@@ -5333,7 +5317,7 @@ Blockly.Blocks['date'] = {
         .appendField(".get")
         .appendField(new Blockly.FieldDropdown([["Date","Date"], ["Day","Day"], ["FullYear","FullYear"], ["Hour","Hours"], ["MilliSeconds","Milliseconds"], ["Minute","Minutes"], ["Month","Month"], ["Seconds","Seconds"]]), "p");
     this.setOutput(true, null);
-    this.setColour(Blockly.COMPONENTS_CATEGORY_HUE);
+    this.setColour(window.Blockly.COMPONENTS_CATEGORY_HUE);
  this.setTooltip("Call the DateManager to return the given propry it's value");
  this.setHelpUrl("");
   }
@@ -5347,7 +5331,7 @@ Blockly.Blocks['date_get_now'] = {
         .appendField(".getNow");
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour(Blockly.COMPONENTS_CATEGORY_HUE);
+    this.setColour(window.Blockly.COMPONENTS_CATEGORY_HUE);
  this.setTooltip("Call the DateManger to get the current date");
  this.setHelpUrl("");
   }
@@ -5363,7 +5347,7 @@ Blockly.Blocks['stop_start_timer'] = {
         .appendField("Timer");
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour(Blockly.COMPONENTS_CATEGORY_HUE);
+    this.setColour(window.Blockly.COMPONENTS_CATEGORY_HUE);
  this.setTooltip("Start or stop the timer");
  this.setHelpUrl("");
   }
@@ -5376,7 +5360,7 @@ Blockly.Blocks['get_elapsed_time'] = {
         .appendField(new Blockly.FieldDropdown([["DateManager","OPTIONNAME"]]), "NAME")
         .appendField(".getElapsedTime");
     this.setOutput(true, null);
-    this.setColour(Blockly.COMPONENTS_CATEGORY_HUE);
+    this.setColour(window.Blockly.COMPONENTS_CATEGORY_HUE);
  this.setTooltip("Return the time that has been elapsed after the timer is stopped(in Milliseconds)");
  this.setHelpUrl("");
   }
@@ -5398,7 +5382,7 @@ Blockly.Blocks['get_permison_staet'] = {
         .appendField("do");
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour(Blockly.COMPONENTS_CATEGORY_HUE);
+    this.setColour(window.Blockly.COMPONENTS_CATEGORY_HUE);
  this.setTooltip("Check the granted state of a permison(return either prompt, granted or denied)");
  this.setHelpUrl("");
   },
@@ -5460,7 +5444,7 @@ Blockly.Blocks['device_manager'] = {
         .appendField(".get")
         .appendField(new Blockly.FieldDropdown([["DeviceMemory", "dm"], ["DeviceOS","d"], ["DeviceType","imd"], ["ColorScheme","hde"], ["NetworkState","ictan"], ["DeviceLanguage","l"], ['Orientation', 'o']]), "p");
     this.setOutput(true, null);
-    this.setColour(Blockly.COMPONENTS_CATEGORY_HUE);
+    this.setColour(window.Blockly.COMPONENTS_CATEGORY_HUE);
  this.setTooltip("Calls the device manager to return the status of the property");
  this.setHelpUrl("");
   }
@@ -5479,7 +5463,7 @@ Blockly.Blocks['save_item'] = {
     this.setInputsInline(true);
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour(Blockly.COMPONENTS_CATEGORY_HUE);
+    this.setColour(window.Blockly.COMPONENTS_CATEGORY_HUE);
  this.setTooltip("Store the given value for the given key to local storage");
  this.setHelpUrl("");
   }
@@ -5495,7 +5479,7 @@ Blockly.Blocks['emove_item'] = {
     this.setInputsInline(true);
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour(Blockly.COMPONENTS_CATEGORY_HUE);
+    this.setColour(window.Blockly.COMPONENTS_CATEGORY_HUE);
  this.setTooltip("Remove the key from local storage");
  this.setHelpUrl("");
   }
@@ -5510,7 +5494,7 @@ Blockly.Blocks['clear_storage'] = {
     this.setInputsInline(true);
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour(Blockly.COMPONENTS_CATEGORY_HUE);
+    this.setColour(window.Blockly.COMPONENTS_CATEGORY_HUE);
  this.setTooltip("Delete all stored data stored in the application WARNING: using this block while live testing will delete all data from Sketch aswel USE AT OWN RISK");
  this.setHelpUrl("");
   }
@@ -5524,7 +5508,7 @@ Blockly.Blocks['get_item'] = {
         .appendField(new Blockly.FieldDropdown([["StorageManager","OPTIONNAME"]]), "NAME")
         .appendField(".getKey");
     this.setOutput(true, null);
-    this.setColour(Blockly.COMPONENTS_CATEGORY_HUE);
+    this.setColour(window.Blockly.COMPONENTS_CATEGORY_HUE);
  this.setTooltip("GEt the value of the given key");
  this.setHelpUrl("");
   }
@@ -5539,7 +5523,7 @@ Blockly.Blocks['before_unload'] = {
     this.appendStatementInput("NAME")
         .setCheck(null)
         .appendField("do");
-    this.setColour(Blockly.EVENTS_CATEGORY_HUE);
+    this.setColour(window.Blockly.EVENTS_CATEGORY_HUE);
     this.setInputsInline(true);
  this.setTooltip("Do some statements when the page it's contents are about to be unloaded  (ask the user if he wants to leave the page +  will fire on both cancel and confirm) ");
  this.setHelpUrl("");
@@ -5562,7 +5546,7 @@ Blockly.Blocks['add_object'] = {
         .setAlign(Blockly.ALIGN_RIGHT);
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour(Blockly.OBJECT_CATEGORY_HUE);
+    this.setColour(window.Blockly.OBJECT_CATEGORY_HUE);
  this.setTooltip("Add a new key with a value to an object");
  this.setHelpUrl("");
   }
@@ -5590,7 +5574,7 @@ Blockly.Blocks['set_prop'] = {
     this.setInputsInline(true);
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour(Blockly.ELEMENTS_CATEGORY_HUE);
+    this.setColour(window.Blockly.ELEMENTS_CATEGORY_HUE);
  this.setTooltip("Sets the propety its value for the element");
  this.setHelpUrl("");
   },
@@ -5654,7 +5638,7 @@ Blockly.Blocks['get_propo'] = {
         .appendField(new Blockly.FieldDropdown(opt), "NAME2");
     this.setInputsInline(true);
     this.setOutput(true, null);
-    this.setColour(Blockly.ELEMENTS_CATEGORY_HUE);
+    this.setColour(window.Blockly.ELEMENTS_CATEGORY_HUE);
  this.setTooltip("Return the propety its value for the element");
  this.setHelpUrl("");
   },
@@ -5743,7 +5727,7 @@ Blockly.Blocks['api'] = {
         .appendField("do");
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour(Blockly.COMPONENTS_CATEGORY_HUE);
+    this.setColour(window.Blockly.COMPONENTS_CATEGORY_HUE);
  this.setTooltip("Make a apio Get, Put, Post, Patch and Delete request");
  this.setHelpUrl("");
   },
@@ -5820,7 +5804,7 @@ Blockly.Blocks['download_file'] = {
     this.setInputsInline(true);
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour(Blockly.COMPONENTS_CATEGORY_HUE);
+    this.setColour(window.Blockly.COMPONENTS_CATEGORY_HUE);
  this.setTooltip("Download a file to the users device");
  this.setHelpUrl("");
   }
@@ -5847,7 +5831,7 @@ Blockly.Blocks['pick_file'] = {
     this.setInputsInline(true);
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour(Blockly.COMPONENTS_CATEGORY_HUE);
+    this.setColour(window.Blockly.COMPONENTS_CATEGORY_HUE);
  this.setTooltip("Open the device file picker dialog to let the user pick files");
  this.setHelpUrl("");
   },
@@ -5920,7 +5904,7 @@ Blockly.Blocks['function_var'] = {
         .setCheck(null)
         .appendField("result");
     this.setOutput(true, null);
-    this.setColour(Blockly.FUNCTIONS_CATEGORY_HUE);
+    this.setColour(window.Blockly.FUNCTIONS_CATEGORY_HUE);
  this.setTooltip("Runs the blocks in the do section before returning a value, usefull if you need to run blocks before returning a value to a function");
  this.setHelpUrl("https://app.gitbook.com/s/AR1GoZvc2Hq3eaRFIOdL/functions#defining-functions-with-a-return-value-and-blocks");
   }
@@ -5933,7 +5917,7 @@ Blockly.Blocks['comment'] = {
         .appendField(new FieldTextBox('This is a comment'), 'NAME')
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour(Blockly.OTHER_CATEGORY_HUE);
+    this.setColour(window.Blockly.OTHER_CATEGORY_HUE);
  this.setTooltip("Adds a comment to your project");
  this.setHelpUrl("https://app.gitbook.com/s/AR1GoZvc2Hq3eaRFIOdL/other#commenting-on-blocks");
   }
@@ -7026,7 +7010,7 @@ Blockly.Blocks['toast'] = {
         .appendField(".showToast");
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour(Blockly.COMPONENTS_CATEGORY_HUE);
+    this.setColour(window.Blockly.COMPONENTS_CATEGORY_HUE);
  this.setTooltip("Show a short message on the screen");
  this.setHelpUrl("");
   }
@@ -7044,7 +7028,7 @@ Blockly.Blocks['click'] = {
     this.setPreviousStatement(true, null);
         this.setInputsInline(true);
     this.setNextStatement(true, null);
-    this.setColour(Blockly.ELEMENTS_CATEGORY_HUE);
+    this.setColour(window.Blockly.ELEMENTS_CATEGORY_HUE);
  this.setTooltip("Click or request focus on an element, usefull if you need to open a file picker without user input");
  this.setHelpUrl("");
   },
@@ -7071,7 +7055,7 @@ Blockly.Blocks['share'] = {
         .appendField(".share");
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour(Blockly.COMPONENTS_CATEGORY_HUE);
+    this.setColour(window.Blockly.COMPONENTS_CATEGORY_HUE);
  this.setTooltip("Share a message or file to someone");
  this.setHelpUrl("");
   }
@@ -7085,7 +7069,7 @@ Blockly.Blocks['create_list_with'] = {
     this.appendValueInput("l")
         .setCheck(null);
     this.setOutput(true, null);
-    this.setColour(Blockly.LIST_CATEGORY_HUE);
+    this.setColour(window.Blockly.LIST_CATEGORY_HUE);
     this.setMutator(new Blockly.Mutator(['list']));
  this.setTooltip("Create a list from multiple lists");
  this.setHelpUrl("");
@@ -7194,7 +7178,7 @@ Blockly.Blocks['list'] = {
         .appendField("list");
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour(Blockly.LIST_CATEGORY_HUE);
+    this.setColour(window.Blockly.LIST_CATEGORY_HUE);
  this.setTooltip("");
  this.setHelpUrl("");
  this.contextMenu = false;
@@ -7207,7 +7191,7 @@ Blockly.Blocks['create_list_with_top_block'] = {
         .appendField("lists");
     this.appendStatementInput("NAME")
         .setCheck(null);
-    this.setColour(Blockly.LIST_CATEGORY_HUE);
+    this.setColour(window.Blockly.LIST_CATEGORY_HUE);
     this.setInputsInline(true);
  this.setTooltip("");
  this.setHelpUrl("");
@@ -7227,7 +7211,7 @@ Blockly.Blocks['show_snackbar'] = {
         .appendField("do");
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour(Blockly.COMPONENTS_CATEGORY_HUE);
+    this.setColour(window.Blockly.COMPONENTS_CATEGORY_HUE);
  this.setTooltip("Show a snackbar on the bottom of the screen for the user to interact with");
  this.setHelpUrl("");
   }
@@ -7248,7 +7232,7 @@ Blockly.Blocks['window_resize'] = {
     this.appendStatementInput("NAME")
         .setCheck(null)
         .appendField("do");
-    this.setColour(Blockly.EVENTS_CATEGORY_HUE);
+    this.setColour(window.Blockly.EVENTS_CATEGORY_HUE);
     this.setInputsInline(true);
  this.setTooltip("Do some statements when the user changes the window size");
  this.setHelpUrl("");
@@ -7314,7 +7298,7 @@ Blockly.Blocks['load_audio'] = {
         .appendField(new Blockly.FieldDropdown([['MediaPlayer' ,"OPTIONNAME"]]), "NAME")
         .appendField(".loadAudioFille");
     this.setOutput(true, null);
-    this.setColour(Blockly.COMPONENTS_CATEGORY_HUE);
+    this.setColour(window.Blockly.COMPONENTS_CATEGORY_HUE);
  this.setTooltip("Load an new audio file to play");
  this.setHelpUrl("");
   }
@@ -7330,7 +7314,7 @@ Blockly.Blocks['play_pause'] = {
         .appendField(new Blockly.FieldDropdown([["Play","play"], ["Pause","pause"]]), "t");
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour(Blockly.COMPONENTS_CATEGORY_HUE);
+    this.setColour(window.Blockly.COMPONENTS_CATEGORY_HUE);
  this.setTooltip("Play or pause the audio file");
  this.setHelpUrl("");
   }
@@ -7349,7 +7333,7 @@ Blockly.Blocks['speed_loop'] = {
     this.setInputsInline(true);
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour(Blockly.COMPONENTS_CATEGORY_HUE);
+    this.setColour(window.Blockly.COMPONENTS_CATEGORY_HUE);
  this.setTooltip("Set the Speed or if the audio loops");
  this.setHelpUrl("");
   }
@@ -7423,7 +7407,7 @@ Blockly.Blocks['to_string'] = {
         .setCheck(null)
         .appendField("toString");
     this.setOutput(true, null);
-    this.setColour(Blockly.TEXT_CATEGORY_HUE);
+    this.setColour(window.Blockly.TEXT_CATEGORY_HUE);
  this.setTooltip("Turn an number to a string");
  this.setHelpUrl("");
   }
@@ -7435,7 +7419,7 @@ Blockly.Blocks['to_number'] = {
         .setCheck(null)
         .appendField("toNumber");
     this.setOutput(true, null);
-    this.setColour(Blockly.MATH_CATEGORY_HUE);
+    this.setColour(window.Blockly.MATH_CATEGORY_HUE);
  this.setTooltip("Trun an numberString to a number");
  this.setHelpUrl("");
   }
@@ -7448,7 +7432,7 @@ Blockly.Blocks['istestting'] = {
         .appendField(new Blockly.FieldDropdown([[window.localStorage.getItem("projectName" + project),"OPTIONNAME"]]), "NAME")
         .appendField(".isTesting");
     this.setOutput(true, null);
-    this.setColour(Blockly.COMPONENTS_CATEGORY_HUE);
+    this.setColour(window.Blockly.COMPONENTS_CATEGORY_HUE);
  this.setTooltip("Returns true if the project is run in testing mode");
  this.setHelpUrl("");
   }
@@ -7465,7 +7449,7 @@ Blockly.Blocks['trans_etc'] = {
     .setCheck("Number");
     this.setInputsInline(true);
     this.setOutput(true, null);
-    this.setColour(Blockly.OTHER_CATEGORY_HUE);
+    this.setColour(window.Blockly.OTHER_CATEGORY_HUE);
  this.setTooltip("Allows you to select a property for the property setters");
  this.setHelpUrl("");
   },
@@ -7521,7 +7505,7 @@ Blockly.Blocks['writeclipboard'] = {
         .appendField(".writeText");
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour(Blockly.COMPONENTS_CATEGORY_HUE);
+    this.setColour(window.Blockly.COMPONENTS_CATEGORY_HUE);
  this.setTooltip("Write some text to the clipboard");
  this.setHelpUrl("");
   }
@@ -7534,7 +7518,7 @@ Blockly.Blocks['text_create_join_container'] = {
     this.appendStatementInput("STACK")
         .setCheck(null);
     this.setInputsInline(true);
-    this.setColour(Blockly.TEXT_CATEGORY_HUE);
+    this.setColour(window.Blockly.TEXT_CATEGORY_HUE);
  this.setTooltip("");
  this.setHelpUrl("");
  this.contextMenu = false;
@@ -7548,7 +7532,7 @@ Blockly.Blocks['lists_create_with_container'] = {
     this.appendStatementInput("STACK")
         .setCheck(null);
     this.setInputsInline(true);
-    this.setColour(Blockly.LIST_CATEGORY_HUE);
+    this.setColour(window.Blockly.LIST_CATEGORY_HUE);
  this.setTooltip("");
  this.setHelpUrl("");
  this.contextMenu = false;
@@ -7572,7 +7556,7 @@ Blockly.Blocks['geolocation'] = {
         .appendField("do");
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour(Blockly.COMPONENTS_CATEGORY_HUE);
+    this.setColour(window.Blockly.COMPONENTS_CATEGORY_HUE);
  this.setTooltip("Returns the user's position");
  this.setHelpUrl("");
   }
@@ -7639,7 +7623,7 @@ Blockly.Blocks['touch_start'] = {
     this.appendStatementInput("NAME")
         .setCheck(null)
         .appendField("do");
-    this.setColour(Blockly.EVENTS_CATEGORY_HUE);
+    this.setColour(window.Blockly.EVENTS_CATEGORY_HUE);
     this.setInputsInline(true);
  this.setTooltip("Do some statements when the user start touching the device, only works on mobiles/tablets");
  this.setHelpUrl("");
@@ -7655,7 +7639,7 @@ Blockly.Blocks['touch_end'] = {
     this.appendStatementInput("NAME")
         .setCheck(null)
         .appendField("do");
-    this.setColour(Blockly.EVENTS_CATEGORY_HUE);
+    this.setColour(window.Blockly.EVENTS_CATEGORY_HUE);
     this.setInputsInline(true);
  this.setTooltip("Do some statements when the user stops touching the device, only works on mobiles/tablets");
  this.setHelpUrl("");
@@ -7671,7 +7655,7 @@ Blockly.Blocks['touch_cancel'] = {
     this.appendStatementInput("NAME")
         .setCheck(null)
         .appendField("do");
-    this.setColour(Blockly.EVENTS_CATEGORY_HUE);
+    this.setColour(window.Blockly.EVENTS_CATEGORY_HUE);
     this.setInputsInline(true);
  this.setTooltip("Do some statements when the users touch has been interupted while touching the device, only works on mobiles/tablets");
  this.setHelpUrl("");
@@ -7693,7 +7677,7 @@ Blockly.Blocks['touch_move'] = {
     this.appendStatementInput("NAME")
         .setCheck(null)
         .appendField("do");
-    this.setColour(Blockly.EVENTS_CATEGORY_HUE);
+    this.setColour(window.Blockly.EVENTS_CATEGORY_HUE);
     this.setInputsInline(true);
  this.setTooltip("Do some statements when the user starts moving his fingers over the touch-screen, only works on mobiles/tablets");
  this.setHelpUrl("");
@@ -7769,7 +7753,7 @@ Blockly.Blocks['notification'] = {
     this.setInputsInline(true);
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour(Blockly.COMPONENTS_CATEGORY_HUE);
+    this.setColour(window.Blockly.COMPONENTS_CATEGORY_HUE);
  this.setTooltip("Shows a notification for the user to interact with");
  this.setHelpUrl("");
   }
@@ -7784,7 +7768,7 @@ Blockly.Blocks['dismiss_notification'] = {
     this.setInputsInline(true);
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour(Blockly.COMPONENTS_CATEGORY_HUE);
+    this.setColour(window.Blockly.COMPONENTS_CATEGORY_HUE);
  this.setTooltip("Dismisses the notification");
  this.setHelpUrl("");
   }
@@ -7828,7 +7812,7 @@ Blockly.Blocks['get_all_items'] = {
         .appendField(new Blockly.FieldDropdown([["StorageManager","OPTIONNAME"]]), "NAME")
         .appendField(".getItems");
     this.setOutput(true, null);
-    this.setColour(Blockly.COMPONENTS_CATEGORY_HUE);
+    this.setColour(window.Blockly.COMPONENTS_CATEGORY_HUE);
  this.setTooltip("Returns a list of all saved items including keys");
  this.setHelpUrl("");
   }
@@ -7844,7 +7828,7 @@ Blockly.Blocks['fullscreen'] = {
         .appendField("fullscreenMode");
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour(Blockly.GAME_CATEGORY_HUE);
+    this.setColour(window.Blockly.GAME_CATEGORY_HUE);
  this.setTooltip("Enter or exit fullscreen mode");
  this.setHelpUrl("");
   }
@@ -7857,7 +7841,7 @@ Blockly.Blocks['isfullscreen'] = {
         .appendField(new Blockly.FieldDropdown([["WebGL","OPTIONNAME"]]), "NAME")
         .appendField(".isInFullscreenMode");
     this.setOutput(true, null);
-    this.setColour(Blockly.GAME_CATEGORY_HUE);
+    this.setColour(window.Blockly.GAME_CATEGORY_HUE);
  this.setTooltip("Returns true if the screen is in fullscreen mode");
  this.setHelpUrl("");
   }

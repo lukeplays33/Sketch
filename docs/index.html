@@ -29,7 +29,7 @@
 Build,Design and Test your projects and deploy them anywhere.</p>
 
 <div class="closeD" id="assetFolder" style="display: none;" onclick="document.getElementById('assetFolder').style.display = 'none';">
-    <div id="folder" class="welcome">
+    <div id="folder" class="welcome" style=' max-height: 90%; overflow: scroll;padding-bottom: 0px;'>
     <p id="MSG1">Assets Folder</p>
     <input type="text" id="searchAssets" placeholder="Search Assets..."br><br>
     <p id="no_ass"> No assets found, press Upload Asset to add one</p>
@@ -42,7 +42,7 @@ Build,Design and Test your projects and deploy them anywhere.</p>
 <!-- MatPat ;) --->
 
 <div class="closeD" id="welcome" style="display: none;" onclick="document.getElementById('welcome').style.display = 'none';">
-    <div id="ww" class="welcome">
+    <div id="ww" class="welcome" style=' max-height: 90%; overflow: scroll; padding-bottom: 0px;'>
         <p id="MSG">Welcome To Sketch</p>
         <p id="MSG2">Welcome to Sketch new user or if you've already been here welcome back.
             Sketch is currently in a public beta phase weach means that you may find bugs, not working futures etc.
@@ -54,12 +54,14 @@ Build,Design and Test your projects and deploy them anywhere.</p>
     </div>
     
     <div id="CloseMenu">
-    <div id= "dropdownMenu">
+    <div id='dropdownMenu'>
+    </div>
+        <div id='dropdownMenu2'>
     </div>
     </div>
     
     <div id="creditsss" class="closeD" style="display: none;" onclick="document.getElementById('creditsss').style.display = 'none';">
-    <div id="sss" class="welcome">
+    <div id="sss" class="welcome" style=' max-height: 90%; overflow: scroll; padding-bottom: 0px;'>
     <p id="MSG1">Credits</p>
     <p id="MSG3">Sketch wasn't made possible without the help of the following people or libaries.</p>
     <p id="MSG4">So THANK YOU for the people helping me and making these awesome libaries.</p>
@@ -74,6 +76,11 @@ Build,Design and Test your projects and deploy them anywhere.</p>
             <p class="libs">Images And Fonts</p>
     <a href="https://fonts.google.com/">https://fonts.google.com/</a>
     <a href="https://fonts.google.com/">https://fontawesome.com/</a>
+    <p class="libs">People Helping With This Project</p>
+    <a href="https://neil.fraser.name/">https://neil.fraser.name/</a>
+    <a href="https://twitter.com/mark_s_friedman">https://twitter.com/mark_s_friedman</a>
+    <a href="http://bekawestberg.me/">http://bekawestberg.me/</a>
+    <img src='Images/logo_built_with_dark.png'style='width: 100%; height: 60px; '>
     <button id="dismisss">Dismiss</button>
     </div>
     </div>
@@ -229,6 +236,7 @@ background-image: url(../Images/61818b07d54ef50010e42587-1.png);
   <input type="text" id="search" placeholder="Search Projects..."><br><br>
     <p id="no_project"> No porjects found, press + to create one</p>
   <div class="projectsList" id="Projects-list">
+  <img id='PSettings' src='../Images/61818b07d54ef50010e42587-1.png'>
     <img src="Images/60d473a38f959300118b9c10-1.png" id="icon" class="photo" width="80px" hieght="80px">
     <div id="title-and-des" class="details">
       <p id="Title" class="list-title">Title</p>
@@ -238,36 +246,89 @@ background-image: url(../Images/61818b07d54ef50010e42587-1.png);
 </div>
 
 <div class="Settings" id="Settings">
-  <p id="siteSettings">Site Settings</p>
-    <input type="text" id="BGImageURL" placeholder="Background Image URL"><br><br>
-  <button id="BGImage">Select Background Image</button>
-  <button id="bgimage">Custom Background Image: Off</button>
-  <button id="theme">Dark Theme: Off </button>
-  <button id="smos">Show menu on start-up: Off</button>
-  <p id="e">Editor</p>
-    <button id="vsStyle">Use Fullscreen Visual Editor: Off</button>
-  <button id="open">Open editor after new project has been created: Off</button>
-    <button id="grid">Grid: Off</button>
-    <button id="snap">Snap To Place: Off</button>
-    <p id="project"></p>
-    <button id="delete">Delete Project</button>
-        <button id="projectIcon">Change FavIcon</button>
-    <input type="text" id="projectName" placeholder="Project Name..."><br><br>
-    <input type="text" id="projectdes" placeholder="Project Description..."><br><br>
-    <input type="text" id="projecttag" placeholder="Project OwnerShip-Tag..."><br><br>
-      <p id="refrence">Other</p>
-  <button id='share'>Share Sketch</button>
-  <button id='credits'>Credits</button>
-  <button id='docss'>Go to Docs</button>
-  <button id='dis'>Join Discord</button>
-  <button id='twitter'>Twitter</button>
-  <button id='yt'>YouTube</button>
+  <p id="siteSettingss" width='150px'>Site Settings</p>
+  <div id='siteSettings'>
+  <p id='text' style=' text-align: left; margin-bottom: 0px;' class='column' >Background Image</p>
+    <button id="bgimage" class='SettingsButton' class='column' >Off</button>
+  </div>
+    <div class='wrapper'>
+  <button id="BGImage" class='columnBGI'>Select Background Image From File</button>
+    <button id="BGImageURL">Select Background Image From URL</button>
+  </div>
+
+  <div id='siteSettings'>
+  <p id='text' style=' text-align: left; margin-bottom: 0px;' class='column' >Dark Theme</p>
+      <button id="theme">Off </button>
+      </div>
+      
+          <div id='siteSettings'>
+  <p id='text' style=' text-align: left; margin-bottom: 0px;' class='column' >Show Menu</p>
+    <button id="smos">Off</button>
+      </div>
+    
+  <p id="e" width='15%'>Editor</p>
+      
+                <div id='siteSettings'>
+  <p id='text' style=' text-align: left; margin-bottom: 0px;' class='column' >Fullscreen Editor</p>
+      <button id="vsStyle">Off</button>
+      </div>
+      
+                      <div id='siteSettings'>
+  <p id='text' style=' text-align: left; margin-bottom: 0px;' class='column' >Open Editor On Creation</p>
+    <button id="open">Off</button>
+      </div>
+      
+                            <div id='siteSettings'>
+  <p id='text' style=' text-align: left; margin-bottom: 0px;' class='column' >Grid</p>
+    <button id="grid">Off</button>
+      </div>
+      
+                                  <div id='siteSettings'>
+  <p id='text' style=' text-align: left; margin-bottom: 0px;' class='column' >Snap To Place</p>
+    <button id="snap">Off</button>
+      </div>
+
+      <p id="refrence" width='15%' >Other</p>
+                                        <div id='siteSettings'>
+  <p id='text2' style=' text-align: left; margin-bottom: 0px;' class='column' >Share Sketch</p>
+    <button id='share'>Share</button>
+      </div>
+      
+                                              <div id='siteSettings'>
+  <p id='text3' style=' text-align: left; margin-bottom: 0px;' class='column' >Credits</p>
+    <button id='credits'>View Credits</button>
+      </div>
+      
+                                                    <div id='siteSettings'>
+  <p id='text4' style=' text-align: left; margin-bottom: 0px;' class='column' >Documentation</p>
+  <button id='docss'>Go To Documentation</button>
+      </div>
+      
+                                        <div id='siteSettings'>
+  <p id='text' style=' text-align: left; margin-bottom: 0px;' class='column' >Community</p>
+  <button id='dis'>Join</button>
+      </div>
+      
+                                                    <div id='siteSettings'>
+  <p id='text3' style=' text-align: left; margin-bottom: 0px;' class='column' >Twitter</p>
+  <button id='twitter'>Follow</button>
+      </div>
+      
+                                                          <div id='siteSettings'>
+  <p id='text3' style=' text-align: left; margin-bottom: 0px;' class='column' >YouTube</p>
+  <button id='yt'>Subscribe</button>
+      </div>
+      
 </div>
 
 <section id="blocklyContainer">
 
     <div id="editor" class="editor">
-    <button id="fullscreen">
+                        <button id="fullscreen">
+</button>
+        <button id="adddd">
+</button>
+<button id="Psettings">
 </button>
     </div>
     <div id="blocklyDiv">
@@ -278,10 +339,10 @@ background-image: url(../Images/61818b07d54ef50010e42587-1.png);
     </div>
     <div id="blocklyDiv2">
     </div>
-</section>\
+</section>
     
 <xml xmlns="https://developers.google.com/blockly/xml" id="toolbox" style="display: none">
-  <category name="Events" colour="#F3AA44" css-icon="customIcon fa fa-calendar">
+  <category name="Events" colour="0" css-icon="customIcon fa fa-calendar">
     <block type="initd">
       <field name="NAME">I'll always do</field>
     </block>
@@ -314,9 +375,22 @@ background-image: url(../Images/61818b07d54ef50010e42587-1.png);
         <block type="window_resize">
       <field name="NAME">OPTIONNAME</field>
     </block>
+        <block type="touch_start">
+      <field name="NAME">OPTIONNAME</field>
+    </block>
+    <block type="touch_end">
+      <field name="NAME">OPTIONNAME</field>
+    </block>
+    <block type="touch_move">
+      <field name="NAME">OPTIONNAME</field>
+    </block>
+    <block type="touch_cancel">
+      <field name="NAME">OPTIONNAME</field>
+    </block>
   </category>
   <category name="Elements" colour="#5D98D3" css-icon="customIcon fa fa-clone">
-    <block type="body"></block>
+    <block type="lexical_variable_get">
+    <field name="VAR">global body</field></block>
     <block type="create_elem">
       <field name="NAME">OPTIONNAME</field>
       <field name="e">b</field>
@@ -325,9 +399,6 @@ background-image: url(../Images/61818b07d54ef50010e42587-1.png);
       <field name="NAME">OPTIONNAME</field>
     </block>
     <block type="apppend_elem">
-      <field name="NAME">OPTIONNAME</field>
-    </block>
-    <block type="remove">
       <field name="NAME">OPTIONNAME</field>
     </block>
     <block type="click">
@@ -350,7 +421,7 @@ background-image: url(../Images/61818b07d54ef50010e42587-1.png);
       <field name="NAME2">OPTIONNAME</field>
     </block>
   </category>
-  <category name="Components" colour="#9596EB" css-icon="customIcon fa fa-code">
+  <category name="Components" colour="200" css-icon="customIcon fa fa-code">
       <block type="istestting">
       <field name="NAME">OPTIONNAME</field>
     </block>
@@ -381,6 +452,10 @@ background-image: url(../Images/61818b07d54ef50010e42587-1.png);
     <block type="title_favicon">
       <field name="NAME">OPTIONNAME</field>
       <field name="t">t</field>
+    </block>
+        <block type="open_window">
+      <field name="NAME">Zero Two is cute</field>
+      <field name="t">int</field>
     </block>
     <block type="share">
       <field name="NAME">OPTIONNAME</field>
@@ -427,6 +502,9 @@ background-image: url(../Images/61818b07d54ef50010e42587-1.png);
     <block type="get_item">
       <field name="NAME">OPTIONNAME</field>
     </block>
+        <block type="get_all_items">
+      <field name="NAME">OPTIONNAME</field>
+    </block>
     <block type="download_file">
       <field name="NAME">OPTIONNAME</field>
     </block>
@@ -447,8 +525,25 @@ background-image: url(../Images/61818b07d54ef50010e42587-1.png);
     <block type="writeclipboard">
       <field name="NAME">OPTIONNAME</field>
     </block>
+        <block type="geolocation">
+      <field name="NAME">OPTIONNAME</field>
+    </block>
+        <block type="notification">
+      <field name="NAME">OPTIONNAME</field>
+    </block>
+    <block type="dismiss_notification">
+      <field name="NAME">OPTIONNAME</field>
+    </block>
   </category>
-  <category name="Other" colour="0" css-icon="customIcon fa fa-object-group">
+    <category name="Game" colour="235" css-icon="customIcon fa fa-gamepad">
+    <block type="fullscreen">
+      <field name="NAME">OPTIONNNAME</field>
+    </block>
+        <block type="isfullscreen">
+      <field name="NAME">OPTIONNNAME</field>
+    </block>
+  </category>
+  <category name="Other" colour="180" css-icon="customIcon fa fa-object-group">
     <block type="load_asset">
       <field name="NAME">OPTIONNNAME</field>
     </block>
@@ -459,9 +554,9 @@ background-image: url(../Images/61818b07d54ef50010e42587-1.png);
       <field name="NAME">o</field>
       <field name="ee">OPTIONNAME</field>
     </block>
-  </category>
+      </category>
   <sep></sep>
-  <category name="Control" colour="#F3AA44" css-icon="customIcon fa fa-gears">
+  <category name="Control" colour="50" css-icon="customIcon fa fa-gears">
     <block type="controls_repeat_ext"></block>
     <block type="controls_whileUntil">
       <field name="MODE">WHILE</field>
@@ -483,9 +578,9 @@ background-image: url(../Images/61818b07d54ef50010e42587-1.png);
     <block type="clearint">
       <field name="NAME">ct</field>
     </block>
-    <block type="break_and_continue">
-      <field name="NAME">break</field>
-    </block>
+<block type="controls_flow_statements">
+    <field name="FLOW">BREAK</field>
+  </block>
     <block type="controls_if"></block>
     <block type="controls_if">
       <mutation else="1"></mutation>
@@ -494,14 +589,10 @@ background-image: url(../Images/61818b07d54ef50010e42587-1.png);
       <mutation elseif="1" else="1"></mutation>
     </block>
     <block type="logic_ternary"></block>
-    <block type="open_window">
-      <field name="NAME">Zero Two is cute</field>
-      <field name="t">int</field>
-    </block>
     <block type="switch2"></block>
     <block type="switch_case"></block>
   </category>
-  <category name="Logic" colour="#45B4A9" css-icon="customIcon fa fa-cog">
+  <category name="Logic" colour="130" css-icon="customIcon fa fa-cog">
     <block type="logic_compare">
       <field name="NAME">==</field>
     </block>
@@ -514,7 +605,7 @@ background-image: url(../Images/61818b07d54ef50010e42587-1.png);
     </block>
     <block type="logic_null"></block>
   </category>
-  <category name="Math" colour="#6789cc" css-icon="customIcon fa fa-calculator">
+  <category name="Math" colour="245" css-icon="customIcon fa fa-calculator">
     <block type="math_number">
       <field name="NUM">0</field>
     </block>
@@ -547,7 +638,7 @@ background-image: url(../Images/61818b07d54ef50010e42587-1.png);
     <block type="math_random_float"></block>
     <block type="to_number"></block>
   </category>
-  <category name="Text" colour="#DF6078" css-icon="customIcon fa fa-italic">
+  <category name="Text" colour="335" css-icon="customIcon fa fa-italic">
     <block type="text">
       <field name="TEXT"></field>
     </block>
@@ -579,7 +670,7 @@ background-image: url(../Images/61818b07d54ef50010e42587-1.png);
     <block type="tet_contains"></block>
     <block type="to_string"></block>
   </category>
-  <category name="Lists" colour="#76afc9" css-icon="customIcon fa fa-list">
+  <category name="Lists" colour="260" css-icon="customIcon fa fa-list">
     <block type="lists_create_with">
       <mutation items="0"></mutation>
     </block>
@@ -618,7 +709,7 @@ background-image: url(../Images/61818b07d54ef50010e42587-1.png);
       <field name="DIRECTION">1</field>
     </block>
   </category>
-  <category name="Objects" colour="#F99EA3" css-icon="customIcon fa fa-object-group">
+  <category name="Objects" colour="305" css-icon="customIcon fa fa-object-group">
     <block type="set_object_prop"></block>
     <block type="add_object"></block>
     <block type="get_object_prop"></block>
@@ -661,7 +752,7 @@ background-image: url(../Images/61818b07d54ef50010e42587-1.png);
       <field name="NAME">OPTIONNAME</field>
     </block>
   </category>
-  <category name="Functions" colour="#7560A4" css-icon="customIcon fa fa-microchip">
+  <category name="Functions" colour="255" css-icon="customIcon fa fa-microchip">
     <block type="procedures_defnoreturn"></block>
     <block type="procedures_defreturn"></block>
     <block type="procedures_callnoreturn"></block>
@@ -674,7 +765,7 @@ background-image: url(../Images/61818b07d54ef50010e42587-1.png);
       <field name="js">alert("Hi There");</field>
     </block>
     <block type="asd_left_output">
-      <field name="js">'Zero two is cute?' == true</field>
+      <field name="js">prompt('Hello There','General Kenobi')</field>
     </block>
     <block type="try_catch"></block>
     <block type="switch2"></block>
@@ -690,5 +781,5 @@ background-image: url(../Images/61818b07d54ef50010e42587-1.png);
     </block>
   </category>
 </xml>
-    
+
     <script type='text/javascript' src='./index.js'></script>
