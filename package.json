@@ -12,7 +12,7 @@
     "@blockly/disable-top-blocks": "^0.1.20",
     "@blockly/plugin-scroll-options": "^1.0.4",
     "@mit-app-inventor/blockly-block-lexical-variables": "^0.0.10",
-    "blockly": "^7.20211209.1",
+    "blockly": "^8.0.0",
     "blockly-field-text-box": "^1.0.1",
     "firebase": "^9.6.6",
     "firebaseui": "^6.0.0",

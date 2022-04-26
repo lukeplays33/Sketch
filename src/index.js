@@ -1,3 +1,5 @@
+
+
 /**
  * @license
  *
@@ -38,15 +40,31 @@ import {
 } from '@mit-app-inventor/blockly-block-lexical-variables/src/fields/field_lexical_variable';
 import * as Utilities from '@mit-app-inventor/blockly-block-lexical-variables/src/utilities';
 import * as Shared from '@mit-app-inventor/blockly-block-lexical-variables/src/shared';
+import * as Instrument from '@mit-app-inventor/blockly-block-lexical-variables/src/instrument';
+import '@mit-app-inventor/blockly-block-lexical-variables/src/instrument';
 
 import * as ProcedureUtils from '@mit-app-inventor/blockly-block-lexical-variables/src/procedure_utils';
 import {FieldNoCheckDropdown} from '@mit-app-inventor/blockly-block-lexical-variables/src/fields/field_nocheck_dropdown';
 import {FieldTextBox} from 'blockly-field-text-box'
 import {FieldProcedureName} from '@mit-app-inventor/blockly-block-lexical-variables/src/fields/field_procedurename';
 
+import interact from 'interactjs'
+
 import fx from 'fireworks'
 
 import { HolidayAPI } from 'holidayapi';
+
+import {loops as loop} from 'blockly/blocks';
+loop.loopTypes.add('forever');
+
+//get x, y values
+
+var x, y
+
+window.addEventListener('mousemove', e => {
+x = e.x;
+y = e.y;
+});
 
 // refresh page when size changes
 
@@ -67,6 +85,7 @@ if( s == 2) {
 if( a == 2) {
 if( d <= 2) {
 alert("H Wq xlto swhchtz,\nehjhtz shcr lgc roi aooqa ehyo ocoitwe ugtharqotc bli srwc hj'o xlto.\nQwkvo vihtzhtz roi cl ehjo shee roeu?");
+d = 0
 } else {
 if(e.kay == "d") {
 d++
@@ -88,6 +107,69 @@ w++
 }
 }
 });
+
+function editProject(x,y,p) {
+createContextMenuI(x,y,['Rename Project','Delete Project','Change Owner-Ship-Tag','Change Project Description','Change FavIcon']);
+document.getElementById('4').onclick = function () {
+         let input = document.createElement("input");
+    input.type = "file";
+    input.onchange = (_) => {
+      input.accept = "image/*";
+      // you can use this method to get file and perform respective operations
+      var files = Array.from(input.files);
+      console.log(files);
+      for (let i = 0; i < files.length; i++) {
+        reader.addEventListener(
+          "load",
+          function () {
+              window.localStorage.setItem("icon" + p, reader.result);
+              document.getElementById("icon" + p).src = reader.result
+          },
+          false
+        );
+        reader.readAsDataURL(files[i]);
+      }
+    };
+    input.click();
+}
+document.getElementById('3').onclick = function () {
+var des = prompt('Change Project Description' , window.localStorage.getItem('projectdes' + p));
+window.localStorage.setItem('projectdes' + p, des);
+}
+document.getElementById('2').onclick = function () {
+var tag = prompt(' Change Project Owner-Ship-Tag' , window.localStorage.getItem('projecttag' + p));
+window.localStorage.setItem('projecttag'  + p, tag);
+}
+document.getElementById('1').onclick = function () {
+if(confirm("Delete Project?")) {
+            var pp = projects.indexOf(p);
+            projects.splice(pp, 1);
+            window.localStorage.setItem("projects", JSON.stringify(projects));
+            
+                        var d = document.getElementById(p);
+            d.remove();
+            
+                          document.getElementById("home").style.display = "block";
+    document.getElementById("Settings").style.display = "none";
+          
+                  document.getElementById("project").style.display = "none";
+        document.getElementById("projectName").style.display = "none";
+        document.getElementById("projectIcon").style.display = "none";
+          document.getElementById("delete").style.display = "none";
+            
+                        if(projects.length == 0 ) {
+                            document.getElementById("no_project").style.display = "block";
+    } else {
+    }
+        }
+}
+document.getElementById('0').onclick = function () {
+var name = prompt('Rename Project', window.localStorage.getItem('projectName' + p));
+        window.localStorage.setItem("projectName" + p, name);
+        document.getElementById("Title" + p).innerHTML = name
+        document.getElementById("project").innerHTML = name
+}
+}
 
 //rickroll everyone
 {
@@ -151,6 +233,8 @@ for(var i = 0; i < child; i++) {
 document.getElementById(i).remove(true);
 }
 document.getElementById("CloseMenu").style.display = "none"
+document.getElementById("dropdownMenu2").style.display = "none"
+document.getElementById("dropdownMenu").style.display = "block"
 child = 0
 for(var i of options) {
 var e = document.createElement("p");
@@ -180,6 +264,8 @@ for(var i = 0; i < child; i++) {
 document.getElementById(i).remove(true);
 }
 document.getElementById("CloseMenu").style.display = "none"
+document.getElementById("dropdownMenu").style.display = "none"
+document.getElementById("dropdownMenu2").style.display = "block"
 child = 0
 for(var i of options) {
 var e = document.createElement("p");
@@ -191,11 +277,11 @@ e.style.fontSize = "20px"
 e.style.margin = "0px"
 e.style.marginBottom = "8px"
 child = child + 1
-document.getElementById("dropdownMenu").appendChild(e);
+document.getElementById("dropdownMenu2").appendChild(e);
 }
 
-document.getElementById("dropdownMenu").style.top = y
-document.getElementById("dropdownMenu").style.left = x
+document.getElementById("dropdownMenu2").style.top = y
+document.getElementById("dropdownMenu2").style.left = x
 
 document.getElementById("CloseMenu").style.display = "block"
 document.getElementById("CloseMenu").onclick = function () {
@@ -203,7 +289,120 @@ document.getElementById("CloseMenu").style.display = "none"
 }
 }
 
+// change hue
+Blockly.HSV_SATURATION = 0.50;
+Blockly.HSV_VALUE = 0.78;
+
+// block colors
+
+Blockly.EVENTS_CATEGORY_HUE = '0'
+Blockly.ELEMENTS_CATEGORY_HUE = '210'
+Blockly.COMPONENTS_CATEGORY_HUE = '200'
+Blockly.OTHER_CATEGORY_HUE = '180'
+Blockly.GAME_CATEGORY_HUE = '235'
+Blockly.CONTROL_CATEGORY_HUE = '50'
+Blockly.LOGIC_CATEGORY_HUE = '130'
+Blockly.MATH_CATEGORY_HUE = '245'
+Blockly.TEXT_CATEGORY_HUE = '335'
+Blockly.LIST_CATEGORY_HUE = '260'
+Blockly.OBJECT_CATEGORY_HUE = '305'
+Blockly.FUNCTIONS_CATEGORY_HUE = '255'
+
 //define generators
+
+Blockly.JavaScript['isfullscreen'] = function(block) {
+  var dropdown_name = block.getFieldValue('NAME');
+  // TODO: Assemble JavaScript into code variable.
+  var code = 'isFullscreen == 0'
+  // TODO: Change ORDER_NONE to the correct strength.
+  return [code, Blockly.JavaScript.ORDER_NONE];
+};
+
+Blockly.JavaScript['fullscreen'] = function(block) {
+  var dropdown_name = block.getFieldValue('NAME');
+  var dropdown_t = block.getFieldValue('t');
+  // TODO: Assemble JavaScript into code variable.
+  if(dropdown_t == 'exit') {
+  var code = 'document.exitFullscreen();\nisFullscreen = 0;\n'
+  } else {
+  var code = 'document.body.requestFullscreen();\nisFullscreen = 1;\n'
+  }
+  return code;
+};
+
+Blockly.JavaScript['get_all_items'] = function(block) {
+  var dropdown_name = block.getFieldValue('NAME');
+  // TODO: Assemble JavaScript into code variable.
+  var code = 'Object.entries(window.localStorage)'
+  // TODO: Change ORDER_NONE to the correct strength.
+  return [code, Blockly.JavaScript.ORDER_NONE];
+};
+
+Blockly.JavaScript['dismiss_notification'] = function(block) {
+  var dropdown_name = block.getFieldValue('NAME');
+  // TODO: Assemble JavaScript into code variable.
+  var code = 'nm.close();\n'
+  return code;
+};
+
+Blockly.JavaScript['notification'] = function(block) {
+  var dropdown_name = block.getFieldValue('NAME');
+  var value_titke = Blockly.JavaScript.valueToCode(block, 'titke', Blockly.JavaScript.ORDER_ATOMIC);
+  var value_message = Blockly.JavaScript.valueToCode(block, 'message', Blockly.JavaScript.ORDER_ATOMIC);
+  var value_icon = Blockly.JavaScript.valueToCode(block, 'icon', Blockly.JavaScript.ORDER_ATOMIC);
+  // TODO: Assemble JavaScript into code variable.
+  var code = 'Notification.requestPermission();\nlet nm = new Notification(' + value_titke + ',{\nbody: ' + value_message + ',\nicon: ' + value_icon + '});\nnm.onclick = function () {\neventnmclick();\n}\nnm.onerror = function () {\neventnmerror();\n}\nnm.onclose = function () {\neventnmclose();\n}\nnm.onshow = function () {\neventnmshow();\n}\n'
+  return code;
+};
+
+Blockly.JavaScript['touch_start'] = function(block) {
+  var dropdown_name = block.getFieldValue('NAME');
+  var statements_name = Blockly.JavaScript.statementToCode(block, 'NAME');
+  // TODO: Assemble JavaScript into code variable.
+  var code = 'window.ontouchstart = function () {\n' + statements_name + '\n}\n'
+  return code;
+};
+
+Blockly.JavaScript['touch_end'] = function(block) {
+  var dropdown_name = block.getFieldValue('NAME');
+  var statements_name = Blockly.JavaScript.statementToCode(block, 'NAME');
+  // TODO: Assemble JavaScript into code variable.
+  var code = 'window.ontouchend = function () {\n' + statements_name + '\n}\n'
+  return code;
+};
+
+Blockly.JavaScript['touch_cancel'] = function(block) {
+  var dropdown_name = block.getFieldValue('NAME');
+  var statements_name = Blockly.JavaScript.statementToCode(block, 'NAME');
+  // TODO: Assemble JavaScript into code variable.
+  var code = 'window.ontouchcancel = function () {\n' + statements_name + '\n}\n'
+  return code;
+};
+
+Blockly.JavaScript['touch_move'] = function(block) {
+  var dropdown_name = block.getFieldValue('NAME');
+  var statements_name = Blockly.JavaScript.statementToCode(block, 'NAME');
+  var x = Blockly.JavaScript.nameDB_.getName(
+      block.getFieldValue('x'), Blockly.VARIABLE_CATEGORY_NAME);
+      var y = Blockly.JavaScript.nameDB_.getName(
+      block.getFieldValue('y'), Blockly.VARIABLE_CATEGORY_NAME);
+  // TODO: Assemble JavaScript into code variable.
+  var code = 'window.ontouchmove = function (e) {\nlet ' + x + ' = e.touches[0].clientX\nlet ' + y + ' = e.touches[0].clientX\n' + statements_name + '\n}\n'
+  return code;
+};
+
+Blockly.JavaScript['geolocation'] = function(block) {
+  var dropdown_name = block.getFieldValue('NAME');
+  var statements_name = Blockly.JavaScript.statementToCode(block, 'NAME');
+  var la = Blockly.JavaScript.nameDB_.getName(
+      block.getFieldValue('la'), Blockly.VARIABLE_CATEGORY_NAME);
+      var lo = Blockly.JavaScript.nameDB_.getName(
+      block.getFieldValue('lo'), Blockly.VARIABLE_CATEGORY_NAME);
+  // TODO: Assemble JavaScript into code variable.
+  var code = `navigator.geolocation.getCurrentPosition(showPosition);
+  function showPosition (position) { let ` + la + ` = position.coords.latitude\nlet ` + lo + ` = position.coords.longitude\n` + statements_name + `\n}\n`
+  return code;
+};
 
 Blockly.JavaScript['writeclipboard'] = function(block) {
   var dropdown_name = block.getFieldValue('NAME');
@@ -348,11 +547,13 @@ Blockly.JavaScript['click'] = function(block) {
   var value_name = Blockly.JavaScript.valueToCode(block, 'NAME', Blockly.JavaScript.ORDER_ATOMIC);
   // TODO: Assemble JavaScript into code variable.
   if(dropdown_d == "ce") {
-  var code = value_name + ".click();"
+  var code = value_name + ".click();\n"
   } else if(dropdown_d == 'ri') {
-  var code = value_name + '.src = ' + value_name + '.src'
+  var code = value_name + '.src = ' + value_name + '.src\n'
+  } else if(dropdown_d == 'dmk') {
+  var code = 'captionHideKb();\n'
   } else {
-  var code = value_name + ".focus();"
+  var code = value_name + "." + dropdown_d + "();\n"
   }
   return code;
 };
@@ -369,8 +570,12 @@ Blockly.JavaScript['create_listener'] = function(block) {
   var dropdown_e = block.getFieldValue('e');
   var dropdown_name2 = block.getFieldValue('NAME2');
   var statements_s = Blockly.JavaScript.statementToCode(block, 's');
+  if(block.getField('eid')) {
   var eid = Blockly.JavaScript.nameDB_.getName(
       block.getFieldValue('eid'), Blockly.VARIABLE_CATEGORY_NAME);
+      } else {
+      var eid = 'component'
+      }
   // TODO: Assemble JavaScript into code variable.
   var code = "function event" + dropdown_e + dropdown_name2 + " (" + eid + ") {\n" + statements_s + "\n}\n"
   return code;
@@ -489,6 +694,8 @@ Blockly.JavaScript['get_propo'] = function(block) {
   var code = value_name + 'LP' + dropdown_name2
   } else if(dropdown_name2 == 'dd') {
   var code = value_name + 'LP.getDuration(true)'
+  } else if(dropdown_name2 =='hc') {
+  var code = 'String("#" + String([...' + value_name + '.classList].pop()).replaceAll("hc",""))'
   } else {
   var code = value_name + '.'+ dropdown_name2
   }
@@ -539,6 +746,7 @@ Blockly.JavaScript['set_prop'] = function(block) {
   renderer: ` + value_name + `LPR,
   loop: ` + value_name + `LPlo,
   autoplay: ` + value_name + `LPa,
+  name: '` + eid + `',
   path: ` + value_name + `LPp // the path to the animation json
 });
 ` + value_name + `LP.setSpeed(` + value_name + `LPs);
@@ -546,6 +754,8 @@ Blockly.JavaScript['set_prop'] = function(block) {
 p.appendChild(` + value_name + `);\n`
   } else if(dropdown_name2 == 'style.transform') {
   var code = value_name + "." + dropdown_name2 + " += " + value_e + ";\n"
+  } else if (dropdown_name2 == 'hc') {
+  var code = value_name + '.classList.add("' + 'hc' + String(value_e).replaceAll('#','').replaceAll("'",'') + '");\n'
   } else {
   var code = value_name + "." + dropdown_name2 + " = " + value_e + ";\n"
   }
@@ -677,7 +887,7 @@ Blockly.JavaScript['device_manager'] = function(block) {
   var code = "navigator.platform"
   } 
   if(dropdown_p == "imd") {
-  var code = "/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)"
+  var code = "/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ? 'Mobile' : 'Desktop'"
   }
   if(dropdown_p == "hde") {
   var code = "window.matchMedia('(prefers-color-scheme: dark)').matches ? 'DarkMode' : 'LightMode'"
@@ -691,7 +901,7 @@ Blockly.JavaScript['device_manager'] = function(block) {
   var code = 'window.matchMedia("(orientation: portrait)").matches ? "Portrait" : "Landscape"'
   }
   // TODO: Change ORDER_NONE to the correct strength.
-  return [code, Blockly.JavaScript.ORDER_NONE];
+  return [code, Blockly.JavaScript.ORDER_ATOMIC];
 };
 
 Blockly.JavaScript['get_permison_staet'] = function(block) {
@@ -928,14 +1138,6 @@ Blockly.JavaScript['clone'] = function(block) {
   return [code, Blockly.JavaScript.ORDER_ATOMIC];
 };
 
-Blockly.JavaScript['remove'] = function(block) {
-  var dropdown_name = block.getFieldValue('NAME');
-  var value_name = Blockly.JavaScript.valueToCode(block, 'NAME', Blockly.JavaScript.ORDER_ATOMIC);
-  // TODO: Assemble JavaScript into code variable.
-  var code = value_name + ".remove();\n"
-  return code;
-};
-
 Blockly.JavaScript['apppend_elem'] = function(block) {
   var dropdown_name = block.getFieldValue('NAME');
   var value_name = Blockly.JavaScript.valueToCode(block, 'NAME', Blockly.JavaScript.ORDER_ATOMIC);
@@ -953,58 +1155,59 @@ Blockly.JavaScript['create_elem'] = function(block) {
       block.getFieldValue('eid'), Blockly.VARIABLE_CATEGORY_NAME);
   // TODO: Assemble JavaScript into code variable.
     if (dropdown_e == "if") {
-        var code = "{\nlet " + eid + " = document.createElement('iframe');\n" + eid + ".setAttribute('src', 'https://lukeplays33.github.io/Sketch/');\n" + eid + ".style.height = window.innerHeight + 'px';\n" + eid + ".style.width = window.innerWidth + 'px';\n" + eid + ".onload = function () {\nevent" + dropdown_e + "load(" + eid + ");\n}\n"
+        var code = "\nlet " + eid + " = document.createElement('iframe');\n" + eid + ".setAttribute('src', 'https://lukeplays33.github.io/Sketch/');\n" + eid + ".style.height = window.innerHeight + 'px';\n" + eid + ".style.width = window.innerWidth + 'px';\n" + eid + ".onload = function () {\nevent" + dropdown_e + "load(" + eid + ");\n}\n"
     } else if (dropdown_e == "d") {
-        var code = "{\nlet " + eid + " = document.createElement('div');\n" + eid + ".onclick = function () {\nevent" + dropdown_e + "click(" + eid + ");\n}\n" + eid + ".onmousedown = function () {\nevent" + dropdown_e + "mouseDown(" + eid + ");\n}\n" + eid + ".onmouseup = function () {\nevent" + dropdown_e + "mouseUp(" + eid + ");\n}\n" + eid + ".onmouseover = function () {\nevent" + dropdown_e + "onmouseover(" + eid + ");\n}\n"
+        var code = "\nlet " + eid + " = document.createElement('div');\n" + eid + ".onclick = function () {\nevent" + dropdown_e + "click(" + eid + ");\n}\n" + eid + ".onmousedown = function () {\nevent" + dropdown_e + "mouseDown(" + eid + ");\n}\n" + eid + ".onmouseup = function () {\nevent" + dropdown_e + "mouseUp(" + eid + ");\n}\n" + eid + ".onmouseover = function () {\nevent" + dropdown_e + "onmouseover(" + eid + ");\n}\n" + eid + ".onmouseleave = function () {\nevent" + dropdown_e + "onmouseout(" + eid + ");\n}\n"
     } else if (dropdown_e == "i") {
-        var code = "{\nlet " + eid + " = document.createElement('img');\n" + eid + ".src = 'https://i.kym-cdn.com/photos/images/newsfeed/001/473/342/633.png';\n" + eid + ".onclick = function () {\nevent" + dropdown_e + "click(" + eid + ");\n}\n" + eid + ".onmousedown = function () {\nevent" + dropdown_e + "mouseDown(" + eid + ");\n}\n" + eid + ".onmouseup = function () {\nevent" + dropdown_e + "mouseUp(" + eid + ");\n}\n" + eid + ".onmouseover = function () {\nevent" + dropdown_e + "onmouseover(" + eid + ");\n}\n"
+        var code = "\nlet " + eid + " = document.createElement('img');\n" + eid + ".src = 'https://i.kym-cdn.com/photos/images/newsfeed/001/473/342/633.png';\n" + eid + ".onclick = function () {\nevent" + dropdown_e + "click(" + eid + ");\n}\n" + eid + ".onmousedown = function () {\nevent" + dropdown_e + "mouseDown(" + eid + ");\n}\n" + eid + ".onmouseup = function () {\nevent" + dropdown_e + "mouseUp(" + eid + ");\n}\n" + eid + ".onmouseover = function () {\nevent" + dropdown_e + "onmouseover(" + eid + ");\n}\n" + eid + ".onmouseleave = function () {\nevent" + dropdown_e + "onmouseout(" + eid + ");\n}\n"
     } else if (dropdown_e == "p") {
-        var code = "{\nlet " + eid + " = document.createElement('p');\n" + eid + ".innerHTML = 'I am a paragraph, oh yes I am';\n" + eid + ".onclick = function () {\nevent" + dropdown_e + "click(" + eid + ");\n}\n" + eid + ".onmousedown = function () {\nevent" + dropdown_e + "mouseDown(" + eid + ");\n}\n" + eid + ".onmouseup = function () {\nevent" + dropdown_e + "mouseUp(" + eid + ");\n}\n" + eid + ".onmouseover = function () {\nevent" + dropdown_e + "onmouseover(" + eid + ");\n}\n"
+        var code = "\nlet " + eid + " = document.createElement('p');\n" + eid + ".innerHTML = 'I am a paragraph, oh yes I am';\n" + eid + ".onclick = function () {\nevent" + dropdown_e + "click(" + eid + ");\n}\n" + eid + ".onmousedown = function () {\nevent" + dropdown_e + "mouseDown(" + eid + ");\n}\n" + eid + ".onmouseup = function () {\nevent" + dropdown_e + "mouseUp(" + eid + ");\n}\n" + eid + ".onmouseover = function () {\nevent" + dropdown_e + "onmouseover(" + eid + ");\n}\n" + eid + ".onmouseleave = function () {\nevent" + dropdown_e + "onmouseout(" + eid + ");\n}\n"
     } else if ( dropdown_e == "b") {
-        var code = "{\nlet " + eid + " = document.createElement('button');\n" + eid + ".innerHTML = 'Never gonna give you up, Never gonna let you down';\n" + eid + ".onclick = function () {\nevent" + dropdown_e + "click(" + eid + ");\n}\n" + eid + ".onmousedown = function () {\nevent" + dropdown_e + "mouseDown(" + eid + ");\n}\n" + eid + ".onmouseup = function () {\nevent" + dropdown_e + "mouseUp(" + eid + ");\n}\n" + eid + ".onmouseover = function () {\nevent" + dropdown_e + "onmouseover(" + eid + ");\n}\n"
+        var code = "\nlet " + eid + " = document.createElement('button');\n" + eid + ".innerHTML = 'Never gonna give you up, Never gonna let you down';\n" + eid + ".onclick = function () {\nevent" + dropdown_e + "click(" + eid + ");\n}\n" + eid + ".onmousedown = function () {\nevent" + dropdown_e + "mouseDown(" + eid + ");\n}\n" + eid + ".onmouseup = function () {\nevent" + dropdown_e + "mouseUp(" + eid + ");\n}\n" + eid + ".onmouseover = function () {\nevent" + dropdown_e + "onmouseover(" + eid + ");\n}\n" + eid + ".onmouseleave = function () {\nevent" + dropdown_e + "onmouseout(" + eid + ");\n}\n"
     } else if ( dropdown_e == "ddb") {
-        var code = "{\nlet " + eid + " = document.createElement('select');\n             var newDropdownOption = document.createElement('option');\nnewDropdownOption.value = 'value1';\nnewDropdownOption.text = 'option 1';\n" + eid + ".add(newDropdownOption);\n" + eid + ".onchange = function () {\nevent" + dropdown_e + "change(" + eid + ");\n}\n"
+        var code = "\nlet " + eid + " = document.createElement('select');\n             var newDropdownOption = document.createElement('option');\nnewDropdownOption.value = 'value1';\nnewDropdownOption.text = 'option 1';\n" + eid + ".add(newDropdownOption);\n" + eid + ".onchange = function () {\nevent" + dropdown_e + "change(" + eid + ");\n}\n"
         } else if ( dropdown_e == "cp") {
-            var code = "{\nlet " + eid + " = document.createElement('input');\n" + eid + ".type = 'color';\n" + eid + ".onchange = function () {\nevent" + dropdown_e + "change(" + eid + ");\n}\n"
+            var code = "\nlet " + eid + " = document.createElement('input');\n" + eid + ".type = 'color';\n" + eid + ".onchange = function () {\nevent" + dropdown_e + "change(" + eid + ");\n}\n"
     } else if ( dropdown_e == "dp") {
-        var code = "{\nlet " + eid + " = document.createElement('input');\n" + eid + ".type = 'date';\n" + eid + ".onchange = function () {\nevent" + dropdown_e + "change(" + eid + ");\n}\n"
+        var code = "\nlet " + eid + " = document.createElement('input');\n" + eid + ".type = 'date';\n" + eid + ".onchange = function () {\nevent" + dropdown_e + "change(" + eid + ");\n}\n"
     } else if ( dropdown_e == "tp") {
-        var code = "{\nlet " + eid + " = document.createElement('input');\n" + eid + ".type = 'time';\n" + eid + ".onchange = function () {\nevent" + dropdown_e + "change(" + eid + ");\n}\n"
+        var code = "\nlet " + eid + " = document.createElement('input');\n" + eid + ".type = 'time';\n" + eid + ".onchange = function () {\nevent" + dropdown_e + "change(" + eid + ");\n}\n"
     } else if ( dropdown_e == "tf2") {
-        var code = "{\nlet " + eid + " = document.createElement('input');\n" + eid + ".placeholder = 'This is a placeholder, oh yes this is';\n" + eid + ".oninput = function () {\nevent" + dropdown_e + "input(" + eid + ");\n}\n"
+        var code = "\nlet " + eid + " = document.createElement('input');\n" + eid + ".placeholder = 'This is a placeholder, oh yes this is';\n" + eid + ".oninput = function () {\nevent" + dropdown_e + "input(" + eid + ");\n}\n"
     } else if ( dropdown_e == "c") {
-        var code = "{\nlet " + eid + " = document.createElement('canvas');\nevent" + dropdown_e + "load(" + eid + ");\n"
+        var code = "\nlet " + eid + " = document.createElement('canvas');\nevent" + dropdown_e + "load(" + eid + ");\n"
     } else if (dropdown_e == "s") {
-        var code = "{\nlet " + eid + " = document.createElement('input');\n" + eid + ".type = 'range';\n" + eid + ".max = 100;\n" + eid + ".value = 50;\n" + eid + ".onchange = function () {\nevent" + dropdown_e + "change(" + eid + ");\n}\n"
+        var code = "\nlet " + eid + " = document.createElement('input');\n" + eid + ".type = 'range';\n" + eid + ".max = 100;\n" + eid + ".value = 50;\n" + eid + ".onchange = function () {\nevent" + dropdown_e + "change(" + eid + ");\n}\n"
     } else if ( dropdown_e == "pb") {
-        var code = "{\nlet " + eid + " = document.createElement('progress');\n" + eid + ".onchange = function () {\nevent" + dropdown_e + "change(" + eid + ");\n}\n"
+        var code = "\nlet " + eid + " = document.createElement('progress');\n" + eid + ".onchange = function () {\nevent" + dropdown_e + "change(" + eid + ");\n}\n"
     } else if ( dropdown_e == "cb") {
-        var code = "{\nlet " + eid + " = document.createElement('input');\n" + eid + ".type = 'checkbox';\n" + eid + ".onclick = function () {\nevent" + dropdown_e + "change(" + eid + ");\n}\n"
+        var code = "\nlet " + eid + " = document.createElement('input');\n" + eid + ".type = 'checkbox';\n" + eid + ".onclick = function () {\nevent" + dropdown_e + "change(" + eid + ");\n}\n"
     } else if ( dropdown_e == "rb") {
-        var code = "{\nlet " + eid + " = document.createElement('input');\n" + eid + ".type = 'radio';\n" + eid + ".onclick = function () {\nevent" + dropdown_e + "change(" + eid + ");\n}\n"
+        var code = "\nlet " + eid + " = document.createElement('input');\n" + eid + ".type = 'radio';\n" + eid + ".onclick = function () {\nevent" + dropdown_e + "change(" + eid + ");\n}\n"
     } else if( dropdown_e == "li") {
-    var code = "{\nlet " + eid + " = document.createElement('div');\n"
+    var code = "\nlet " + eid + " = document.createElement('div');\n"
     } else if (dropdown_e == "fab") {
-    var code = "{\nlet " + eid + " = document.createElement('div');\n" + eid + ".onclick = function () {\nevent" + dropdown_e + "click(" + eid + ");\n}\n" + eid + ".onmousedown = function () {\nevent" + dropdown_e + "mouseDown(" + eid + ");\n}\n" + eid + ".onmouseup = function () {\nevent" + dropdown_e + "mouseUp(" + eid + ");\n}\n" + eid + ".onmouseover = function () {\nevent" + dropdown_e + "onmouseover(" + eid + ");\n}\n"
+    var code = "\nlet " + eid + " = document.createElement('div');\n" + eid + ".onclick = function () {\nevent" + dropdown_e + "click(" + eid + ");\n}\n" + eid + ".onmousedown = function () {\nevent" + dropdown_e + "mouseDown(" + eid + ");\n}\n" + eid + ".onmouseup = function () {\nevent" + dropdown_e + "mouseUp(" + eid + ");\n}\n" + eid + ".onmouseover = function () {\nevent" + dropdown_e + "onmouseover(" + eid + ");\n}\n" + eid + ".onmouseout = function () {\nevent" + dropdown_e + "onmouseleave(" + eid + ");\n}\n"
     } else if ( dropdown_e == "ul") {
-    var code = "{\nlet " + eid + " = document.createElement('ul');\n"
+    var code = "\nlet " + eid + " = document.createElement('ul');\n"
     }else if ( dropdown_e == "ol") {
-    var code = "{\nlet " + eid + " = document.createElement('ol');\n"
+    var code = "\nlet " + eid + " = document.createElement('ol');\n"
     } else if (dropdown_e == "a") {
-    var code = "{\nlet " + eid + " = document.createElement('a');\n" + eid + ".href = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'\n" + eid + ".innerHTML = 'This Is A HyperLink' \n"
+    var code = "\nlet " + eid + " = document.createElement('a');\n" + eid + ".href = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'\n" + eid + ".innerHTML = 'This Is A HyperLink' \n"
     } else if(dropdown_e == 'lp') {
-    var code = "{\nlet " + eid + " = document.createElement('div');\n" + `var ` + eid + `LP = lottieWeb.loadAnimation({
+    var code = "\nlet " + eid + " = document.createElement('div');\n" + `var ` + eid + `LP = lottieWeb.loadAnimation({
   container: ` + eid + `, // the dom element that will contain the animation
   renderer: 'svg',
   loop: true,
   autoplay: true,
+  name: '` + eid + `',
   path: 'https://assets4.lottiefiles.com/packages/lf20_jtbfg2nb.json' // the path to the animation json
 });\nlet ` + eid + `LPR = 'svg'\nlet ` + eid + `LPlo = true\nlet ` + eid + `LPa = true\nlet ` + eid + `LPp = 'https://assets4.lottiefiles.com/packages/lf20_jtbfg2nb.json'\nlet `  + eid + `LPs = 1\nlet `  + eid + `LPd = 1\n`
     } else if(dropdown_e == 'fv') {
     var code = "{\nlet " + eid + " = document.createElement('object');\n" + eid + '.data = `https://image.winudf.com/v2/image1/Y29tLnRodW5rYWJsZS5saXZlX2ljb25fMTU1NDk3OTQzOF8wMzc/icon.png?w=&fakeurl=1`\n'
     }
     
-    var code = code + eid + ".className = '" + dropdown_e + "'\n" + statements_name + "\n}\n"
+    var code = code + eid + ".className = '" + dropdown_e + "'\n" + statements_name + "\n"
     
   return code;
 };
@@ -1169,18 +1372,7 @@ Blockly.JavaScript['initd'] = function(block) {
   var code = "window.addEventListener(`load`, e => {\n" + statements_name + "\n});"
   return code;
 };
-        Blockly.JavaScript['change_d_var'] = function(block) {
-  var value_s = Blockly.JavaScript.valueToCode(block, 's', Blockly.JavaScript.ORDER_ATOMIC);
-            value_s = value_s.replace("'", "").replace("'", "");
-  var value_t = Blockly.JavaScript.valueToCode(block, 't', Blockly.JavaScript.ORDER_ATOMIC);
-  // TODO: Assemble JavaScript into code variable.
-            if(Math.sign(value_t) == 1 ) {
-                var code = value_s + " += " + value_t + ";\n"
-                } else {
-                    var code = value_s + " -= " + value_t.replace("-", " ") + ";\n"
-                    }
-  return code;
-};
+
         Blockly.JavaScript['change'] = function(block) {
             var v = getVariableName(block.getFieldValue('VAR'));
   var value_name = Blockly.JavaScript.valueToCode(block, 'NAME', Blockly.JavaScript.ORDER_ATOMIC);
@@ -1191,23 +1383,6 @@ Blockly.JavaScript['initd'] = function(block) {
                     var code = v + " -= " + value_name.replace(`-`, ` `) + ";\n"
                     }
   return code;
-};
-        
-Blockly.JavaScript['create_dynamic_var'] = function(block) {
-  var value_s = Blockly.JavaScript.valueToCode(block, 's', Blockly.JavaScript.ORDER_ATOMIC);
-  var value_t = Blockly.JavaScript.valueToCode(block, 't', Blockly.JavaScript.ORDER_ATOMIC);
-  // TODO: Assemble JavaScript into code variable.
-  var code = "var " + value_s.replace("'", "").replace("'", "") + " = " + value_t + ";\n" 
-  return code;
-};
-
-        Blockly.JavaScript['get_d_var'] = function(block) {
-  var value_g = Blockly.JavaScript.valueToCode(block, 'g', Blockly.JavaScript.ORDER_ATOMIC);
-            value_g = value_g.replace("'", "").replace("'", "");
-  // TODO: Assemble JavaScript into code variable.
-  var code = value_g
-  // TODO: Change ORDER_NONE to the correct strength.
-  return [code, Blockly.JavaScript.ORDER_ATOMIC];
 };
         
         Blockly.JavaScript['logic_compare'] = function(block) {
@@ -1224,7 +1399,7 @@ Blockly.JavaScript['create_dynamic_var'] = function(block) {
   // TODO: Assemble JavaScript into code variable.
   var code = dropdown_name
   // TODO: Change ORDER_NONE to the correct strength.
-  return [code, Blockly.JavaScript.ORDER_NONE];
+  return [code, Blockly.JavaScript.ORDER_ATOMIC];
 };
         Blockly.JavaScript['logic_null'] = function(block) {
   // TODO: Assemble JavaScript into code variable.
@@ -1251,11 +1426,11 @@ Blockly.JavaScript['create_dynamic_var'] = function(block) {
 
 //variables
 
-var events = ["initd", 'window_click', 'key_changed', 'game_pad_connected','game_pad_disconnected', 'game_pad_button_change', 'before_unload'];
+var events = ["initd", 'window_click', 'key_changed', 'game_pad_connected','game_pad_disconnected', 'game_pad_button_change', 'before_unload','window_resize','touch_start','touch_end', 'touch_cancel','touch_move'];
 var loops = ['controls_repeat', 'controls_repeat_ext', 'controls_forEach', 'controls_for', 'controls_whileUntil', 'forever'];
 var projects = [];
 
-var secretsMSG = ["I am a monster", "Well hello there, If you've found this then congratulations there is more to see than you think, Just giving you a hint ;).", "I'll marry her, I'lljust have to finda way", "02 x Sketch", "I'm in love with a fairytale, even tho it hurts, but I don't care if I lose my mind, I'm already cursed.","Hentai", "Hello There", "What is this?, I hate this feeling", "I think Sketch would make a great Game Theory episode","Zero Two is kinda Hot", ["MUSIC MAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAN"]];
+var secretsMSG = ["I am a monster", "Well hello there, If you've found this then congratulations there is more to see than you think, Just giving you a hint ;).", "I'll marry her, I'lljust have to finda way", "02 x Sketch", "I'm in love with a fairytale, even tho it hurts, but I don't care if I lose my mind, I'm already cursed.","Hentai", "Hello There", "What is this?, I hate this feeling", "I think Sketch would make a great Game Theory episode","Zero Two is kinda Hot", "MUSIC MAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAN", 'Does anyone actually read these','Oh you dont know what Karlson is?','Oh you dont know what Sketch is?','Once we die, we’ll only be a statistic. It won’t matter what we were called. ~ Zero Two'];
 
 var project = "";
 
@@ -1263,9 +1438,14 @@ var base64 = [];
 var assetsBlockDropdown = [["UploadAsset","OPTIONNAME"]];
 var assetsBase64 = [];
 
-var t = ["body", "if", "d", "i", "p", "b", "ddb", "cp", "tp" , "dp", "tf2", "c", "s", "pb", "cb", "rb", "li", "fab", "ul", "ol", "a"];
-
 function tooltip () {
+var t = [];
+for(var i of workspace.getBlocksByType('create_elem')) {
+t.push(i.getFieldValue('e'));
+}
+
+t = [... new Set(t)]
+
 let e = ""
 for(var i of t) {
 e = e + `.` + i + ` {
@@ -1277,6 +1457,18 @@ e = e + `.` + i + ` {
 }`
 }
 return e 
+}
+
+function hintColor () {
+var hc = workspace.getBlocksByType('set_prop');
+var colors = ''
+for(var i of hc) {
+if(i.getFieldValue('NAME2') == 'hc') {
+var col = String(Blockly.JavaScript.valueToCode(i, 'e', Blockly.JavaScript.ORDER_ATOMIC)).replaceAll("'",'')
+colors = colors + '.' + 'hc' + String(col).replaceAll('#','') + '::-webkit-input-placeholder {\ncolor: ' + col + '\n}\n'
+}
+}
+return colors;
 }
 
 function html () {
@@ -1291,6 +1483,7 @@ assets = assets + "var Ass_" + i.replaceAll(" ", "_").replaceAll("-", "_").repla
  ` + window.localStorage.getItem("projecttag" + project) + `
 <link rel="shortcut icon" type="image/jpg" href="` + window.localStorage.getItem("icon" + project) + `"\/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <style>
 html, body {
 margin: 0px;
@@ -1302,6 +1495,8 @@ width: 100%;
 
   box-sizing: border-box;
 }
+
+` + hintColor() + `
 
 .li {
   border: 8px solid #f3f3f3; /* Light grey */
@@ -1461,6 +1656,10 @@ src="https://media.discordapp.net/attachments/898978597996466189/946430018463105
 
 import lottieWeb from 'https://cdn.skypack.dev/lottie-web';
 
+const body = document.body
+
+var isFullscreen = 0;
+
 const reader = new FileReader();
 let spalsh = document.createElement('img');
 spalsh.src = 'https://media.discordapp.net/attachments/898978597996466189/900743720905900032/60d473a38f959300118b9c10.png';
@@ -1513,6 +1712,24 @@ navigator.clipboard.readText()
 return err
   });
 }
+
+var csShowCount = 0;
+
+function captionKbClose() {
+  if (csShowCount > 0) {
+    csShowCount = csShowCount - 1;
+  }
+  if (csShowCount == 0) {
+    document.title = savedTitle;
+  }
+}
+
+function captionHideKb() { 
+  document.title = savedTitle + csAddStr + "Hide";
+  csShowCount = csShowCount + 1;
+  setTimeout(captionKbClose, 1000);
+}
+
 `
   return gen
 }
@@ -1541,10 +1758,6 @@ var dd = new Date();
 
 var menuSize = !window.localStorage.getItem("vsStyle") == null || !window.localStorage.getItem("vsStyle") == "" || navigator.userAgentData.mobile ? "420px" : "350px"
 
-// change hue
-Blockly.HSV_SATURATION = 0.56;
-Blockly.HSV_VALUE = 0.83;
-
 // Inject Blockly.
 
 document.getElementById("blocklyContainer").style.height = (String((window.innerHeight) - 50) + 'px');
@@ -1568,19 +1781,19 @@ const workspace2 = Blockly.inject("blocklyDiv2", {
     theme: {
       'blockStyles' : {
           "logic_blocks": {
-            "colourPrimary": "#F3AA44"
+            "colourPrimary": Blockly.CONTROL_CATEGORY_HUE
          },
                     "loop_blocks": {
-            "colourPrimary": "#F3AA44"
+            "colourPrimary": Blockly.CONTROL_CATEGORY_HUE
          },
          "list_blocks": {
-            "colourPrimary": "#76afc9"
+            "colourPrimary": Blockly.LIST_CATEGORY_HUE
          },
                    "math_blocks": {
-            "colourPrimary": "#6789cc"
+            "colourPrimary": Blockly.MATH_CATEGORY_HUE
          },
                    "text_blocks": {
-            "colourPrimary": "#DF6078"
+            "colourPrimary": Blockly.TEXT_CATEGORY_HUE
          },
                              "colour_blocks": {
             "colourPrimary": "#7F7F7F"
@@ -1589,7 +1802,7 @@ const workspace2 = Blockly.inject("blocklyDiv2", {
             "colourPrimary": "#CD5E94"
          },
                                                  "procedure_blocks": {
-            "colourPrimary": "#7560A4"
+            "colourPrimary": Blockly.FUNCTIONS_CATEGORY_HUE
          }
       },
       'componentStyles' : {
@@ -1659,19 +1872,19 @@ const workspace = Blockly.inject("blocklyDiv", {
     theme: {
       'blockStyles' : {
           "logic_blocks": {
-            "colourPrimary": "#F3AA44"
+            "colourPrimary": Blockly.CONTROL_CATEGORY_HUE
          },
                     "loop_blocks": {
-            "colourPrimary": "#F3AA44"
+            "colourPrimary": Blockly.CONTROL_CATEGORY_HUE
          },
          "list_blocks": {
-            "colourPrimary": "#76afc9"
+            "colourPrimary": Blockly.LIST_CATEGORY_HUE
          },
                    "math_blocks": {
-            "colourPrimary": "#6789cc"
+            "colourPrimary": Blockly.MATH_CATEGORY_HUE
          },
                    "text_blocks": {
-            "colourPrimary": "#DF6078"
+            "colourPrimary": Blockly.TEXT_CATEGORY_HUE
          },
                              "colour_blocks": {
             "colourPrimary": "#7F7F7F"
@@ -1680,7 +1893,7 @@ const workspace = Blockly.inject("blocklyDiv", {
             "colourPrimary": "#CD5E94"
          },
                                                  "procedure_blocks": {
-            "colourPrimary": "#7560A4"
+            "colourPrimary": Blockly.FUNCTIONS_CATEGORY_HUE
          }
       },
       'componentStyles' : {
@@ -1750,7 +1963,9 @@ const scrollOptionsPlugin = new ScrollOptions(workspace);
 
 scrollOptionsPlugin.init({ enableWheelScroll: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
     navigator.userAgent
-  ) ? false : true, enableEdgeScroll: true });
+  ) ? false : true, enableEdgeScroll: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+    navigator.userAgent
+  ) ? false : true });
 
 // Add the disableOrphans event handler. This is not done automatically by
 // the plugin and should be handled by your application.
@@ -1785,26 +2000,12 @@ function start() {
     
     document.getElementById("menu").style.display = "none";
     
-                      document.getElementById("project").style.display = "none";
-        document.getElementById("projectName").style.display = "none";
-        document.getElementById("projecttag").style.display = "none";
-        document.getElementById("projectdes").style.display = "none";
-        document.getElementById("projectIcon").style.display = "none";
-    document.getElementById("delete").style.display = "none";
-    
             document.getElementById("reset").style.display = "none";
     document.getElementById("goHome").style.display = "none";
     
     
   document.getElementById("GoHome2").style.backgroundImage =
     "url(Images/round_home_white_24dp.png)";
-    
-    document.getElementById("fullscreen").style.backgroundImage =
-    "url(Images/outline_fullscreen_white_24dp.png)";
-    
-    document.getElementById("fullscreen").style.backgroundRepeat = 'no-repeat';
-    document.getElementById("fullscreen").style.backgroundSize = 'contain';
-    document.getElementById("fullscreen").style.backgroundPosition = 'center';
     
     document.getElementById("upload").style.backgroundImage =
     "url(Images/round_create_new_folder_white_24dp.png)";
@@ -1817,6 +2018,28 @@ function start() {
     
     document.getElementById("ssetings").style.backgroundImage =
     "url(Images/61818b07d54ef50010e42587-1.png)";
+    
+        
+    document.getElementById("fullscreen").style.backgroundImage =
+    "url(Images/outline_fullscreen_white_24dp.png)";
+    
+    document.getElementById("fullscreen").style.backgroundRepeat = 'no-repeat';
+    document.getElementById("fullscreen").style.backgroundSize = 'contain';
+    document.getElementById("fullscreen").style.backgroundPosition = 'center';
+    
+            document.getElementById("Psettings").style.backgroundImage =
+    "url(Images/61818b07d54ef50010e42587-1.png)";
+    
+    document.getElementById("Psettings").style.backgroundRepeat = 'no-repeat';
+    document.getElementById("Psettings").style.backgroundSize = 'contain';
+    document.getElementById("Psettings").style.backgroundPosition = 'center';
+    
+        document.getElementById("adddd").style.backgroundImage =
+    "url(Images/round_add_white_24dp.png)";
+    
+    document.getElementById("adddd").style.backgroundRepeat = 'no-repeat';
+    document.getElementById("adddd").style.backgroundSize = 'contain';
+    document.getElementById("adddd").style.backgroundPosition = 'center';
     
      document.getElementById("Switch").style.backgroundImage =
     "url(Images/round_extension_white.png)";
@@ -1836,7 +2059,7 @@ function start() {
   window.setTimeout(function () {
   
   if(!window.localStorage.getItem("smos") == null || !window.localStorage.getItem("smos") == "") {
-    document.getElementById("smos").innerHTML = "Show menu on start-up: On"
+    document.getElementById("smos").innerHTML = "On"
     
 icon = 0
         menu.style.backgroundImage =
@@ -1890,14 +2113,15 @@ icon = 0
     base64 = JSON.parse(window.localStorage.getItem("base64"));
     document.getElementById("no_ass").style.display = "none";
     
-        document.getElementById('searchAssets').onclick = function () {
+        document.getElementById('searchAssets').onclick = function (e) {
         window.setTimeout(function () {
     document.getElementById("assetFolder").style.display = "block";
      document.getElementById("searchAssets").focus();
     },1);
     }
     
-    document.getElementById('searchAssets').oninput = function () {
+    document.getElementById('searchAssets').oninput = function (e) {
+    e.stopPropagnation();
     for (var i of assetsBase64) {
     if(i.includes(document.getElementById('searchAssets').value)) {
     document.getElementById(i).style.display = 'block'
@@ -1925,7 +2149,6 @@ icon = 0
     var oo = this.id
     
     createContextMenuI(String(x) + "px", String(y) + "px", ["Delete Asset", "Rename asset", "Replace Asset", 'View Asset']);
-    
     document.getElementById('3').onclick = function () {
     var vv = window.open('');
     vv.document.write(`<!DOCTYPE html>
@@ -2033,12 +2256,21 @@ icon = 0
         document.getElementById(
           "Description" + i
         ).innerHTML = window.localStorage.getItem("created" + i);
+        
+                const select4 = neww_list_item.querySelector("#PSettings");
+      select4.id = "PSettings" + i;
+      select4.className = 'PSettings'
+            select4.onclick = function (e) {
+      e.stopPropagation();
+      editProject(String(window.innerWidth - 275) + 'px',String(this.id).replaceAll('PSettings','') == projects[0] ? '145px' : String(145 + 118 * projects.indexOf(String(this.id).replaceAll('PSettings',''))) + 'px', String(this.id).replaceAll('PSettings','')); //145px
+      }
 
         const select3 = neww_list_item.querySelector("#icon");
         select3.id = "icon" + i;
         document.getElementById("icon" + i).src = window.localStorage.getItem(
           "icon" + i
         );
+        
         document.getElementById("home").appendChild(itemm);
       }
     }
@@ -2069,6 +2301,7 @@ let input = document.createElement("input");
     if(projects.includes(new_project)) {
     new_project = prompt("Project name already exist.\nPlaease enter a new name");
     }
+                    
         document.getElementById("no_project").style.display = "none";
       var new_list_item = document.getElementById("Projects-list");
       var item = new_list_item.cloneNode(true);
@@ -2107,9 +2340,37 @@ let input = document.createElement("input");
 
       const select3 = new_list_item.querySelector("#icon");
       select3.id = "icon" + new_project;
+      
+            const select4 = new_list_item.querySelector("#PSettings");
+      select4.id = "PSettings" + new_project;
+      select4.className = 'PSettings'
+            select4.onclick = function (e) {
+      e.stopPropagation();
+      editProject(String(window.innerWidth - 275) + 'px',String(this.id).replaceAll('PSettings','') == projects[0] ? '145px' : String(145 + 118 * projects.indexOf(String(this.id).replaceAll('PSettings',''))) + 'px', String(this.id).replaceAll('PSettings','')); //145px
+      }
 
-window.localStorage.setItem(window.localStorage.getItem("created" + new_project) + "blocks", reader.result);
 
+                                 var name = String(reader.result).replaceAll('<!--Name-->','')
+  window.localStorage.setItem("projectName" + window.localStorage.getItem("created" + new_project), String(String(reader.result).replaceAll('<!--Name-->','')).substring(0,name.indexOf('<')));
+  
+  name = String(String(reader.result).replaceAll('<!--Name-->','')).substring(0,name.indexOf('<'))
+  
+  var tag = String(String(reader.result).replaceAll('<!--Name-->' + name,'').replaceAll('<!--ownerTag-->',''))
+  tag = tag.substring(0,tag.indexOf('<'))
+
+window.localStorage.setItem("projecttag" + new_project, tag);
+
+var des =String(String(reader.result).replaceAll('<!--Name-->' + name + '<!--ownerTag-->' + tag,'').replaceAll('<!--Description-->',''))
+
+des = des.substring(0,des.indexOf('<'))
+
+window.localStorage.setItem("projectdes" + new_project, des);
+
+var b = String(String(reader.result).substring(String(reader.result).indexOf('<!--Block XML File-->')).replaceAll('<!--Block XML File-->',''))
+
+                    window.localStorage.setItem(window.localStorage.getItem("created" + new_project) + "blocks", b);
+                    }
+                    
       window.localStorage.setItem(
         "icon" + new_project,
         document.getElementById("icon" + new_project).src
@@ -2119,8 +2380,6 @@ window.localStorage.setItem(window.localStorage.getItem("created" + new_project)
         if (window.localStorage.getItem("open") == "") {
     
   } else {
-                    window.localStorage.setItem(window.localStorage.getItem("created" + new_project) + "blocks", reader.result);
-      
        document.getElementById("home").style.display = "none";
           document.getElementById("blocklyContainer").style.display = "block";
           project = new_project
@@ -2139,9 +2398,7 @@ window.localStorage.setItem(window.localStorage.getItem("created" + new_project)
         document.getElementById("upload").style.display = "block";
       
     document.getElementById("settings").style.display = "none";
-  }
-    }  
-                            window.localStorage.setItem(window.localStorage.getItem("created" + new_project) + "blocks", reader.result);
+    }
           },
           false
         );
@@ -2195,6 +2452,15 @@ window.localStorage.setItem(window.localStorage.getItem("created" + new_project)
 
       const select3 = new_list_item.querySelector("#icon");
       select3.id = "icon" + new_project;
+      
+      const select4 = new_list_item.querySelector("#PSettings");
+      select4.id = "PSettings" + new_project;
+      select4.className = 'PSettings'
+            select4.onclick = function (e) {
+      e.stopPropagation();
+      editProject(String(window.innerWidth - 275) + 'px',String(this.id).replaceAll('PSettings','') == projects[0] ? '145px' : String(145 + 118 * projects.indexOf(String(this.id).replaceAll('PSettings',''))) + 'px', String(this.id).replaceAll('PSettings','')); //145px
+      }
+
 
       window.localStorage.setItem(
         "icon" + new_project,
@@ -2263,10 +2529,10 @@ document.getElementById("creditsss").style.display = "block";
     var vs = document.getElementById("vsStyle");
     vs.onclick = function () {
         if(window.localStorage.getItem("vsStyle") == null || window.localStorage.getItem("vsStyle") == "" ) {
-            vs.innerHTML = "Use Fullscreen Visual Editor: On"
+            vs.innerHTML = "On"
             window.localStorage.setItem("vsStyle", true);
         } else {
-            vs.innerHTML = "Use Fullscreen Visual Editor: Off"
+            vs.innerHTML = "Off"
                 window.localStorage.setItem("vsStyle", "");
         }
             if(!window.localStorage.getItem("vsStyle") == null || !window.localStorage.getItem("vsStyle") == "" || navigator.userAgentData.mobile) {
@@ -2300,7 +2566,7 @@ document.getElementById("editor").style.width = window.innerWidth + "px"
   bgimage.onclick = function () {
     if (!window.localStorage.getItem("BGImage") == "") {
       document.getElementById("bgimage").innerHTML =
-        "Custom Background Image: Off";
+        "Off";
       window.localStorage.setItem("BGImage", "");
       document.body.style.backgroundImage = "url(``)";
     } else {
@@ -2325,7 +2591,7 @@ document.getElementById("editor").style.width = window.innerWidth + "px"
             +")";
             window.localStorage.setItem("BGImage", reader.result);
             document.getElementById("bgimage").innerHTML =
-              "Custom Background Image: On";
+              "On";
           },
           false
         );
@@ -2354,13 +2620,13 @@ document.getElementById("editor").style.width = window.innerWidth + "px"
 
       document.getElementById("GoHome2").style.backgroundColor = "#424242";
       
+          document.getElementById("BGImageURL").style.backgroundColor = "#424242";
+      
       document.getElementById("smos").style.backgroundColor = "#424242";
 
       document.getElementById("open").style.backgroundColor = "#424242";
       
             document.getElementById("credits").style.backgroundColor = "#424242";
-    
-    document.getElementById("e").style.color = "white";
         
         document.getElementById("no_project").style.color = "white";
         
@@ -2393,22 +2659,14 @@ document.getElementById("editor").style.width = window.innerWidth + "px"
         
         document.getElementById("dismisss").style.backgroundColor = "#424242";
 
-      document.getElementById("theme").innerHTML = "Dark Theme: On";
+      document.getElementById("theme").innerHTML = "On";
+      
+       document.getElementById("challange").style.color = "white";
 
-      document.getElementById("siteSettings").style.color = "white";
-
-      document.getElementById("challange").style.color = "white";
-
-      document.getElementById("refrence").style.color = "white";
       document.getElementById("loading").style.borderTop = "8px solid #424242";
 
       document.getElementById("logo").src =
         "https://media.discordapp.net/attachments/898978597996466189/911561074178949150/Untitled116.png";
-        
-              document.getElementById("project").style.color = "white";
-      document.getElementById("projectIcon").style.backgroundColor = "#424242";
-        
-        document.getElementById("delete").style.backgroundColor = "#ad0e0e";
         
         document.getElementById("yt").style.backgroundColor = "#424242";
       document.getElementById("twitter").style.backgroundColor = "#424242";
@@ -2431,12 +2689,12 @@ document.getElementById("editor").style.width = window.innerWidth + "px"
       document.getElementById("twitter").style.backgroundColor = "#008dcd";
       
       document.getElementById("credits").style.backgroundColor = "#008dcd";
-    
-    document.getElementById("e").style.color = "#008dcd";
       
       document.getElementById("smos").style.backgroundColor = "#008dcd";
       
       document.getElementById("header").style.backgroundColor = "#008dcd";
+      
+          document.getElementById("BGImageURL").style.backgroundColor = "#008dcd";
         
         document.getElementById("ssetings").style.backgroundColor = "#008dcd";
         
@@ -2471,23 +2729,16 @@ document.getElementById("editor").style.width = window.innerWidth + "px"
       document.getElementById("bgimage").style.backgroundColor = "#008dcd";
       document.getElementById("theme").style.backgroundColor = "#008dcd";
 
-      document.getElementById("theme").innerHTML = "Dark Theme: Off";
-
-      document.getElementById("siteSettings").style.color = "#008dcd";
+      document.getElementById("theme").innerHTML = "Off";
 
       document.getElementById("challange").style.color = "#008dcd";
-
-      document.getElementById("refrence").style.color = "#008dcd";
+      
       document.getElementById("settings").style.backgroundColor = "#008dcd";
       document.getElementById("reset").style.backgroundColor = "#008dcd";
       document.getElementById("logo").src =
         "https://media.discordapp.net/attachments/898978597996466189/909471139921793044/Untitled183_20210624211409.png";
 
       document.getElementById("loading").style.borderTop = "8px solid #008dcd";
-        
-              document.getElementById("project").style.color = "#008dcd";
-      document.getElementById("projectIcon").style.backgroundColor = "#008dcd";
-        document.getElementById("delete").style.backgroundColor = "#fc0303";
     }
   };
     
@@ -2495,10 +2746,10 @@ document.getElementById("editor").style.width = window.innerWidth + "px"
     snap.onclick = function () {
         if (window.localStorage.getItem("snap") == "false" || window.localStorage.getItem("snap") == null ) {
             window.localStorage.setItem("snap", true);
-            snap.innerHTML = "Snap To Place: On"
+            snap.innerHTML = "On"
         } else {
             window.localStorage.setItem("snap", "false");
-            snap.innerHTML = "Snap To Place: Off"
+            snap.innerHTML = "Off"
         }
         window.location.reload();
     }
@@ -2507,10 +2758,10 @@ document.getElementById("editor").style.width = window.innerWidth + "px"
     grid.onclick = function () {
         if (window.localStorage.getItem("grid") == 0 || window.localStorage.getItem("grid") == null) {
             window.localStorage.setItem("grid", 40);
-            grid.innerHTML = "Grid: On"
+            grid.innerHTML = "On"
         } else {
             window.localStorage.setItem("grid", 0);
-            grid.innerHTML = "Grid: Off"
+            grid.innerHTML = "Off"
         }
         window.location.reload();
     }
@@ -2518,7 +2769,7 @@ document.getElementById("editor").style.width = window.innerWidth + "px"
     var smos = document.getElementById("smos");
     smos.onclick = function () {
     if(window.localStorage.getItem("smos") == null || window.localStorage.getItem("smos") == "") {
-    smos.innerHTML = "Show menu on start-up: On"
+    smos.innerHTML = "On"
     window.localStorage.setItem("smos", true);
     
 icon = 0
@@ -2526,7 +2777,7 @@ icon = 0
     "url(Images/round_close_white_24dp.png)";
         document.getElementById("menuItems").style.display = "block";
     } else {
-    smos.innerHTML = "Show menu on start-up: Off"
+    smos.innerHTML = "Off"
     window.localStorage.setItem("smos", "");
     
             icon = 1
@@ -2587,13 +2838,6 @@ icon = 0
               document.getElementById("blocklyContainer").style.display = "block";
     document.getElementById("Settings").style.display = "none";
           
-                  document.getElementById("project").style.display = "none";
-        document.getElementById("projectName").style.display = "none";
-        document.getElementById("projectdes").style.display = "none";
-        document.getElementById("projecttag").style.display = "none";
-        document.getElementById("projectIcon").style.display = "none";
-          document.getElementById("delete").style.display = "none";
-          
                         document.getElementById("ssetings").style.display = "block";
     document.getElementById("GoHome2").style.display = "block";
         document.getElementById("download").style.display = "block";
@@ -2639,92 +2883,26 @@ icon = 0
   open.onclick = function () {
     if (window.localStorage.getItem("open") == "") {
       document.getElementById("open").innerHTML =
-      "Open editor after new project has been created: On";
+      "On";
       window.localStorage.setItem("open", true);
     } else {
       document.getElementById("open").innerHTML =
-      "Open editor after new project has been created: Off";
+      "Off";
       window.localStorage.setItem("open", "");
     }
   }
-    
-    var rename = document.getElementById("projectName");
-    rename.addEventListener("input", e => {
-        window.localStorage.setItem("projectName" + project, document.getElementById("projectName").value);
-        document.getElementById("Title" + project).innerHTML = document.getElementById("projectName").value
-        document.getElementById("project").innerHTML = document.getElementById("projectName").value
-    });
-    
-        var tag = document.getElementById("projecttag");
-    tag.addEventListener("input", e => {
-        window.localStorage.setItem("projecttag" + project, document.getElementById("projecttag").value);
-    });
-    
-        var des = document.getElementById("projectdes");
-    des.addEventListener("input", e => {
-        window.localStorage.setItem("projectdes" + project, document.getElementById("projectdes").value);
-    });
-    
-    var changeFav = document.getElementById("projectIcon");
-    changeFav.onclick = function () {
-         let input = document.createElement("input");
-    input.type = "file";
-    input.onchange = (_) => {
-      input.accept = "image/*";
-      // you can use this method to get file and perform respective operations
-      var files = Array.from(input.files);
-      console.log(files);
-      for (let i = 0; i < files.length; i++) {
-        reader.addEventListener(
-          "load",
-          function () {
-              window.localStorage.setItem("icon" + project, reader.result);
-              document.getElementById("icon" + project).src = reader.result
-          },
-          false
-        );
-        reader.readAsDataURL(files[i]);
-      }
-    };
-    input.click();
-    }
-    
-    var del = document.getElementById("delete");
-    del.onclick = function () {
-        if(confirm("Delete Project?")) {
-            var p = projects.indexOf(project);
-            projects.splice(p, 1);
-            window.localStorage.setItem("projects", JSON.stringify(projects));
-            
-                        var d = document.getElementById(project);
-            d.remove();
-            
-                          document.getElementById("home").style.display = "block";
-    document.getElementById("Settings").style.display = "none";
-          
-                  document.getElementById("project").style.display = "none";
-        document.getElementById("projectName").style.display = "none";
-        document.getElementById("projectIcon").style.display = "none";
-          document.getElementById("delete").style.display = "none";
-            
-                        if(projects.length == 0 ) {
-                            document.getElementById("no_project").style.display = "block";
-    } else {
-    }
-        }
-    }
 }
 settings();
 
 function setBGImage() {
   if (window.localStorage.getItem("BGImage") == "" || window.localStorage.getItem("BGImage") == null) {
     document.getElementById("bgimage").innerHTML =
-      "Custom Background Image: Off";
+      "Off";
   } else {
     document.body.style.backgroundImage =
       "url(" + window.localStorage.getItem("BGImage") + ")";
     document.getElementById("bgimage").innerHTML =
-      "Custom Background Image: On";
+      "On";
   }
 }
 
@@ -2763,27 +2941,24 @@ function Dtheme() {
     document.getElementById("settings").style.backgroundColor = "#424242";
     
     document.getElementById("open").style.backgroundColor = "#424242";
-    
-    document.getElementById("e").style.color = "white";
 
     document.getElementById("BGImage").style.backgroundColor = "#424242";
+    document.getElementById("BGImageURL").style.backgroundColor = "#424242";
     
     document.getElementById("dismisss").style.backgroundColor = "#424242";
 
     document.getElementById("bgimage").style.backgroundColor = "#424242";
 
     document.getElementById("theme").style.backgroundColor = "#424242";
+    
+    document.getElementById("dropdownMenu2").style.backgroundColor = "#424242";
 
     document.getElementById("share").style.backgroundColor = "#424242";
 
-    document.getElementById("theme").innerHTML = "Dark Theme: On";
+    document.getElementById("theme").innerHTML = "On";
 
 document.getElementById("smos").style.backgroundColor = "#424242";
 
-    document.getElementById("siteSettings").style.color = "white";
-      
-      document.getElementById("project").style.color = "white";
-      document.getElementById("projectIcon").style.backgroundColor = "#424242";
       
       document.getElementById("dropdownMenu").style.backgroundColor = "#424242";
       
@@ -2793,50 +2968,52 @@ document.getElementById("smos").style.backgroundColor = "#424242";
                   document.getElementById("pick").style.backgroundColor = "#424242";
       document.getElementById("cc").style.backgroundColor = "#424242";
 
-    document.getElementById("refrence").style.color = "white";
     document.getElementById("challange").style.color = "white";
 
     document.getElementById("loading").style.borderTop = "8px solid #424242";
 
     document.getElementById("logo").src =
       "Images/Untitled116-1.png";
-      
-      document.getElementById("delete").style.backgroundColor = "#ad0e0e";
 
     document.getElementById("reset").style.backgroundColor = "#424242";
       
       document.getElementById("menu").style.backgroundColor = "#424242";
       document.getElementById("menuItems").style.backgroundColor = "#424242";
   } else {
-      document.getElementById("delete").style.backgroundColor = "#fc0303";
   }
 }
 Dtheme();
 
 //BGImage from URL
 function BGIfURL() {
-  document.getElementById("BGImageURL").addEventListener("input", updateValue);
-  function updateValue(e) {
-    document.body.style.backgroundImage =
-      "url(" + document.getElementById("BGImageURL").value + ")";
+  document.getElementById("BGImageURL").onclick = function () {
+  var img = prompt('Set Background Image From URL');
+  if(!img == null || !img == '') {
+      document.body.style.backgroundImage =
+      "url(" + img + ")";
     window.localStorage.setItem(
       "BGImage",
-      document.getElementById("BGImageURL").value
+      img
     );
     document.getElementById("bgimage").innerHTML =
-      "Custom Background Image: On";
+      "On";
+      }
   }
 }
 BGIfURL();
 
-var x, y
-
-window.addEventListener('mousemove', e => {
-x = e.x;
-y = e.y;
-});
-
 function editor() {
+
+document.getElementById('Psettings').onclick = function (e) {
+e.stopPropagation();
+editProject(String(window.innerWidth - 355) + 'px',t == 0 ? '102px' : '51px', project);
+}
+
+document.getElementById('adddd').onclick = function (e) {
+e.stopPropagation();
+createContextMenuI(String(window.innerWidth - 221) + 'px', t == 0 ? '102px' : '51px', ["Iframe", "Div",'Image','Paragraph','Button','DropDownButton','ColorPicker','DatePicker','TimePicker','TextField','Canvas','Slider','ProgressBar','CheckBox','RadioButton','LoadingIcon','FAB','UnorderedList','OrderedList','HyperLink','LottiePlayer','FileViewer']);
+}
+
 var t = 0
 var f = document.getElementById('fullscreen');
 f.onclick = function (e) {
@@ -2876,7 +3053,7 @@ e.onclick = function () {
 createContextMenuI(String(x) + "px", String(y) + "px", ["Edit Element", "Add New Element"]);
 document.getElementById('1').onclick = function () {
 window.setTimeout(function () {
-createContextMenuI(String(x) + "px", String(y) + "px", ["Iframe", "Div", 'Image', 'Paragraph', 'Button', 'DropDownButton', 'ColorPicker', 'TimePicker', 'DatePicker', 'TextField', 'Canvas', 'Slider', 'ProgressBar', 'CheckBox', 'RadioButton', 'LoadingIcon', 'FAB', 'UnorderedList', 'OrderedList', 'HyperLink', 'LottiePlayer']);
+document.getElementById('adddd').click();
 }, 0);
 }
 document.getElementById('0').onclick = function () {
@@ -2898,6 +3075,22 @@ document.getElementById('0').onclick = function () {
     }
   var goHome = document.getElementById("GoHome2");
 goHome.onclick = function () {
+
+document.getElementById("blocklyContainer").style.height = (String((window.innerHeight) - 50) + 'px');
+document.getElementById("editor").style.height = (String((window.innerHeight) - 50) + 'px');
+
+document.getElementById('blocklyContainer').style.transform = 'translateY(50px)'
+
+if(!window.localStorage.getItem("vsStyle") == null || !window.localStorage.getItem("vsStyle") == "" || navigator.userAgentData.mobile) {
+document.getElementById("editor").style.width = window.innerWidth + "px"
+        } else {
+            document.getElementById("editor").style.width = "350px"
+        }
+
+document.getElementById("fullscreen").style.backgroundImage =
+    "url(Images/outline_fullscreen_white_24dp.png)";
+    document.getElementById('header').style.display = 'block'
+    t = 0
         
     document.getElementById("menuItems").style.height = "170px";
     
@@ -2920,6 +3113,7 @@ goHome.onclick = function () {
 };
   var test = document.getElementById("Test");
   test.onclick = function () {
+  window.sessionStorage.setItem('rl' , 'test');
      if(!getWarnings().length == 0) {
           if(confirm('WARNING: there are ' + getWarnings().length + ' warnings found.\nAre you sure you want to coninue testing?\nTesting with warnings may break your project.')) {
     var w = window.open();
@@ -2938,6 +3132,7 @@ w.document.open();
   d.onclick = function () {
   createContextMenu(String(parseInt(d.style.right.replace("px", "")) + 66) + "px",d.style.bottom, ["Download Project HTML", "Download Project XML"]);
   document.getElementById("0").onclick = function () {
+    window.sessionStorage.setItem('rl' , 'html');
   downloadHTML();
   }
   document.getElementById("1").onclick = function () { 
@@ -2947,20 +3142,24 @@ w.document.open();
     
     var se = document.getElementById("ssetings");
     se.onclick = function () {
+    document.getElementById("blocklyContainer").style.height = (String((window.innerHeight) - 50) + 'px');
+document.getElementById("editor").style.height = (String((window.innerHeight) - 50) + 'px');
+
+document.getElementById('blocklyContainer').style.transform = 'translateY(50px)'
+
+if(!window.localStorage.getItem("vsStyle") == null || !window.localStorage.getItem("vsStyle") == "" || navigator.userAgentData.mobile) {
+document.getElementById("editor").style.width = window.innerWidth + "px"
+        } else {
+            document.getElementById("editor").style.width = "350px"
+        }
+
+document.getElementById("fullscreen").style.backgroundImage =
+    "url(Images/outline_fullscreen_white_24dp.png)";
+    document.getElementById('header').style.display = 'block'
+    t = 0
+    
             document.getElementById("blocklyContainer").style.display = "none";
     document.getElementById("Settings").style.display = "block";
-        
-        document.getElementById("project").style.display = "block";
-        document.getElementById("projectName").style.display = "block";
-        document.getElementById("projectdes").style.display = "block";
-        document.getElementById("projecttag").style.display = "block";
-        document.getElementById("projectIcon").style.display = "block";
-        document.getElementById("delete").style.display = "block";
-        
-        document.getElementById("project").innerHTML = window.localStorage.getItem("projectName" + project)
-        document.getElementById("projectName").value = window.localStorage.getItem("projectName" + project)
-        document.getElementById("projecttag").value = window.localStorage.getItem("projecttag" + project)
-        document.getElementById("projectdes").value = window.localStorage.getItem("projectdes" + project)
         
                       document.getElementById("ssetings").style.display = "none";
     document.getElementById("GoHome2").style.display = "none";
@@ -2986,24 +3185,28 @@ editor();
 function downloadXML () {
 var dom = Blockly.Xml.workspaceToDom(workspace);
 var t = Blockly.Xml.domToText(dom);
+
+t = '<!--Name-->' + window.localStorage.getItem("projectName" + project) + '<!--ownerTag-->' + window.localStorage.getItem("projecttag" + project) + '<!--Description-->' + window.localStorage.getItem("projectdes" + project) + '<!--Block XML File-->' + t
+
 download(window.localStorage.getItem("projectName" + project) + ".xml", t);
 }
 
 if (window.localStorage.getItem("grid") == 0 || window.localStorage.getItem("grid") == null ) {
 } else {
-    document.getElementById("grid").innerHTML = "Grid: On"
+    document.getElementById("grid").innerHTML = "On"
 }
 
 if (window.localStorage.getItem("snap") == "false" || window.localStorage.getItem("snap") == null ) {
 } else {
-    document.getElementById("snap").innerHTML = "Snap To Place: On"
+    document.getElementById("snap").innerHTML = "On"
 }
 
         if(!window.localStorage.getItem("vsStyle") == null || !window.localStorage.getItem("vsStyle") == "" || navigator.userAgentData.mobile) {
-            document.getElementById("vsStyle").innerHTML = "Use Fullscreen Visual Editor: On"
+            document.getElementById("vsStyle").innerHTML = "On"
         } else {
-            document.getElementById("vsStyle").innerHTML = "Use Fullscreen Visual Editor: Off"
+            document.getElementById("vsStyle").innerHTML = "Off"
         }
+        
 
 //context menu
 function configureContextMenu(menuOptions) {
@@ -3252,10 +3455,10 @@ download(window.localStorage.getItem("projectName" + project) + ".html", html() 
 function open () {
   if (!window.localStorage.getItem("open") == "" || window.localStorage.getItem("open") == null) {
       document.getElementById("open").innerHTML =
-      "Open editor after new project has been created: On";
+      "On";
     } else {
       document.getElementById("open").innerHTML =
-      "Open editor after new project has been created: Off";
+      "Off";
     }
   }
 open();
@@ -3296,6 +3499,7 @@ workspace.addChangeListener(save);
              if(window.sessionStorage.getItem('o') == 'ii') {
              document.getElementById("assetFolder").style.display = "block";
              }
+             window.sessionStorage.setItem('as', files[i].name);
              
     
         var p = document.createElement("p");
@@ -3406,6 +3610,31 @@ workspace.addChangeListener(save);
     input.click();
   };
 
+// disable blocks with warnings
+
+var dis = [];
+
+function disable () {
+var blocks = getWarnings();
+
+for(var i of dis) {
+if(i) {
+i.setEnabled(true);
+}
+}
+
+for(var i of blocks) {
+console.log(i['block_']['id']);
+if(workspace.getBlockById(i['block_']['id']).warning) {
+workspace.getBlockById(i['block_']['id']).setEnabled(false);
+dis.push(workspace.getBlockById(i['block_']['id']));
+}
+
+}
+}
+
+workspace.addChangeListener(disable);
+
 //get warnings
 
 function getWarnings() {
@@ -3470,9 +3699,18 @@ function loop_errors () {
     var blocks = workspace.getAllBlocks();
     for (var i of blocks) {
     if ( i.type == "break_and_continue") {
+    let b = i
+    for(var e of blocks) {
+    if(loops.includes(b.type)) {
+    i.setWarningText(null);
+    } else {
+    i.setWarningText('This block can only be placed inside of a loop');
+    b = b.getParent();
+    }
+    }
     } else if (i.type == "clearint") {
     
-    } else if (i.type == "play_pause") {
+    } else if (i.type == "play_pause" || i.type == "fullscreen" || i.type =='open_window') {
     if(i.getRootBlock().type == "create_listener") {
     i.setWarningText(null);
     } else {
@@ -3511,6 +3749,41 @@ function getVariableName(name) {
   }
 }
 
+// custom warning icon
+
+// get element variables
+
+FieldLexicalVariable.getGlobalNames = function(optExcludedBlock) {
+  // TODO: Maybe switch to injectable warning/error handling
+  if (Instrument.useLynCacheGlobalNames && Blockly.getMainWorkspace() &&
+      Blockly.getMainWorkspace().getWarningHandler &&
+      Blockly.getMainWorkspace().getWarningHandler().cacheGlobalNames) {
+    return Blockly.getMainWorkspace().getWarningHandler().cachedGlobalNames;
+  }
+  const globals = [];
+  if (Blockly.getMainWorkspace()) {
+    let blocks = [];
+    if (Instrument.useLynGetGlobalNamesFix) {
+      // [lyn, 04/13/14] Only need top blocks, not all blocks!
+      blocks = Blockly.getMainWorkspace().getBlocksByType('global_declaration');
+      blocks = blocks.concat(Blockly.getMainWorkspace().getBlocksByType('create_elem'));
+      blocks = blocks.concat(Blockly.getMainWorkspace().getBlocksByType('set_timeout'));
+      blocks = blocks.concat(Blockly.getMainWorkspace().getBlocksByType('rnaf'));
+    } else {
+      // [lyn, 11/10/12] Is there a better way to get workspace?
+      blocks = Blockly.getMainWorkspace().getAllBlocks();
+    }
+    for (let i = 0; i < blocks.length; i++) {
+      const block = blocks[i];
+      if ((block.getGlobalNames) &&
+          (block != optExcludedBlock)) {
+        globals.push(...block.getGlobalNames());
+      }
+    }
+    globals.push('body');
+  }
+  return globals;
+};
 
 // define blocks
 
@@ -3632,7 +3905,7 @@ Blockly.Blocks['eval'] = {
         .setCheck(null);
     this.setInputsInline(true);
     this.setOutput(true, null);
-    this.setColour("#45B4A9");
+    this.setColour(Blockly.LOGIC_CATEGORY_HUE);
  this.setTooltip("Returns true when the inputs are equals, greater or smaller from each other");
  this.setHelpUrl("");
   }
@@ -3647,7 +3920,7 @@ Blockly.Blocks['eval'] = {
         .setCheck(null);
     this.setInputsInline(true);
     this.setOutput(true, null);
-    this.setColour("#45B4A9");
+    this.setColour(Blockly.LOGIC_CATEGORY_HUE);
  this.setTooltip("Returns true when either one or both inputs return true");
  this.setHelpUrl("");
   }
@@ -3658,7 +3931,7 @@ Blockly.Blocks['eval'] = {
         .setCheck(null)
         .appendField("not");
     this.setOutput(true, null);
-    this.setColour("#45B4A9");
+    this.setColour(Blockly.LOGIC_CATEGORY_HUE);
  this.setTooltip("Returns true if the input is false, returns false if the input is true");
  this.setHelpUrl("");
   }
@@ -3668,7 +3941,7 @@ Blockly.Blocks['eval'] = {
     this.appendDummyInput()
         .appendField(new Blockly.FieldDropdown([["true","true"], ["false","false"]]), "NAME");
     this.setOutput(true, "Boolean");
-    this.setColour("#45B4A9");
+    this.setColour(Blockly.LOGIC_CATEGORY_HUE);
  this.setTooltip("Returns either true or false");
  this.setHelpUrl("");
   }
@@ -3678,7 +3951,7 @@ Blockly.Blocks['eval'] = {
     this.appendDummyInput()
         .appendField("null");
     this.setOutput(true, null);
-    this.setColour("#45B4A9");
+    this.setColour(Blockly.LOGIC_CATEGORY_HUE);
  this.setTooltip("Returns null");
  this.setHelpUrl("");
   }
@@ -3690,7 +3963,7 @@ Blockly.Blocks['clearint'] = {
         .setCheck(null)
         .appendField(new Blockly.FieldDropdown([["clearTimeout","ct"], ["cancelAnimationFrame","caf"]]), "NAME");
     this.setPreviousStatement(true, null);
-    this.setColour("#F3AA44");
+    this.setColour(Blockly.CONTROL_CATEGORY_HUE);
  this.setTooltip("Stop the current timeout or animation frame requests");
  this.setHelpUrl("");
   }
@@ -3709,68 +3982,33 @@ Blockly.Blocks['set_timeout'] = {
         .appendField("loops")
       .setAlign(Blockly.ALIGN_RIGHT);
     this.appendDummyInput()
-        .appendField(
-            new FieldParameterFlydown('TimeoutID', true, FieldFlydown.DISPLAY_BELOW),
-            'timeout');
+        .appendField(new FieldGlobalFlydown(
+           'TimeoutID', Blockly.Msg.LANG_VARIABLES_GLOBAL_DECLARATION_NAME,
+            FieldFlydown.DISPLAY_BELOW), 'timeout')
     this.appendStatementInput("s")
         .setCheck(null)
         .appendField("do");
       this.setInputsInline(false);
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour("#F3AA44");
+    this.setColour(Blockly.CONTROL_CATEGORY_HUE);
  this.setTooltip("Wait the specified amount of time before performing the next action.");
  this.setHelpUrl("");
   },
-  withLexicalVarsAndPrefix: function(child, proc) {
-            if (this.getInputTargetBlock('s') === child) {
-                const params = this.declaredNames();
-                // not arguments_ instance var
-                for (let i = 0; i < params.length; i++) {
-                    proc(params[i], '');
-                }
-            }
-        },
   getVars: function() {
-    return [
-      this.getFieldValue('timeout'),
-    ];
+    const field = this.getField('timeout');
+    return field ? [field.getText()] : [];
   },
-  blocksInScope: function() {
-    const doBlock = this.getInputTargetBlock('s');
-    if (doBlock) {
-      return [doBlock];
-    } else {
-      return [];
-    }
-  },
-  declaredNames: function() {
-    return [
-      this.getFieldValue('timeout'),
-    ];
+  getGlobalNames: function() {
+    return this.getVars();
   },
   renameVar: function(oldName, newName) {
     if (Blockly.Names.equals(oldName, this.getFieldValue('timeout'))) {
       this.setFieldValue(newName, 'timeout');
     }
   },
-  renameBound: function(boundSubstitution, freeSubstitution) {
-    const paramSubstitution = boundSubstitution.restrictDomain(
-        this.declaredNames());
-    this.renameVars(paramSubstitution);
-    const newFreeSubstitution = freeSubstitution.extend(paramSubstitution);
-    LexicalVariable.renameFree(
-        this.getInputTargetBlock(this.bodyInputName), newFreeSubstitution);
-  },
-  renameFree: function(freeSubstitution) {
-    // There shouldn't be any free variables
-  },
-  freeVariables: function() { // return the free variables of this block
-    // There shouldn't be any free variables, so this should return an empty set.
-    // Should return the empty set: something is wrong if it doesn't!
-    return new Blockly.NameSet();
-  }
 };
+
                 Blockly.Blocks['open_window'] = {
   init: function() {
     this.appendValueInput("NAME")
@@ -3781,7 +4019,7 @@ Blockly.Blocks['set_timeout'] = {
         .appendField(new Blockly.FieldDropdown([["InNewTab","int"], ["InCurrentTab","ict"]]), "t");
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour("#F3AA44");
+    this.setColour(Blockly.COMPONENTS_CATEGORY_HUE);
  this.setTooltip("Open a link in a new tab or current tab");
  this.setHelpUrl("");
   }
@@ -3797,7 +4035,7 @@ Blockly.Blocks['custom_events'] = {
     this.appendStatementInput("NAME")
         .setCheck(null)
         .appendField("do");
-    this.setColour("#F3AA44");
+    this.setColour(Blockly.EVENTS_CATEGORY_HUE);
     this.setInputsInline(true);
  this.setTooltip("Do some statements when the given event fires");
  this.setHelpUrl("");
@@ -3818,7 +4056,7 @@ Blockly.Blocks['custom_events'] = {
     this.appendStatementInput("NAME")
         .setCheck(null)
         .appendField("do");
-    this.setColour("#F3AA44");
+    this.setColour(Blockly.EVENTS_CATEGORY_HUE);
     this.setInputsInline(true);
  this.setTooltip("Do some statements when a key on the keyboard is pressed");
  this.setHelpUrl("");
@@ -3900,7 +4138,7 @@ Blockly.Blocks['custom_events'] = {
     this.appendStatementInput("NAME")
         .setCheck(null)
         .appendField("do");
-    this.setColour("#F3AA44");
+    this.setColour(Blockly.EVENTS_CATEGORY_HUE);
     this.setInputsInline(true);
  this.setTooltip("Do some statements when the mouse changed");
  this.setHelpUrl("");
@@ -3982,27 +4220,10 @@ Blockly.Blocks['custom_events'] = {
     this.appendStatementInput("NAME")
         .setCheck(null)
         .appendField("do");
-    this.setColour("#F3AA44");
+    this.setColour(Blockly.EVENTS_CATEGORY_HUE);
     this.setInputsInline(true);
  this.setTooltip("Do some statements when the page finished loading.");
  this.setHelpUrl("https://app.gitbook.com/s/AR1GoZvc2Hq3eaRFIOdL/events#load-event");
-  }
-};
-
-Blockly.Blocks['change_d_var'] = {
-  init: function() {
-    this.appendValueInput("s")
-        .setCheck("String")
-        .appendField("change dynamic");
-    this.appendValueInput("t")
-        .setCheck("Number")
-        .appendField("by");
-    this.setInputsInline(true);
-    this.setPreviousStatement(true, null);
-    this.setNextStatement(true, null);
-    this.setColour(330);
- this.setTooltip("Change a dynamic variable by the given value");
- this.setHelpUrl("");
   }
 };
         
@@ -4070,35 +4291,6 @@ this.errors = [
     return result;
   }
 };
-        
-Blockly.Blocks['create_dynamic_var'] = {
-  init: function() {
-    this.appendValueInput("s")
-        .setCheck("String")
-        .appendField("set dynamic");
-    this.appendValueInput("t")
-        .setCheck(null)
-        .appendField("to");
-    this.setInputsInline(true);
-    this.setPreviousStatement(true, null);
-    this.setNextStatement(true, null);
-    this.setColour("#CD5E94");
- this.setTooltip("changes a dynamic variable to the given value(creates one when it doesn't exist)");
- this.setHelpUrl("");
-  }
-};
-        
-        Blockly.Blocks['get_d_var'] = {
-  init: function() {
-    this.appendValueInput("g")
-        .setCheck("String")
-        .appendField("get");
-    this.setOutput(true, null);
-    this.setColour("#CD5E94");
- this.setTooltip("Returns the value of a dynamic variable");
- this.setHelpUrl("");
-  }
-};
 
 Blockly.Blocks['import'] = {
   init: function() {
@@ -4119,67 +4311,32 @@ Blockly.Blocks['rnaf'] = {
         .appendField("call")
         .appendField(new Blockly.FieldDropdown([[window.localStorage.getItem("projectName" + project),"OPTIONNAME"]]), "NAME")
         .appendField(".requestAnimationFrame")
-      .appendField(
-                  new FieldParameterFlydown('AnimationId', true, FieldFlydown.DISPLAY_BELOW),
-            'id');
-    this.appendStatementInput("NAME")
+.appendField(new FieldGlobalFlydown(
+           'AnimationId', Blockly.Msg.LANG_VARIABLES_GLOBAL_DECLARATION_NAME,
+            FieldFlydown.DISPLAY_BELOW), 'id');
+            this.appendStatementInput("NAME")
         .setCheck(null)
         .appendField("do");
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour("#F3AA44");
+    this.setColour(Blockly.CONTROL_CATEGORY_HUE);
  this.setTooltip("Do some statements when a Animation Frame Iis requested");
  this.setHelpUrl("");
   },
-  withLexicalVarsAndPrefix: function(child, proc) {
-            if (this.getInputTargetBlock('NAME') === child) {
-                const params = this.declaredNames();
-                // not arguments_ instance var
-                for (let i = 0; i < params.length; i++) {
-                    proc(params[i], '');
-                }
-            }
-        },
   getVars: function() {
-    return [
-      this.getFieldValue('id'),
-    ];
+    const field = this.getField('id');
+    return field ? [field.getText()] : [];
   },
-  blocksInScope: function() {
-    const doBlock = this.getInputTargetBlock('NAME');
-    if (doBlock) {
-      return [doBlock];
-    } else {
-      return [];
-    }
-  },
-  declaredNames: function() {
-    return [
-      this.getFieldValue('id'),
-    ];
+  getGlobalNames: function() {
+    return this.getVars();
   },
   renameVar: function(oldName, newName) {
     if (Blockly.Names.equals(oldName, this.getFieldValue('id'))) {
       this.setFieldValue(newName, 'id');
     }
   },
-  renameBound: function(boundSubstitution, freeSubstitution) {
-    const paramSubstitution = boundSubstitution.restrictDomain(
-        this.declaredNames());
-    this.renameVars(paramSubstitution);
-    const newFreeSubstitution = freeSubstitution.extend(paramSubstitution);
-    LexicalVariable.renameFree(
-        this.getInputTargetBlock(this.bodyInputName), newFreeSubstitution);
-  },
-  renameFree: function(freeSubstitution) {
-    // There shouldn't be any free variables
-  },
-  freeVariables: function() { // return the free variables of this block
-    // There shouldn't be any free variables, so this should return an empty set.
-    // Should return the empty set: something is wrong if it doesn't!
-    return new Blockly.NameSet();
-  }
 };
+
 
 Blockly.Blocks['game_pad_connected'] = {
   init: function() {
@@ -4193,7 +4350,7 @@ Blockly.Blocks['game_pad_connected'] = {
     this.appendStatementInput("NAME")
         .setCheck(null)
         .appendField("do");
-    this.setColour("#F3AA44");
+    this.setColour(Blockly.EVENTS_CATEGORY_HUE);
     this.setInputsInline(true);
  this.setTooltip("Do some statements when a controler has been connected");
  this.setHelpUrl("");
@@ -4255,7 +4412,7 @@ Blockly.Blocks['game_pad_disconnected'] = {
     this.appendStatementInput("NAME")
         .setCheck(null)
         .appendField("do");
-    this.setColour("#F3AA44");
+    this.setColour(Blockly.EVENTS_CATEGORY_HUE);
     this.setInputsInline(true);
  this.setTooltip("Do some statements when a controler has been disconnected");
  this.setHelpUrl("");
@@ -4280,7 +4437,7 @@ Blockly.Blocks['game_pad_button_change'] = {
     this.appendStatementInput("NAME")
         .setCheck(null)
         .appendField("do");
-    this.setColour("#F3AA44");
+    this.setColour(Blockly.EVENTS_CATEGORY_HUE);
     this.setInputsInline(true);
  this.setTooltip("Do some statements when a button on the controller is pressed");
  this.setHelpUrl("");
@@ -4349,68 +4506,32 @@ Blockly.Blocks['create_elem'] = {
         .appendField("call")
         .appendField(new Blockly.FieldDropdown([[window.localStorage.getItem("projectName" + project),"OPTIONNAME"]]), "NAME")
         .appendField(".createNew")
-        .appendField(new Blockly.FieldDropdown([["Iframe","if"], ["Div","d"], ["Image","i"], ["Paragraph","p"], ["Button","b"], ["DropDownButton","ddb"], ["ColorPicker","cp"], ["DatePicker","dp"], ["TimePicker","tp"], ["TextField","tf2"], ["Canvas","c"], ["Slider","s"], ["ProgressBar","pb"], ["Checkbox","cb"], ["RadioButton","rb"], ["LoadignIcon","li"], ["FAB", "fab"], ["UnorderedList", "ul"], ["OrderedList", "ol"], ["HyperLink", "a"],['LottiePlayer', 'lp'],['FileViewer', 'fv']]), "e")
+        .appendField(new Blockly.FieldDropdown([["Iframe","if"], ["Div","d"], ["Image","i"], ["Paragraph","p"], ["Button","b"], ["DropDownButton","ddb"], ["ColorPicker","cp"], ["DatePicker","dp"], ["TimePicker","tp"], ["TextField","tf2"], ["Canvas","c"], ["Slider","s"], ["ProgressBar","pb"], ["CheckBox","cb"], ["RadioButton","rb"], ["LoadignIcon","li"], ["FAB", "fab"], ["UnorderedList", "ul"], ["OrderedList", "ol"], ["HyperLink", "a"],['LottiePlayer', 'lp'],['FileViewer', 'fv']]), "e")
         .appendField("Element")
-      .appendField(
-                  new FieldParameterFlydown('ElementId', true, FieldFlydown.DISPLAY_BELOW),
-            'eid');
+      .appendField(new FieldGlobalFlydown(
+           'ElementId', Blockly.Msg.LANG_VARIABLES_GLOBAL_DECLARATION_NAME,
+            FieldFlydown.DISPLAY_BELOW), 'eid')
     this.appendStatementInput("NAME")
         .setCheck(null)
         .appendField("do");
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour(210);
+    this.setColour(Blockly.ELEMENTS_CATEGORY_HUE);
  this.setTooltip("Creatte a new element");
  this.setHelpUrl("");
   },
-  withLexicalVarsAndPrefix: function(child, proc) {
-            if (this.getInputTargetBlock('NAME') === child) {
-                const params = this.declaredNames();
-                // not arguments_ instance var
-                for (let i = 0; i < params.length; i++) {
-                    proc(params[i], '');
-                }
-            }
-        },
   getVars: function() {
-    return [
-      this.getFieldValue('eid'),
-    ];
+    const field = this.getField('eid');
+    return field ? [field.getText()] : [];
   },
-  blocksInScope: function() {
-    const doBlock = this.getInputTargetBlock('NAME');
-    if (doBlock) {
-      return [doBlock];
-    } else {
-      return [];
-    }
-  },
-  declaredNames: function() {
-    return [
-      this.getFieldValue('eid'),
-    ];
+  getGlobalNames: function() {
+    return this.getVars();
   },
   renameVar: function(oldName, newName) {
     if (Blockly.Names.equals(oldName, this.getFieldValue('eid'))) {
       this.setFieldValue(newName, 'eid');
     }
   },
-  renameBound: function(boundSubstitution, freeSubstitution) {
-    const paramSubstitution = boundSubstitution.restrictDomain(
-        this.declaredNames());
-    this.renameVars(paramSubstitution);
-    const newFreeSubstitution = freeSubstitution.extend(paramSubstitution);
-    LexicalVariable.renameFree(
-        this.getInputTargetBlock(this.bodyInputName), newFreeSubstitution);
-  },
-  renameFree: function(freeSubstitution) {
-    // There shouldn't be any free variables
-  },
-  freeVariables: function() { // return the free variables of this block
-    // There shouldn't be any free variables, so this should return an empty set.
-    // Should return the empty set: something is wrong if it doesn't!
-    return new Blockly.NameSet();
-  }
 };
 
 Blockly.Blocks['apppend_elem'] = {
@@ -4426,24 +4547,8 @@ Blockly.Blocks['apppend_elem'] = {
     this.setInputsInline(true);
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour(210);
+    this.setColour(Blockly.ELEMENTS_CATEGORY_HUE);
  this.setTooltip("Add a newly created element to the body or element");
- this.setHelpUrl("");
-  }
-};
-
-Blockly.Blocks['remove'] = {
-  init: function() {
-    this.appendValueInput("NAME")
-        .setCheck(null)
-        .appendField("call")
-        .appendField(new Blockly.FieldDropdown([[window.localStorage.getItem("projectName" + project),"OPTIONNAME"]]), "NAME")
-        .appendField(".removeElement");
-    this.setInputsInline(true);
-    this.setPreviousStatement(true, null);
-    this.setNextStatement(true, null);
-    this.setColour(210);
- this.setTooltip("Removes an element");
  this.setHelpUrl("");
   }
 };
@@ -4454,11 +4559,11 @@ Blockly.Blocks['clone'] = {
         .setCheck(null)
         .appendField("call")
         .appendField(new Blockly.FieldDropdown([[window.localStorage.getItem("projectName" + project),"OPTIONNAME"]]), "NAME")
-        .appendField(".")
+        .appendField(".get")
         .appendField(new Blockly.FieldDropdown([["Clone","c"], ["Parent","p"], ["FirstChild","fc"], ["LastChild","lc"], ["AllChild","ac"]]), "d")
         .appendField("ElementOf");
     this.setOutput(true, null);
-    this.setColour(210);
+    this.setColour(Blockly.ELEMENTS_CATEGORY_HUE);
  this.setTooltip("Clones an element or return it'sparent, first/last/all childeren");
  this.setHelpUrl("");
   }
@@ -4469,7 +4574,7 @@ Blockly.Blocks['body'] = {
     this.appendDummyInput()
         .appendField("body");
     this.setOutput(true, null);
-    this.setColour(210);
+    this.setColour(Blockly.ELEMENTS_CATEGORY_HUE);
  this.setTooltip("Return the location of the documents body");
  this.setHelpUrl("");
   }
@@ -4483,7 +4588,7 @@ Blockly.Blocks['forever'] = {
         .setCheck(null);
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour("#F3AA44");
+    this.setColour(Blockly.CONTROL_CATEGORY_HUE);
  this.setTooltip("Runs the blocks until there is a break block");
  this.setHelpUrl("");
   }
@@ -4495,7 +4600,7 @@ Blockly.Blocks['break_and_continue'] = {
         .appendField(new Blockly.FieldDropdown([["Break out of","break"], ["Continue with","continue"]]), "NAME")
         .appendField("loop");
 this.setPreviousStatement(true, null);
-    this.setColour("#F3AA44");
+    this.setColour(Blockly.CONTROL_CATEGORY_HUE);
  this.setTooltip("Stop or continue with the current loop");
  this.setHelpUrl("");
   }
@@ -4507,10 +4612,10 @@ Blockly.Blocks['all_elements'] = {
         .appendField("call")
         .appendField(new Blockly.FieldDropdown([[window.localStorage.getItem("projectName" + project),"OPTIONNAME"]]), "NAME")
         .appendField(".getAll")
-        .appendField(new Blockly.FieldDropdown([["Iframe","if"], ["Div","d"], ["Image","i"], ["Paragraph","p"], ["Button","b"], ["DropDownButton","ddb"], ["ColorPicker","cp"], ["DatePicker","dp"], ["TimePicker","tp"], ["TextField","tf2"], ["Canvas","c"], ["Slider","s"], ["ProgressBar","pb"], ["Checkbox","cb"], ["RadioButton","rb"], ["LoadignIcon","li"], ["FAB", "fab"], ["UnorderedList", "ul"], ["OrderedList", "ol"], ["HyperLink", "a"],['LottiePlayer', 'lp'],['FileViewer', 'fv']]), "e")
+        .appendField(new Blockly.FieldDropdown([["Iframe","if"], ["Div","d"], ["Image","i"], ["Paragraph","p"], ["Button","b"], ["DropDownButton","ddb"], ["ColorPicker","cp"], ["DatePicker","dp"], ["TimePicker","tp"], ["TextField","tf2"], ["Canvas","c"], ["Slider","s"], ["ProgressBar","pb"], ["CheckBox","cb"], ["RadioButton","rb"], ["LoadignIcon","li"], ["FAB", "fab"], ["UnorderedList", "ul"], ["OrderedList", "ol"], ["HyperLink", "a"],['LottiePlayer', 'lp'],['FileViewer', 'fv']]), "e")
         .appendField("Elements");
     this.setOutput(true, null);
-    this.setColour(210);
+    this.setColour(Blockly.ELEMENTS_CATEGORY_HUE);
  this.setTooltip("Return a list a all elements");
  this.setHelpUrl("");
   }
@@ -4690,32 +4795,30 @@ Blockly.Blocks['switch2'] = {
 Blockly.Blocks['load_asset'] = {
   init: function() {
     this.appendDummyInput()
-        .appendField(new Blockly.FieldDropdown(this.getAssets, this.validate), "NAME");
+        .appendField(new Blockly.FieldDropdown(this.getAssets), "NAME");
     this.setOutput(true, null);
-    this.setColour(0);
+    this.setColour(Blockly.OTHER_CATEGORY_HUE);
  this.setTooltip("Load an asset");
  this.setHelpUrl("https://app.gitbook.com/s/AR1GoZvc2Hq3eaRFIOdL/other#loading-assets");
+  },onchange: function (e) {
+  if(e.type == 'change') {
+  if(e.newValue == 'OPTIONNAME') {
+  as.click();
+  console.log('y');
+window.sessionStorage.removeItem('o');
+}
+  }
   },
     getAssets: function () {
         return assetsBlockDropdown
-    },
-  validate: function(newValue) {
-  this.getSourceBlock().updateConnections(newValue);
-  return newValue;
-},
-updateConnections: function(newValue) {
-if(newValue == "OPTIONNAME" ) {
-as.click();
-window.sessionStorage.removeItem('o');
-}
-}
+    }
 };
 
 Blockly.Blocks['create_listener'] = {
   init: function() {
     this.appendDummyInput()
         .appendField("when")
-        .appendField(new Blockly.FieldDropdown([["Iframe","if"], ["Div","d"], ["Image","i"], ["Paragraph","p"], ["Button","b"], ["DropDownButton","ddb"], ["ColorPicker","cp"], ["DatePicker","dp"], ["TimePicker","tp"], ["TextField","tf2"], ["Canvas","c"], ["Slider","s"], ["Checkbox","cb"], ["RadioButton","rb"], ["FAB", "fab"]], this.validate), "e")
+        .appendField(new Blockly.FieldDropdown([["Iframe","if"], ["Div","d"], ["Image","i"], ["Paragraph","p"], ["Button","b"], ["DropDownButton","ddb"], ["ColorPicker","cp"], ["DatePicker","dp"], ["TimePicker","tp"], ["TextField","tf2"], ["Canvas","c"], ["Slider","s"], ["CheckBox","cb"], ["RadioButton","rb"], ["FAB", "fab"],['NotificationManager','nm']], this.validate), "e")
         .appendField(".")
         this.appendDummyInput("ee")
         .appendField(new Blockly.FieldDropdown([["WebPageFinishedLoading","load"]]), "NAME2")
@@ -4725,7 +4828,7 @@ Blockly.Blocks['create_listener'] = {
     this.appendStatementInput("s")
         .setCheck(null)
         .appendField("do");
-    this.setColour("#F3AA44");
+    this.setColour(Blockly.EVENTS_CATEGORY_HUE);
     this.setInputsInline(true);
  this.setTooltip("Do some statements when an event for an element fires");
  this.setHelpUrl("");
@@ -4786,9 +4889,9 @@ updateConnections: function(newValue) {
   if ( newValue == "if") {
   var opti = [["WebPageFinishedLoading","load"]]
   }else if (newValue == "i") {
-  var opti = [["Click", "click"], ["MouseDown", "mouseDown"], ["MouseUp", "mouseUp"], ["OnMouseOver", "onmouseover"]]
+  var opti = [["Click", "click"], ["MouseDown", "mouseDown"], ["MouseUp", "mouseUp"], ["MouseOver", "onmouseover"], ['MouseLeave','onmouseout']]
   }else if (newValue == "p" || newValue == "b") {
-  var opti = [["Click", "click"], ["MouseDown", "mouseDown"], ["MouseUp", "mouseUp"], ["OnMouseOver", "onmouseover"]]
+  var opti = [["Click", "click"], ["MouseDown", "mouseDown"], ["MouseUp", "mouseUp"], ["MouseOver", "onmouseover"], ['MouseLeave','onmouseout']]
   } else if (newValue == "ddb") {
   var opti = [["Change", "change"]]
   } else if ( newValue == "tf2") {
@@ -4798,16 +4901,26 @@ updateConnections: function(newValue) {
   } else if (newValue == "cb" || newValue == "rb") {
   var opti = [["Change", "change"]]
   } else if ( newValue == "li") {
-  var opti = [["Click", "click"], ["MouseDown", "mouseDown"], ["MouseUp", "mouseUp"], ["OnMouseOver", "onmouseover"]]
+  var opti = [["Click", "click"], ["MouseDown", "mouseDown"], ["MouseUp", "mouseUp"], ["MouseOver", "onmouseover"], ['MouseLeave','onmouseout']]
   }else if (newValue == "ul" || newValue == "ol") {
   var opti = [["SelectionChange", "click"]]
   } else if (newValue == "c") {
   var opti = [["CanvasFinishedLoading", "load"]]
   }else if (newValue == "cp" || newValue == "dp" || newValue == "cp" || newValue == "tp") {
   var opti = [["Change", "change"]]
+  } else if(newValue == 'nm' ) {
+  var opti = [['Click', 'click'],['ErrorOccured','error'],['Shown','show'],['Closed','close']]
   } else {
-  var opti = [["Click", "click"], ["MouseDown", "mouseDown"], ["MouseUp", "mouseUp"], ["OnMouseOver", "onmouseover"]]
+  var opti = [["Click", "click"], ["MouseDown", "mouseDown"], ["MouseUp", "mouseUp"], ["MouseOver", "onmouseover"], ['MouseLeave','onmouseout']]
   }
+  
+          if(newValue == 'nm') {
+                  this.appendDummyInput("ee")
+        .appendField(new Blockly.FieldDropdown(opti), "NAME2");
+            this.appendStatementInput("s")
+        .setCheck(null)
+        .appendField("do");
+        } else {
         this.appendDummyInput("ee")
         .appendField(new Blockly.FieldDropdown(opti), "NAME2")
         .appendField(
@@ -4816,6 +4929,7 @@ updateConnections: function(newValue) {
             this.appendStatementInput("s")
         .setCheck(null)
         .appendField("do");
+        }
 }
 };
 
@@ -4824,7 +4938,7 @@ Blockly.Blocks['new_line'] = {
     this.appendDummyInput()
         .appendField("new line");
     this.setOutput(true, null);
-    this.setColour("#DF6078");
+    this.setColour(Blockly.TEXT_CATEGORY_HUE);
  this.setTooltip("Return a newline string, used as a delimeter");
  this.setHelpUrl("");
   }
@@ -4836,7 +4950,7 @@ Blockly.Blocks['remove_duplicates'] = {
         .setCheck(null)
         .appendField("remove duplicates of");
     this.setOutput(true, null);
-    this.setColour("#76afc9");
+    this.setColour(Blockly.LIST_CATEGORY_HUE);
  this.setTooltip("Removes all duplicates from an list");
  this.setHelpUrl("");
   }
@@ -4855,7 +4969,7 @@ Blockly.Blocks['repplace_text'] = {
         .appendField("with");
     this.setInputsInline(true);
     this.setOutput(true, null);
-    this.setColour("#DF6078");
+    this.setColour(Blockly.TEXT_CATEGORY_HUE);
  this.setTooltip("Replace the given text string with a new piece of text");
  this.setHelpUrl("");
   }
@@ -4871,7 +4985,7 @@ Blockly.Blocks['tet_contains'] = {
         .appendField("contain");
     this.setInputsInline(true);
     this.setOutput(true, "Boolean");
-    this.setColour("#DF6078");
+    this.setColour(Blockly.TEXT_CATEGORY_HUE);
  this.setTooltip("Reeturn true if the given piece of text is inside of a string");
  this.setHelpUrl("");
   }
@@ -4893,7 +5007,7 @@ Blockly.Blocks['set_object_prop'] = {
       .setAlign(Blockly.ALIGN_RIGHT);
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour("#F99EA3");
+    this.setColour(Blockly.OBJECT_CATEGORY_HUE);
  this.setTooltip("Set a property of an object");
  this.setHelpUrl("");
   }
@@ -4910,7 +5024,7 @@ Blockly.Blocks['get_object_prop'] = {
         .appendField("of object")
       .setAlign(Blockly.ALIGN_RIGHT);
     this.setOutput(true, null);
-    this.setColour("#F99EA3");
+    this.setColour(Blockly.OBJECT_CATEGORY_HUE);
  this.setTooltip("Get a property of an objects field");
  this.setHelpUrl("");
   }
@@ -4922,7 +5036,7 @@ Blockly.Blocks['get_of_json'] = {
         .setCheck("String")
         .appendField("get object or list from JSON");
     this.setOutput(true, null);
-    this.setColour("#F99EA3");
+    this.setColour(Blockly.OBJECT_CATEGORY_HUE);
  this.setTooltip("Get a object or list from a JSON string");
  this.setHelpUrl("");
   }
@@ -4934,7 +5048,7 @@ Blockly.Blocks['object_to_json'] = {
       .setCheck(null)
         .appendField("generate JSON from object or list");
     this.setOutput(true, null);
-    this.setColour("#F99EA3");
+    this.setColour(Blockly.OBJECT_CATEGORY_HUE);
  this.setTooltip("Trun an object or list into an JSON string");
  this.setHelpUrl("");
   }
@@ -4945,7 +5059,7 @@ Blockly.Blocks['create_object'] = {
     this.appendDummyInput()
         .appendField("create object");
     this.setOutput(true, null);
-    this.setColour("#F99EA3");
+    this.setColour(Blockly.OBJECT_CATEGORY_HUE);
  this.setTooltip("Create a new object with some value's (optionally) ");
  this.setHelpUrl("");
       this.setMutator(new Blockly.Mutator(['object']));
@@ -5056,7 +5170,7 @@ Blockly.Blocks['get_list_of_objects'] = {
         .appendField(new Blockly.FieldDropdown([["Values","p"], ["Keys","k"]]), "NAME")
         .appendField("of object");
     this.setOutput(true, null);
-    this.setColour("#F99EA3");
+    this.setColour(Blockly.OBJECT_CATEGORY_HUE);
  this.setTooltip("Return a list of an objects properties or keys");
  this.setHelpUrl("");
   }
@@ -5069,7 +5183,7 @@ Blockly.Blocks['object'] = {
     this.setInputsInline(true);
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour("#F99EA3");
+    this.setColour(Blockly.OBJECT_CATEGORY_HUE);
  this.setTooltip("");
  this.setHelpUrl("");
  this.contextMenu = false;
@@ -5083,7 +5197,7 @@ Blockly.Blocks['object_top_block'] = {
     this.appendStatementInput("NAME")
         .setCheck(null);
     this.setInputsInline(true);
-    this.setColour("#F99EA3");
+    this.setColour(Blockly.OBJECT_CATEGORY_HUE);
     this.setInputsInline(true);
  this.setTooltip("");
  this.setHelpUrl("");
@@ -5100,7 +5214,7 @@ Blockly.Blocks['object_key_val'] = {
         .appendField("value");
     this.setInputsInline(true);
     this.setOutput(true, null);
-    this.setColour("#F99EA3");
+    this.setColour(Blockly.OBJECT_CATEGORY_HUE);
  this.setTooltip("Add a pair to the object");
  this.setHelpUrl("");
   }
@@ -5115,7 +5229,7 @@ Blockly.Blocks['alert'] = {
         .appendField(".showAlert");
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour("#9596EB");
+    this.setColour(Blockly.COMPONENTS_CATEGORY_HUE);
  this.setTooltip("Show a pop up dialog with the given massage");
  this.setHelpUrl("");
   }
@@ -5129,7 +5243,7 @@ Blockly.Blocks['show_propmt'] = {
         .appendField(new Blockly.FieldDropdown([[window.localStorage.getItem("projectName" + project),"OPTIONNAME"]]), "NAME")
         .appendField(".showPrompt");
     this.setOutput(true, null);
-    this.setColour("#9596EB");
+    this.setColour(Blockly.COMPONENTS_CATEGORY_HUE);
  this.setTooltip("Show a pop up dailog requesting the user to input some text");
  this.setHelpUrl("");
   }
@@ -5143,7 +5257,7 @@ Blockly.Blocks['show_confirm'] = {
         .appendField(new Blockly.FieldDropdown([[window.localStorage.getItem("projectName" + project),"OPTIONNAME"]]), "NAME")
         .appendField(".confrim");
     this.setOutput(true, null);
-    this.setColour("#9596EB");
+    this.setColour(Blockly.COMPONENTS_CATEGORY_HUE);
  this.setTooltip("Shows a popup asking the user to confirm a decision");
  this.setHelpUrl("");
   }
@@ -5159,7 +5273,7 @@ Blockly.Blocks['console'] = {
         .appendField(new Blockly.FieldDropdown([["Log","log"], ["Warn","warn"], ["Error","error"]]), "y");
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour("#9596EB");
+    this.setColour(Blockly.COMPONENTS_CATEGORY_HUE);
  this.setTooltip("Log a message to the browsers console");
  this.setHelpUrl("");
   }
@@ -5174,7 +5288,7 @@ Blockly.Blocks['windew_height_width'] = {
         .appendField(new Blockly.FieldDropdown([["Outer","outer"], ["Inner","inner"]]), "y")
         .appendField(new Blockly.FieldDropdown([["Width","Width"], ["Height","Height"]]), "w");
     this.setOutput(true, null);
-    this.setColour("#9596EB");
+    this.setColour(Blockly.COMPONENTS_CATEGORY_HUE);
  this.setTooltip("return the windows inner or outerwidth or height");
  this.setHelpUrl("");
   }
@@ -5191,7 +5305,7 @@ Blockly.Blocks['title_favicon'] = {
         .appendField("to");
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour("#9596EB");
+    this.setColour(Blockly.COMPONENTS_CATEGORY_HUE);
  this.setTooltip("Set either the project title or favIcon");
  this.setHelpUrl("");
   }
@@ -5205,7 +5319,7 @@ Blockly.Blocks['screen'] = {
         .appendField(".get")
         .appendField(new Blockly.FieldDropdown([["Width","width"], ["Height","height"], ["AvaibleWidth","availWidth"], ["AvaibleHeight","availHeight"], ["ColorDepth","colorDepth"], ["PixelDepth","pixelDepth"]]), "p");
     this.setOutput(true, null);
-    this.setColour("#9596EB");
+    this.setColour(Blockly.COMPONENTS_CATEGORY_HUE);
  this.setTooltip("Call the ScreenManager to return the value of the given property");
  this.setHelpUrl("");
   }
@@ -5219,7 +5333,7 @@ Blockly.Blocks['date'] = {
         .appendField(".get")
         .appendField(new Blockly.FieldDropdown([["Date","Date"], ["Day","Day"], ["FullYear","FullYear"], ["Hour","Hours"], ["MilliSeconds","Milliseconds"], ["Minute","Minutes"], ["Month","Month"], ["Seconds","Seconds"]]), "p");
     this.setOutput(true, null);
-    this.setColour("#9596EB");
+    this.setColour(Blockly.COMPONENTS_CATEGORY_HUE);
  this.setTooltip("Call the DateManager to return the given propry it's value");
  this.setHelpUrl("");
   }
@@ -5233,7 +5347,7 @@ Blockly.Blocks['date_get_now'] = {
         .appendField(".getNow");
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour("#9596EB");
+    this.setColour(Blockly.COMPONENTS_CATEGORY_HUE);
  this.setTooltip("Call the DateManger to get the current date");
  this.setHelpUrl("");
   }
@@ -5249,7 +5363,7 @@ Blockly.Blocks['stop_start_timer'] = {
         .appendField("Timer");
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour("#9596EB");
+    this.setColour(Blockly.COMPONENTS_CATEGORY_HUE);
  this.setTooltip("Start or stop the timer");
  this.setHelpUrl("");
   }
@@ -5262,7 +5376,7 @@ Blockly.Blocks['get_elapsed_time'] = {
         .appendField(new Blockly.FieldDropdown([["DateManager","OPTIONNAME"]]), "NAME")
         .appendField(".getElapsedTime");
     this.setOutput(true, null);
-    this.setColour("#9596EB");
+    this.setColour(Blockly.COMPONENTS_CATEGORY_HUE);
  this.setTooltip("Return the time that has been elapsed after the timer is stopped(in Milliseconds)");
  this.setHelpUrl("");
   }
@@ -5284,7 +5398,7 @@ Blockly.Blocks['get_permison_staet'] = {
         .appendField("do");
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour("#9596EB");
+    this.setColour(Blockly.COMPONENTS_CATEGORY_HUE);
  this.setTooltip("Check the granted state of a permison(return either prompt, granted or denied)");
  this.setHelpUrl("");
   },
@@ -5346,7 +5460,7 @@ Blockly.Blocks['device_manager'] = {
         .appendField(".get")
         .appendField(new Blockly.FieldDropdown([["DeviceMemory", "dm"], ["DeviceOS","d"], ["DeviceType","imd"], ["ColorScheme","hde"], ["NetworkState","ictan"], ["DeviceLanguage","l"], ['Orientation', 'o']]), "p");
     this.setOutput(true, null);
-    this.setColour("#9596EB");
+    this.setColour(Blockly.COMPONENTS_CATEGORY_HUE);
  this.setTooltip("Calls the device manager to return the status of the property");
  this.setHelpUrl("");
   }
@@ -5365,7 +5479,7 @@ Blockly.Blocks['save_item'] = {
     this.setInputsInline(true);
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour("#9596EB");
+    this.setColour(Blockly.COMPONENTS_CATEGORY_HUE);
  this.setTooltip("Store the given value for the given key to local storage");
  this.setHelpUrl("");
   }
@@ -5381,7 +5495,7 @@ Blockly.Blocks['emove_item'] = {
     this.setInputsInline(true);
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour("#9596EB");
+    this.setColour(Blockly.COMPONENTS_CATEGORY_HUE);
  this.setTooltip("Remove the key from local storage");
  this.setHelpUrl("");
   }
@@ -5396,7 +5510,7 @@ Blockly.Blocks['clear_storage'] = {
     this.setInputsInline(true);
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour("#9596EB");
+    this.setColour(Blockly.COMPONENTS_CATEGORY_HUE);
  this.setTooltip("Delete all stored data stored in the application WARNING: using this block while live testing will delete all data from Sketch aswel USE AT OWN RISK");
  this.setHelpUrl("");
   }
@@ -5410,7 +5524,7 @@ Blockly.Blocks['get_item'] = {
         .appendField(new Blockly.FieldDropdown([["StorageManager","OPTIONNAME"]]), "NAME")
         .appendField(".getKey");
     this.setOutput(true, null);
-    this.setColour("#9596EB");
+    this.setColour(Blockly.COMPONENTS_CATEGORY_HUE);
  this.setTooltip("GEt the value of the given key");
  this.setHelpUrl("");
   }
@@ -5425,7 +5539,8 @@ Blockly.Blocks['before_unload'] = {
     this.appendStatementInput("NAME")
         .setCheck(null)
         .appendField("do");
-    this.setColour("#F3AA44");
+    this.setColour(Blockly.EVENTS_CATEGORY_HUE);
+    this.setInputsInline(true);
  this.setTooltip("Do some statements when the page it's contents are about to be unloaded  (ask the user if he wants to leave the page +  will fire on both cancel and confirm) ");
  this.setHelpUrl("");
   }
@@ -5447,15 +5562,15 @@ Blockly.Blocks['add_object'] = {
         .setAlign(Blockly.ALIGN_RIGHT);
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour("#F99EA3");
+    this.setColour(Blockly.OBJECT_CATEGORY_HUE);
  this.setTooltip("Add a new key with a value to an object");
  this.setHelpUrl("");
   }
 };
 
-  var options = [["Body", "body"],["Iframe","if"], ["Div","d"], ["Image","i"], ["Paragraph","p"], ["Button","b"], ["DropDownButton","ddb"], ["ColorPicker","cp"], ["DatePicker","dp"], ["TimePicker","tp"], ["TextField","tf2"], ["Canvas","c"], ["Slider","s"], ["ProgressBar","pb"], ["Checkbox","cb"], ["RadioButton","rb"], ["LoadignIcon","li"], ["FAB", "fab"], ["UnorderedList", "ul"], ["OrderedList", "ol"], ["HyperLink", "a"], ['LottiePlayer', 'lp'], ['FileViewer', 'fv']];
+  var options = [["Body", "body"],["Iframe","if"], ["Div","d"], ["Image","i"], ["Paragraph","p"], ["Button","b"], ["DropDownButton","ddb"], ["ColorPicker","cp"], ["DatePicker","dp"], ["TimePicker","tp"], ["TextField","tf2"], ["Canvas","c"], ["Slider","s"], ["ProgressBar","pb"], ["CheckBox","cb"], ["RadioButton","rb"], ["LoadignIcon","li"], ["FAB", "fab"], ["UnorderedList", "ul"], ["OrderedList", "ol"], ["HyperLink", "a"], ['LottiePlayer', 'lp'], ['FileViewer', 'fv']];
   
-  var opt = [["BackgroundColor", "style.backgroundColor"], ["BackgroundImage", "style.backgroundImage"], ["BackgroundImagePosition", "style.backgroundPosition"], ["BackgroundImageRepeat", "style.backgroundRepeat"], ["Width", "style.width"], ["Height", "style.height"], ["Margin", "style.margin"], ["MarginLeft", "style.marginLeft"], ["MarginRight", "style.marginRight"],["MarginTop", "style.marginTop"], ["MarginBottom", "style.marginBottom"], ["Padding", "style.padding"], ["PaddingLeft", "style.paddingLeft"],["PaddingRight", "style.paddingRight"], ["PaddingTop", "style.paddingTop"], ["PaddingBottom", "style.paddingBottom"], ["Top", "style.top"], ["Bottom", "style.bottom"], ["Left", "style.left"], ["Right", "style.right"],["BorderColor", "style.borderColor"], ["BorderWidth", "style.borderWidth"], ["BorderRadius", "style.borderRadius"], ["BorderRadiusRightTop", "style.borderTopRightRadius"], ["BorderRadiusLeftTop", "style.borderTopLeftRadius"], ["BorderRadiusLeftBottom", "style.borderBottomLeftRadius"], ["BorderRadiusRightBottom", "style.borderBottomRightRadius"],  ["BorderStyle", "style.borderStyle"], ["Position", "style.position"], ["Visible", "style.display"], ["Transform", "style.transform"], ["Overflow", "style.overflow"], ['Perspective', 'style.perspective'], ['TransformStyle','style.transformStyle']];
+  var opt = [["BackgroundColor", "style.backgroundColor"], ["BackgroundImage", "style.backgroundImage"],['BackgroundImageSize', 'style.backgroundSize'], ["BackgroundImagePosition", "style.backgroundPosition"], ["BackgroundImageRepeat", "style.backgroundRepeat"], ["Width", "style.width"], ["Height", "style.height"],['MinHeight','style.minHeight'],['MaxHeight','style.maxHeight'],['MinWidth','style.minWidth'],['MaxWidth','style.maxWidth'], ["Margin", "style.margin"], ["MarginLeft", "style.marginLeft"], ["MarginRight", "style.marginRight"],["MarginTop", "style.marginTop"], ["MarginBottom", "style.marginBottom"], ["Padding", "style.padding"], ["PaddingLeft", "style.paddingLeft"],["PaddingRight", "style.paddingRight"], ["PaddingTop", "style.paddingTop"], ["PaddingBottom", "style.paddingBottom"], ["Top", "style.top"], ["Bottom", "style.bottom"], ["Left", "style.left"], ["Right", "style.right"],["BorderColor", "style.borderColor"], ["BorderWidth", "style.borderWidth"], ["BorderRadius", "style.borderRadius"], ["BorderRadiusRightTop", "style.borderTopRightRadius"], ["BorderRadiusLeftTop", "style.borderTopLeftRadius"], ["BorderRadiusLeftBottom", "style.borderBottomLeftRadius"], ["BorderRadiusRightBottom", "style.borderBottomRightRadius"],  ["BorderStyle", "style.borderStyle"], ["Position", "style.position"], ["Visible", "style.display"], ["Transform", "style.transform"], ["Overflow", "style.overflow"], ['Perspective', 'style.perspective'], ['TransformStyle','style.transformStyle'],['Transparency','style.opacity'],['Z-Index','style.zIndex']];
   
   var p = [["MaxValue", "max"], ["MinVlaue", "min"], ["Value", "value"]];
   
@@ -5475,7 +5590,7 @@ Blockly.Blocks['set_prop'] = {
     this.setInputsInline(true);
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour(210);
+    this.setColour(Blockly.ELEMENTS_CATEGORY_HUE);
  this.setTooltip("Sets the propety its value for the element");
  this.setHelpUrl("");
   },
@@ -5490,15 +5605,23 @@ updateConnections: function(newValue) {
   }else if (newValue == "i") {
   var opti = opt.concat([["Image", "src"], ["ImagePosition", "style.objectFit"], ["ImageFilter", "style.filter"]]);
   }else if (newValue == "p" || newValue == "b") {
-  var opti = opt.concat(text);
+  var t = text
+  if(newValue == "b") {
+  t = text.concat([['Disabled','disabled']]);
+  }
+  var opti = opt.concat(t);
   } else if (newValue == "ddb") {
   var opti = opt.concat(text).concat([["Options", "opt"], ["Value", "value"]]);
   } else if ( newValue == "tf2") {
-  var opti = opt.concat([["Text", "value"], ["TextColor", "style.color"], ["TextSize", "style.fontSize"], ["FontFamily", "style.fontFamily"], ["TextAlign", "style.textAlign"]]).concat([["Hint", "placeholder"]]);
-  } else if ( newValue == "s"|| newValue == "pb") { 
-  var opti = opt.concat(p);
+  var opti = opt.concat([["Text", "value"], ["TextColor", "style.color"], ["TextSize", "style.fontSize"], ["FontFamily", "style.fontFamily"], ["TextAlign", "style.textAlign"]]).concat([["Hint", "placeholder"],['HintColor', 'hc'], ['Disabled','disabled']]);
+  } else if ( newValue == "s" || newValue == "pb") { 
+  var oo = p
+  if(newValue == "s") {
+  oo = p.concat([['Disabled','disabled']]);
+  }
+  var opti = opt.concat(oo);
   } else if (newValue == "cb" || newValue == "rb") {
-  var opti = opt.concat(text).concat([["Checked" , "checked"]]);
+  var opti = opt.concat(text).concat([["Checked" , "checked"], ['Disabled','disabled']]);
   } else if ( newValue == "li") {
   var opti = opt.concat([["BorderBackgroundColor", "style.borderTop"]])
   }else if (newValue == "ul" || newValue == "ol") {
@@ -5531,7 +5654,7 @@ Blockly.Blocks['get_propo'] = {
         .appendField(new Blockly.FieldDropdown(opt), "NAME2");
     this.setInputsInline(true);
     this.setOutput(true, null);
-    this.setColour(210);
+    this.setColour(Blockly.ELEMENTS_CATEGORY_HUE);
  this.setTooltip("Return the propety its value for the element");
  this.setHelpUrl("");
   },
@@ -5546,15 +5669,23 @@ updateConnections: function(newValue) {
   }else if (newValue == "i") {
   var opti = opt.concat([["Image", "src"], ["ImagePosition", "style.objectFit"], ["ImageFilter", "style.filter"]]);
   }else if (newValue == "p" || newValue == "b") {
-  var opti = opt.concat(text);
+  var t = text
+  if(newValue == "b") {
+  t = text.concat([['Disabled','disabled']]);
+  }
+  var opti = opt.concat(t);
   } else if (newValue == "ddb") {
   var opti = opt.concat(text).concat([["Value", "value"]]);
   } else if ( newValue == "tf2") {
-  var opti = opt.concat([["Text", "value"], ["TextColor", "style.color"], ["TextSize", "style.fontSize"], ["FontFamily", "style.fontFamily"], ["TextAlign", "style.textAlign"]]).concat([["Hint", "placeholder"]]);
+  var opti = opt.concat([["Text", "value"], ["TextColor", "style.color"],["TextSize", "style.fontSize"], ["FontFamily", "style.fontFamily"], ["TextAlign", "style.textAlign"]]).concat([["Hint", "placeholder"],['HintColor', 'hc'], ['Disabled','disabled']]);
   } else if ( newValue == "s"|| newValue == "pb") { 
-  var opti = opt.concat(p);
+    var oo = p
+  if(newValue == "s") {
+  oo = p.concat([['Disabled','disabled']]);
+  }
+  var opti = opt.concat(oo);
   } else if (newValue == "cb" || newValue == "rb") {
-  var opti = opt.concat(text).concat([["Checked" , "checked"]]);
+  var opti = opt.concat(text).concat([["Checked" , "checked"], ['Disabled','disabled']]);
   } else if ( newValue == "li") {
   var opti = opt.concat([["BorderBackgroundColor", "style.borderTop"]])
   }else if (newValue == "ul" || newValue == "ol") {
@@ -5612,7 +5743,7 @@ Blockly.Blocks['api'] = {
         .appendField("do");
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour("9596EB");
+    this.setColour(Blockly.COMPONENTS_CATEGORY_HUE);
  this.setTooltip("Make a apio Get, Put, Post, Patch and Delete request");
  this.setHelpUrl("");
   },
@@ -5689,7 +5820,7 @@ Blockly.Blocks['download_file'] = {
     this.setInputsInline(true);
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour("9596EB");
+    this.setColour(Blockly.COMPONENTS_CATEGORY_HUE);
  this.setTooltip("Download a file to the users device");
  this.setHelpUrl("");
   }
@@ -5716,7 +5847,7 @@ Blockly.Blocks['pick_file'] = {
     this.setInputsInline(true);
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour("9596EB");
+    this.setColour(Blockly.COMPONENTS_CATEGORY_HUE);
  this.setTooltip("Open the device file picker dialog to let the user pick files");
  this.setHelpUrl("");
   },
@@ -5789,7 +5920,7 @@ Blockly.Blocks['function_var'] = {
         .setCheck(null)
         .appendField("result");
     this.setOutput(true, null);
-    this.setColour("#7560A4");
+    this.setColour(Blockly.FUNCTIONS_CATEGORY_HUE);
  this.setTooltip("Runs the blocks in the do section before returning a value, usefull if you need to run blocks before returning a value to a function");
  this.setHelpUrl("https://app.gitbook.com/s/AR1GoZvc2Hq3eaRFIOdL/functions#defining-functions-with-a-return-value-and-blocks");
   }
@@ -5802,7 +5933,7 @@ Blockly.Blocks['comment'] = {
         .appendField(new FieldTextBox('This is a comment'), 'NAME')
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour(0);
+    this.setColour(Blockly.OTHER_CATEGORY_HUE);
  this.setTooltip("Adds a comment to your project");
  this.setHelpUrl("https://app.gitbook.com/s/AR1GoZvc2Hq3eaRFIOdL/other#commenting-on-blocks");
   }
@@ -6895,7 +7026,7 @@ Blockly.Blocks['toast'] = {
         .appendField(".showToast");
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour("9596EB");
+    this.setColour(Blockly.COMPONENTS_CATEGORY_HUE);
  this.setTooltip("Show a short message on the screen");
  this.setHelpUrl("");
   }
@@ -6903,19 +7034,32 @@ Blockly.Blocks['toast'] = {
 
 Blockly.Blocks['click'] = {
   init: function() {
-    this.appendValueInput("NAME")
-        .setCheck(null)
+    this.appendDummyInput()
         .appendField("call")
         .appendField(new Blockly.FieldDropdown([[window.localStorage.getItem("projectName" + project),"OPTIONNAME"]]), 'NAME')
         .appendField(".")
-        .appendField(new Blockly.FieldDropdown([["ClickElement","ce"], ["RequestFocusOnElement","rfce"],['RefreshIframe','ri']]), "d");
-    this.setInputsInline(true);
+        .appendField(new Blockly.FieldDropdown([["ClickElement","ce"], ["FocusTextField","focus"],['UnFocusTextField','blur'],['RefreshIframe','ri'],['RemoveElement','remove'],['SelectTextFieldText','select'],['DismissKeyboard','dmk']],this.validate), "d");
+        this.appendValueInput("NAME")
+        .setCheck(null);
     this.setPreviousStatement(true, null);
+        this.setInputsInline(true);
     this.setNextStatement(true, null);
-    this.setColour(210);
+    this.setColour(Blockly.ELEMENTS_CATEGORY_HUE);
  this.setTooltip("Click or request focus on an element, usefull if you need to open a file picker without user input");
  this.setHelpUrl("");
-  }
+  },
+  validate: function(newValue) {
+  this.getSourceBlock().updateConnections(newValue);
+  return newValue;
+},
+updateConnections: function(newValue) {
+  this.removeInput('NAME', /* no error */ true);
+if(newValue == 'dmk') {
+} else {
+this.appendValueInput("NAME")
+        .setCheck(null);
+}
+}
 };
 
 Blockly.Blocks['share'] = {
@@ -6927,7 +7071,7 @@ Blockly.Blocks['share'] = {
         .appendField(".share");
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour("9596EB");
+    this.setColour(Blockly.COMPONENTS_CATEGORY_HUE);
  this.setTooltip("Share a message or file to someone");
  this.setHelpUrl("");
   }
@@ -6941,7 +7085,7 @@ Blockly.Blocks['create_list_with'] = {
     this.appendValueInput("l")
         .setCheck(null);
     this.setOutput(true, null);
-    this.setColour("#76afc9");
+    this.setColour(Blockly.LIST_CATEGORY_HUE);
     this.setMutator(new Blockly.Mutator(['list']));
  this.setTooltip("Create a list from multiple lists");
  this.setHelpUrl("");
@@ -7050,7 +7194,7 @@ Blockly.Blocks['list'] = {
         .appendField("list");
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour("#76afc9");
+    this.setColour(Blockly.LIST_CATEGORY_HUE);
  this.setTooltip("");
  this.setHelpUrl("");
  this.contextMenu = false;
@@ -7063,7 +7207,7 @@ Blockly.Blocks['create_list_with_top_block'] = {
         .appendField("lists");
     this.appendStatementInput("NAME")
         .setCheck(null);
-    this.setColour("#76afc9");
+    this.setColour(Blockly.LIST_CATEGORY_HUE);
     this.setInputsInline(true);
  this.setTooltip("");
  this.setHelpUrl("");
@@ -7083,7 +7227,7 @@ Blockly.Blocks['show_snackbar'] = {
         .appendField("do");
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour("9596EB");
+    this.setColour(Blockly.COMPONENTS_CATEGORY_HUE);
  this.setTooltip("Show a snackbar on the bottom of the screen for the user to interact with");
  this.setHelpUrl("");
   }
@@ -7104,7 +7248,7 @@ Blockly.Blocks['window_resize'] = {
     this.appendStatementInput("NAME")
         .setCheck(null)
         .appendField("do");
-    this.setColour("#F3AA44");
+    this.setColour(Blockly.EVENTS_CATEGORY_HUE);
     this.setInputsInline(true);
  this.setTooltip("Do some statements when the user changes the window size");
  this.setHelpUrl("");
@@ -7170,7 +7314,7 @@ Blockly.Blocks['load_audio'] = {
         .appendField(new Blockly.FieldDropdown([['MediaPlayer' ,"OPTIONNAME"]]), "NAME")
         .appendField(".loadAudioFille");
     this.setOutput(true, null);
-    this.setColour("9596EB");
+    this.setColour(Blockly.COMPONENTS_CATEGORY_HUE);
  this.setTooltip("Load an new audio file to play");
  this.setHelpUrl("");
   }
@@ -7186,7 +7330,7 @@ Blockly.Blocks['play_pause'] = {
         .appendField(new Blockly.FieldDropdown([["Play","play"], ["Pause","pause"]]), "t");
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour("9596EB");
+    this.setColour(Blockly.COMPONENTS_CATEGORY_HUE);
  this.setTooltip("Play or pause the audio file");
  this.setHelpUrl("");
   }
@@ -7205,7 +7349,7 @@ Blockly.Blocks['speed_loop'] = {
     this.setInputsInline(true);
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour("9596EB");
+    this.setColour(Blockly.COMPONENTS_CATEGORY_HUE);
  this.setTooltip("Set the Speed or if the audio loops");
  this.setHelpUrl("");
   }
@@ -7279,7 +7423,7 @@ Blockly.Blocks['to_string'] = {
         .setCheck(null)
         .appendField("toString");
     this.setOutput(true, null);
-    this.setColour("#DF6078");
+    this.setColour(Blockly.TEXT_CATEGORY_HUE);
  this.setTooltip("Turn an number to a string");
  this.setHelpUrl("");
   }
@@ -7291,7 +7435,7 @@ Blockly.Blocks['to_number'] = {
         .setCheck(null)
         .appendField("toNumber");
     this.setOutput(true, null);
-    this.setColour("#6789cc");
+    this.setColour(Blockly.MATH_CATEGORY_HUE);
  this.setTooltip("Trun an numberString to a number");
  this.setHelpUrl("");
   }
@@ -7304,7 +7448,7 @@ Blockly.Blocks['istestting'] = {
         .appendField(new Blockly.FieldDropdown([[window.localStorage.getItem("projectName" + project),"OPTIONNAME"]]), "NAME")
         .appendField(".isTesting");
     this.setOutput(true, null);
-    this.setColour("9596EB");
+    this.setColour(Blockly.COMPONENTS_CATEGORY_HUE);
  this.setTooltip("Returns true if the project is run in testing mode");
  this.setHelpUrl("");
   }
@@ -7313,7 +7457,7 @@ Blockly.Blocks['istestting'] = {
 Blockly.Blocks['trans_etc'] = {
   init: function() {
     this.appendDummyInput()
-        .appendField(new Blockly.FieldDropdown([["Overflow","o"], ["Transform","t"], ["Position","p"], ["ImageFilter","if"], ["BackgroundImageRepeat","bir"], ["BackgroundImagePosition","bip"], ['BorderStyle', 'bs'],['TransformStyle','ts'], ['TextAlign','ta'],['Visible','v']],this.validate), "NAME")
+        .appendField(new Blockly.FieldDropdown([["Overflow","o"], ["Transform","t"], ["Position","p"], ["ImageFilter","if"], ["BackgroundImageRepeat","bir"], ["BackgroundImagePosition","bip"], ['BorderStyle', 'bs'],['TransformStyle','ts'], ['TextAlign','ta'],['Visible','v'], ['Width','w'],['Height','h'],['FontFamily','ff'], ['BackgroundImageSize', 'bis']],this.validate), "NAME")
         .appendField(".");
     this.appendDummyInput('dd')
         .appendField(new Blockly.FieldDropdown([["option","OPTIONNAME"], ["option","OPTIONNAME"], ["option","OPTIONNAME"]]), "ee");
@@ -7321,7 +7465,7 @@ Blockly.Blocks['trans_etc'] = {
     .setCheck("Number");
     this.setInputsInline(true);
     this.setOutput(true, null);
-    this.setColour(0);
+    this.setColour(Blockly.OTHER_CATEGORY_HUE);
  this.setTooltip("Allows you to select a property for the property setters");
  this.setHelpUrl("");
   },
@@ -7352,6 +7496,12 @@ updateConnections: function(newValue) {
   var pp = [['Left','left'],['Right','right'],['Center','center'],['Justify','justify']]
   } else if(newValue == 'v') {
   var pp = [['Visible','block'],['Invisible','none']]
+  } else if(newValue == 'w' || newValue == 'h') {
+  var pp = [['Fill Parent', '100%'],['Fit Content', 'max-content']]
+  } else if( newValue =='ff') {
+  var pp = [['Serif','serif'],['Sans-Serif','sans-serif'],['Monospace','monospace'], ['Cursive','cursive'],['Fantasy','fantasy']]
+  } else if(newValue == 'bis') {
+  var pp = [['Contain','contain'], ['Cover','cover'],['Auto','auto']]
   }
   this.appendDummyInput('dd')
         .appendField(new Blockly.FieldDropdown(pp), "ee");
@@ -7371,7 +7521,7 @@ Blockly.Blocks['writeclipboard'] = {
         .appendField(".writeText");
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour("9596EB");
+    this.setColour(Blockly.COMPONENTS_CATEGORY_HUE);
  this.setTooltip("Write some text to the clipboard");
  this.setHelpUrl("");
   }
@@ -7384,7 +7534,7 @@ Blockly.Blocks['text_create_join_container'] = {
     this.appendStatementInput("STACK")
         .setCheck(null);
     this.setInputsInline(true);
-    this.setColour('#DF6078');
+    this.setColour(Blockly.TEXT_CATEGORY_HUE);
  this.setTooltip("");
  this.setHelpUrl("");
  this.contextMenu = false;
@@ -7398,9 +7548,317 @@ Blockly.Blocks['lists_create_with_container'] = {
     this.appendStatementInput("STACK")
         .setCheck(null);
     this.setInputsInline(true);
-    this.setColour('#76AFC9');
+    this.setColour(Blockly.LIST_CATEGORY_HUE);
  this.setTooltip("");
  this.setHelpUrl("");
  this.contextMenu = false;
+  }
+};
+
+Blockly.Blocks['geolocation'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("call")
+        .appendField(new Blockly.FieldDropdown([["GeoLocationManager","OPTIONNAME"]]), "NAME")
+        .appendField(".getPosition")
+         .appendField(
+            new FieldParameterFlydown('Latitude', true, FieldFlydown.DISPLAY_BELOW),
+            'la')
+             .appendField(
+            new FieldParameterFlydown('Longitude', true, FieldFlydown.DISPLAY_BELOW),
+            'lo')
+    this.appendStatementInput("NAME")
+        .setCheck(null)
+        .appendField("do");
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(Blockly.COMPONENTS_CATEGORY_HUE);
+ this.setTooltip("Returns the user's position");
+ this.setHelpUrl("");
+  }
+  ,
+  withLexicalVarsAndPrefix: function(child, proc) {
+    const params = this.declaredNames();
+    // not arguments_ instance var
+    for (let i = 0; i < params.length; i++) {
+      proc(params[i], '');
+    }
+  },
+  getVars: function() {
+    return [
+      this.getFieldValue('la'),
+        this.getFieldValue('lo'),
+    ];
+  },
+  blocksInScope: function() {
+    const doBlock = this.getInputTargetBlock('NAME');
+    if (doBlock) {
+      return [doBlock];
+    } else {
+      return [];
+    }
+  },
+  declaredNames: function() {
+    return [
+            this.getFieldValue('la'),
+        this.getFieldValue('lo'),
+    ];
+  },
+  renameVar: function(oldName, newName) {
+    if (Blockly.Names.equals(oldName, this.getFieldValue('la'))) {
+      this.setFieldValue(newName, 'la');
+    }
+          if (Blockly.Names.equals(oldName, this.getFieldValue('lo'))) {
+      this.setFieldValue(newName, 'lo');
+    }
+  },
+  renameBound: function(boundSubstitution, freeSubstitution) {
+    const paramSubstitution = boundSubstitution.restrictDomain(
+        this.declaredNames());
+    this.renameVars(paramSubstitution);
+    const newFreeSubstitution = freeSubstitution.extend(paramSubstitution);
+    LexicalVariable.renameFree(
+        this.getInputTargetBlock(this.bodyInputName), newFreeSubstitution);
+  },
+  renameFree: function(freeSubstitution) {
+    // There shouldn't be any free variables
+  },
+  freeVariables: function() { // return the free variables of this block
+    // There shouldn't be any free variables, so this should return an empty set.
+    // Should return the empty set: something is wrong if it doesn't!
+    return new Blockly.NameSet();
+  }
+};
+
+Blockly.Blocks['touch_start'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("when")
+        .appendField(new Blockly.FieldDropdown([[window.localStorage.getItem("projectName" + project),"OPTIONNAME"]]), "NAME")
+        .appendField(".touchStarts");
+    this.appendStatementInput("NAME")
+        .setCheck(null)
+        .appendField("do");
+    this.setColour(Blockly.EVENTS_CATEGORY_HUE);
+    this.setInputsInline(true);
+ this.setTooltip("Do some statements when the user start touching the device, only works on mobiles/tablets");
+ this.setHelpUrl("");
+  }
+};
+
+Blockly.Blocks['touch_end'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("when")
+        .appendField(new Blockly.FieldDropdown([[window.localStorage.getItem("projectName" + project),"OPTIONNAME"]]), "NAME")
+        .appendField(".touchEnds");
+    this.appendStatementInput("NAME")
+        .setCheck(null)
+        .appendField("do");
+    this.setColour(Blockly.EVENTS_CATEGORY_HUE);
+    this.setInputsInline(true);
+ this.setTooltip("Do some statements when the user stops touching the device, only works on mobiles/tablets");
+ this.setHelpUrl("");
+  }
+};
+
+Blockly.Blocks['touch_cancel'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("when")
+        .appendField(new Blockly.FieldDropdown([[window.localStorage.getItem("projectName" + project),"OPTIONNAME"]]), "NAME")
+        .appendField(".touchCancel");
+    this.appendStatementInput("NAME")
+        .setCheck(null)
+        .appendField("do");
+    this.setColour(Blockly.EVENTS_CATEGORY_HUE);
+    this.setInputsInline(true);
+ this.setTooltip("Do some statements when the users touch has been interupted while touching the device, only works on mobiles/tablets");
+ this.setHelpUrl("");
+  }
+};
+
+Blockly.Blocks['touch_move'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("when")
+        .appendField(new Blockly.FieldDropdown([[window.localStorage.getItem("projectName" + project),"OPTIONNAME"]]), "NAME")
+        .appendField(".touchMove")
+        .appendField(
+            new FieldParameterFlydown('TouchX', true, FieldFlydown.DISPLAY_BELOW),
+            'x')
+            .appendField(
+            new FieldParameterFlydown('TouchY', true, FieldFlydown.DISPLAY_BELOW),
+            'y')
+    this.appendStatementInput("NAME")
+        .setCheck(null)
+        .appendField("do");
+    this.setColour(Blockly.EVENTS_CATEGORY_HUE);
+    this.setInputsInline(true);
+ this.setTooltip("Do some statements when the user starts moving his fingers over the touch-screen, only works on mobiles/tablets");
+ this.setHelpUrl("");
+  }  ,
+  withLexicalVarsAndPrefix: function(child, proc) {
+    const params = this.declaredNames();
+    // not arguments_ instance var
+    for (let i = 0; i < params.length; i++) {
+      proc(params[i], '');
+    }
+  },
+  getVars: function() {
+    return [
+      this.getFieldValue('x'),
+        this.getFieldValue('y'),
+    ];
+  },
+  blocksInScope: function() {
+    const doBlock = this.getInputTargetBlock('NAME');
+    if (doBlock) {
+      return [doBlock];
+    } else {
+      return [];
+    }
+  },
+  declaredNames: function() {
+    return [
+            this.getFieldValue('x'),
+        this.getFieldValue('y'),
+    ];
+  },
+  renameVar: function(oldName, newName) {
+    if (Blockly.Names.equals(oldName, this.getFieldValue('x'))) {
+      this.setFieldValue(newName, 'x');
+    }
+          if (Blockly.Names.equals(oldName, this.getFieldValue('y'))) {
+      this.setFieldValue(newName, 'y');
+    }
+  },
+  renameBound: function(boundSubstitution, freeSubstitution) {
+    const paramSubstitution = boundSubstitution.restrictDomain(
+        this.declaredNames());
+    this.renameVars(paramSubstitution);
+    const newFreeSubstitution = freeSubstitution.extend(paramSubstitution);
+    LexicalVariable.renameFree(
+        this.getInputTargetBlock(this.bodyInputName), newFreeSubstitution);
+  },
+  renameFree: function(freeSubstitution) {
+    // There shouldn't be any free variables
+  },
+  freeVariables: function() { // return the free variables of this block
+    // There shouldn't be any free variables, so this should return an empty set.
+    // Should return the empty set: something is wrong if it doesn't!
+    return new Blockly.NameSet();
+  }
+};
+
+Blockly.Blocks['notification'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("call")
+        .appendField(new Blockly.FieldDropdown([["NotificationManager","OPTIONNAME"]]), "NAME")
+        .appendField(".showNotification");
+    this.appendValueInput("titke")
+        .setCheck(null)
+        .appendField("title");
+    this.appendValueInput("message")
+        .setCheck(null)
+        .appendField("message");
+    this.appendValueInput("icon")
+        .setCheck(null)
+        .appendField("icon");
+    this.setInputsInline(true);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(Blockly.COMPONENTS_CATEGORY_HUE);
+ this.setTooltip("Shows a notification for the user to interact with");
+ this.setHelpUrl("");
+  }
+};
+
+Blockly.Blocks['dismiss_notification'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("call")
+        .appendField(new Blockly.FieldDropdown([["NotificationManager","OPTIONNAME"]]), "NAME")
+        .appendField(".dismissNotification");
+    this.setInputsInline(true);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(Blockly.COMPONENTS_CATEGORY_HUE);
+ this.setTooltip("Dismisses the notification");
+ this.setHelpUrl("");
+  }
+};
+
+Blockly.Blocks['global_declaration'] = {
+  // Global var defn
+  category: 'Variables',
+  helpUrl: Blockly.Msg.LANG_VARIABLES_GLOBAL_DECLARATION_HELPURL,
+  init: function() {
+    // Let the theme determine the color.
+    // this.setColour(Blockly.VARIABLE_CATEGORY_HUE);
+    this.setStyle('variable_blocks');
+    this.appendDummyInput()
+        .appendField(Blockly.Msg.LANG_VARIABLES_GLOBAL_DECLARATION_TITLE_INIT)
+        .appendField(new FieldGlobalFlydown(
+            Blockly.Msg.LANG_VARIABLES_GLOBAL_DECLARATION_NAME,
+            FieldFlydown.DISPLAY_BELOW), 'NAME')
+        .appendField(Blockly.Msg.LANG_VARIABLES_GLOBAL_DECLARATION_TO);
+    this.setTooltip(Blockly.Msg.LANG_VARIABLES_GLOBAL_DECLARATION_TOOLTIP);
+    this.appendValueInput('VALUE');
+  },
+  getVars: function() {
+    const field = this.getField('NAME');
+    return field ? [field.getText()] : [];
+  },
+  getGlobalNames: function() {
+    return this.getVars();
+  },
+  renameVar: function(oldName, newName) {
+    if (Blockly.Names.equals(oldName, this.getFieldValue('NAME'))) {
+      this.setFieldValue(newName, 'NAME');
+    }
+  },
+};
+
+Blockly.Blocks['get_all_items'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("call")
+        .appendField(new Blockly.FieldDropdown([["StorageManager","OPTIONNAME"]]), "NAME")
+        .appendField(".getItems");
+    this.setOutput(true, null);
+    this.setColour(Blockly.COMPONENTS_CATEGORY_HUE);
+ this.setTooltip("Returns a list of all saved items including keys");
+ this.setHelpUrl("");
+  }
+};
+
+Blockly.Blocks['fullscreen'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("call")
+        .appendField(new Blockly.FieldDropdown([["WebGL","OPTIONNAME"]]), "NAME")
+        .appendField(".")
+        .appendField(new Blockly.FieldDropdown([["Enter","request"], ["Exit","exit"]]), "t")
+        .appendField("fullscreenMode");
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(Blockly.GAME_CATEGORY_HUE);
+ this.setTooltip("Enter or exit fullscreen mode");
+ this.setHelpUrl("");
+  }
+};
+
+Blockly.Blocks['isfullscreen'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("call")
+        .appendField(new Blockly.FieldDropdown([["WebGL","OPTIONNAME"]]), "NAME")
+        .appendField(".isInFullscreenMode");
+    this.setOutput(true, null);
+    this.setColour(Blockly.GAME_CATEGORY_HUE);
+ this.setTooltip("Returns true if the screen is in fullscreen mode");
+ this.setHelpUrl("");
   }
 };

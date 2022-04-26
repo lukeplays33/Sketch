@@ -42,7 +42,6 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
   overflow: hidden;
-
 }
 
 img {
@@ -426,6 +425,9 @@ input {
   vertical-align: middle;
   width: 80px;
   height: 80px;
+  border-radius: 50%;
+object-fit: cover;
+margin-left: 8px;
 }
 
 .Photo {
@@ -498,7 +500,7 @@ button {
 
 @media only screen and (max-width: 600px) {
 div#blocklyDiv .blocklyToolboxDiv {
-        width: calc(100% - 18px);
+        max-width: calc(100% - 18px);
     border-radius: 10px;
   background: rgba(155, 155, 155, 0.5);
   padding: 8px;
@@ -526,7 +528,7 @@ div#blocklyDiv .blocklyToolboxDiv {
   -moz-box-sizing: border-box; /* Firefox, other Gecko */
 
   box-sizing: border-box;
-  height: 80%;
+  max-height: calc(100% - 18px);
 }
 }
 
@@ -572,6 +574,7 @@ div#blocklyDiv .blocklyFlyout {
   box-sizing: border-box;
 }
         }
+        
         @media only screen and (min-width: 600px) {
         .editor {
             background: rgb(238,238,238);
@@ -611,10 +614,12 @@ max-height: 92%;
       position: fixed;
   top: 50%;
   left: 50%;
+  overflow:visible;
   /* bring your own prefixes */
   transform: translate(-50%, -50%);
     background: rgba(155, 155, 155, 0.5);
     max-width: 92%;
+    min-width: 350px;
     border-radius: 10px;
     padding: 8px;
     padding-bottom: 0px;
@@ -705,12 +710,22 @@ position: fixed;
 padding: 8px;
 padding-bottom: 0px;
 z-index: 900;
-overflow: visible;
+max-height: 85%; overflow: scroll; padding-bottom: 0px;
+}
+
+#dropdownMenu2 {
+border-radius: 10px;
+background-color: #008dcd;
+position: fixed;
+padding: 8px;
+padding-bottom: 0px;
+z-index: 900;
+max-height: 85%; overflow: scroll; padding-bottom: 0px;
 }
 
 #CloseMenu {
-min-width: 100%;
-min-height: 100%;
+width: 100%;
+height: 100%;
 display: none;
 position: fixed;
 z-index: 890;
@@ -726,8 +741,10 @@ z-index: 890;
 width:100%;
 height:100%;
 z-index:800;
+display: none;
 position: fixed;
-overflow: auto;
+max-height: calc(100vh - 210px);
+    overflow-y: auto;
 }
 
 #pick {
@@ -759,12 +776,303 @@ z-index: 810;
   background-size: contain;
   right: 0px;
   top: 0px;
-  background: rgba(155, 155, 155, 0.5);
-  border-radius: 10px;
   margin: 8px;
+   z-index: 410;
+     background: rgba(155, 155, 155, 0.5);
+  border-radius: 10px;
+}
+
+#adddd {
+  width: 35px;
+  height: 35px;
+  padding: 8px;
+  position: fixed;
+  background-image: url("../Images/outline_fullscreen_white_24dp.png");
+  background-repeat: no-repeat;
+    background: rgba(155, 155, 155, 0.5);
+  border-radius: 10px;
+  background-position: center;
+  background-size: contain;
+  right: 45px;
+  top: 0px;
+  margin: 8px;
+   z-index: 410;
+}
+
+#Psettings {
+  width: 35px;
+  height: 35px;
+  padding: 8px;
+  position: fixed;
+  background-image: url("../Images/outline_fullscreen_white_24dp.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+    background: rgba(155, 155, 155, 0.5);
+  border-radius: 10px;
+  right: 88px;
+  top: 0px;
+  margin: 8px;
+   z-index: 410;
+}
+
+.PSettings{
+  width: 25px;
+  height: 25px;
+  padding: 8px;
+  position: fixed;
+  object-fit: center;
+  border-radius: 10px;
+  right: 8px;
    z-index: 410;
 }
 
 ::-webkit-scrollbar {
   width: 0px;
+}
+
+
+#siteSettings{
+color: white;
+background: rgba(155, 155, 155, 0.5);
+font-size : 25px;
+padding: 10px;
+margin-bottom: 8px;
+border-radius: 10px;
+margin-top: 0px;
+}
+
+        @media only screen and (min-width: 600px) {
+                
+#e , #refrence, #siteSettingss  {
+color: white;
+background: rgba(155, 155, 155, 0.5);
+font-size : 25px;
+padding: 10px;
+margin-bottom: 8px;
+border-radius: 10px;
+margin-top: 0px;
+width: 15%;
+text-align: left;
+    
+      -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+
+  -moz-box-sizing: border-box; /* Firefox, other Gecko */
+
+  box-sizing: border-box;
+}
+}
+
+        @media only screen and (max-width: 600px) {
+                
+#e , #refrence, #siteSettingss  {
+color: white;
+background: rgba(155, 155, 155, 0.5);
+font-size : 25px;
+padding: 10px;
+margin-bottom: 8px;
+border-radius: 10px;
+margin-top: 0px;
+width: 100%;
+text-align: left;
+    
+      -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+
+  -moz-box-sizing: border-box; /* Firefox, other Gecko */
+
+  box-sizing: border-box;
+}
+}
+
+#text {
+color: white;
+padding: 6px;
+margin-bottom: 8px;
+border-radius: 10px;
+margin-top: 0px;
+width: calc(100% - 73px)
+}
+
+#bgimage, #theme, #smos, #vsStyle, #open, #grid,#snap,#dis {
+  background-color: #008dcd;
+  color: white;
+  border-radius: 10px;
+  font-size: 16px;
+  border-width: 0px;
+  padding: 8px;
+  margin-bottom: 0px;
+  width: 55px;
+  position: relative;
+  left: 8px;
+    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+
+  -moz-box-sizing: border-box; /* Firefox, other Gecko */
+
+  box-sizing: border-box;
+}
+
+#text2 {
+color: white;
+padding: 6px;
+margin-bottom: 8px;
+border-radius: 10px;
+margin-top: 0px;
+width: calc(100% - 90px)
+}
+
+#share {
+  background-color: #008dcd;
+  color: white;
+  border-radius: 10px;
+  font-size: 16px;
+  border-width: 0px;
+  padding: 8px;
+  margin-bottom: 0px;
+  width: 70px;
+  position: relative;
+  left: 8px;
+  right: 8px;
+    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+
+  -moz-box-sizing: border-box; /* Firefox, other Gecko */
+
+  box-sizing: border-box;
+}
+
+#text3 {
+color: white;
+padding: 6px;
+margin-bottom: 8px;
+border-radius: 10px;
+margin-top: 0px;
+width: calc(100% - 152px)
+}
+
+#text4 {
+color: white;
+padding: 6px;
+margin-bottom: 8px;
+border-radius: 10px;
+margin-top: 0px;
+width: calc(100% - 212px)
+}
+
+#credits, #twitter, #yt {
+  background-color: #008dcd;
+  color: white;
+  border-radius: 10px;
+  font-size: 16px;
+  border-width: 0px;
+  padding: 8px;
+  margin-bottom: 0px;
+  width: 132px;
+  position: relative;
+  left: 8px;
+  right: 8px;
+    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+
+  -moz-box-sizing: border-box; /* Firefox, other Gecko */
+
+  box-sizing: border-box;
+}
+
+#docss {
+  background-color: #008dcd;
+  color: white;
+  border-radius: 10px;
+  font-size: 16px;
+  border-width: 0px;
+  padding: 8px;
+  margin-bottom: 0px;
+  width: 192px;
+  position: relative;
+  left: 8px;
+  right: 8px;
+    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+
+  -moz-box-sizing: border-box; /* Firefox, other Gecko */
+
+  box-sizing: border-box;
+}
+
+    .column {
+        float: left;
+    }
+    
+    @media only screen and (min-width: 600px) {
+    
+    .columnBGI {
+            float: left;
+    }
+    
+        #BGImage, #BGImageURL {
+  background-color: #008dcd;
+  color: white;
+  border-radius: 10px;
+  font-size: 16px;
+  border-width: 0px;
+  padding: 8px;
+  margin-bottom: 0px;
+  width: 49%;
+  position: relative;
+  left: 8px;
+  right: 8px;
+    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+
+  -moz-box-sizing: border-box; /* Firefox, other Gecko */
+
+  box-sizing: border-box;
+}
+
+#BGImageURL {
+margin-left: 8px;
+}
+
+    }
+    
+    @media only screen and (max-width: 600px) {
+        .columnBGI {
+    }
+    
+        #BGImage, #BGImageURL {
+  background-color: #008dcd;
+  color: white;
+  border-radius: 10px;
+  font-size: 16px;
+  border-width: 0px;
+  padding: 8px;
+  margin-bottom: 0px;
+  margin-left: 0px;
+  width: calc(100% - 16px);
+  position: relative;
+  left: 8px;
+  right: 8px;
+    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+
+  -moz-box-sizing: border-box; /* Firefox, other Gecko */
+
+  box-sizing: border-box;
+}
+
+#BGImageURL {
+margin-top: 8px;
+}
+
+    }
+
+    .row:after {
+    content: "";
+    display: table;
+    clear: both;
+    }
+
+.wrapper {
+padding: 0px;
+width: 100%;
+margin-bottom: 8px;
+      -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+
+  -moz-box-sizing: border-box; /* Firefox, other Gecko */
+
+  box-sizing: border-box;
 }
