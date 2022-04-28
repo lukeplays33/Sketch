@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@blockly/disable-top-blocks": "^0.1.20",
+    "@blockly/field-date": "^5.0.13",
     "@blockly/plugin-scroll-options": "^1.0.4",
     "@mit-app-inventor/blockly-block-lexical-variables": "^0.0.10",
     "blockly": "^8.0.0",

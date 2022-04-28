@@ -1,11 +1,11 @@
 export function BlockColors() {
 // change saturation and value
-Blockly.HSV_SATURATION = 0.50;
-Blockly.HSV_VALUE = 0.78;
+Blockly.HSV_SATURATION = 1.0;
+Blockly.HSV_VALUE = 0.97;
 
 // change block colors
 
-Blockly.EVENTS_CATEGORY_HUE = '0'
+Blockly.EVENTS_CATEGORY_HUE = '40'
 Blockly.ELEMENTS_CATEGORY_HUE = '210'
 Blockly.COMPONENTS_CATEGORY_HUE = '200'
 Blockly.OTHER_CATEGORY_HUE = '180'

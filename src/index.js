@@ -59,6 +59,7 @@ loop.loopTypes.add('forever');
 
 //custom .js file imports
 import {blockColors} from 'BlockColors';
+import {OtherBlocks} from 'OtherBlocks';
 
 //get x, y values
 
@@ -396,32 +397,6 @@ Blockly.JavaScript['writeclipboard'] = function(block) {
   return code;
 };
 
-var px = ['blur', 'translateX','translateY','translateZ']
-var deg = ['rotateX','rotateY','rotateZ', 'skewX','skewY']
-var per = ['saturate', 'grayscale']
-
-Blockly.JavaScript['trans_etc'] = function(block) {
-  var dropdown_name = block.getFieldValue('NAME');
-  var dropdown_ee = block.getFieldValue('ee');
-  var value_name = Blockly.JavaScript.valueToCode(block, 'NAME', Blockly.JavaScript.ORDER_ATOMIC);
-    // TODO: Assemble JavaScript into code variable.
-  var code = "'" + dropdown_ee
-  if(block.getField('NAME')) {
-  if(px.includes(dropdown_ee)){
-  code = code + '(' + value_name + "px)"
-  } else if(deg.includes(dropdown_ee)) {
-  code = code + '(' + value_name + "deg)"
-  } else if(per.includes(dropdown_ee)) {
-  code = code + '(' + value_name + "%)"
-  } else if(dropdown_ee.includes('scale')) {
-  code = code + '(' + value_name + ")"
-  }
-  }
-  code = code + "'"
-  // TODO: Change ORDER_NONE to the correct strength.
-  return [code, Blockly.JavaScript.ORDER_ATOMIC];
-};
-
 Blockly.JavaScript['istestting'] = function(block) {
   var dropdown_name = block.getFieldValue('NAME');
   // TODO: Assemble JavaScript into code variable.
@@ -562,13 +537,6 @@ Blockly.JavaScript['create_listener'] = function(block) {
       }
   // TODO: Assemble JavaScript into code variable.
   var code = "function event" + dropdown_e + dropdown_name2 + " (" + eid + ") {\n" + statements_s + "\n}\n"
-  return code;
-};
-
-Blockly.JavaScript['comment'] = function(block) {
-  var text_name = block.getFieldValue('NAME');
-  // TODO: Assemble JavaScript into code variable.
-  var code = "//" + text_name
   return code;
 };
 
@@ -1063,14 +1031,6 @@ Blockly.JavaScript['new_line'] = function(block) {
   return [code, Blockly.JavaScript.ORDER_NONE];
 };
 
-Blockly.JavaScript['load_asset'] = function(block) {
-  var dropdown_name = block.getFieldValue('NAME');
-  // TODO: Assemble JavaScript into code variable.
-  var code = "Ass_" + dropdown_name.replaceAll(" ", "_").replaceAll("-", "_").replaceAll(".", "_").replaceAll("(", "_").replaceAll(")", "_")
-  // TODO: Change ORDER_NONE to the correct strength.
-  return [code, Blockly.JavaScript.ORDER_ATOMIC];
-};
-
 Blockly.JavaScript['all_elements'] = function(block) {
   var dropdown_name = block.getFieldValue('NAME');
   var dropdown_e = block.getFieldValue('e');
@@ -1157,7 +1117,7 @@ Blockly.JavaScript['create_elem'] = function(block) {
     } else if ( dropdown_e == "tp") {
         var code = "\nlet " + eid + " = document.createElement('input');\n" + eid + ".type = 'time';\n" + eid + ".onchange = function () {\nevent" + dropdown_e + "change(" + eid + ");\n}\n"
     } else if ( dropdown_e == "tf2") {
-        var code = "\nlet " + eid + " = document.createElement('input');\n" + eid + ".placeholder = 'This is a placeholder, oh yes this is';\n" + eid + ".oninput = function () {\nevent" + dropdown_e + "input(" + eid + ");\n}\n"
+        var code = "\nlet " + eid + " = document.createElement('input');\n" + eid + ".placeholder = 'This is a placeholder, oh yes this is';\n" + eid + ".oninput = function () {\nevent" + dropdown_e + "input(" + eid + ");\n}\n" + eid + ".onfocus = function () {\nevent" + dropdown_e + "focusin(" + eid + ");\n}\n" + eid + ".onblur = function () {\nevent" + dropdown_e + "focusout(" + eid + ");\n}\n"
     } else if ( dropdown_e == "c") {
         var code = "\nlet " + eid + " = document.createElement('canvas');\nevent" + dropdown_e + "load(" + eid + ");\n"
     } else if (dropdown_e == "s") {
@@ -1416,11 +1376,11 @@ var projects = [];
 
 var secretsMSG = ["I am a monster", "Well hello there, If you've found this then congratulations there is more to see than you think, Just giving you a hint ;).", "I'll marry her, I'lljust have to finda way", "02 x Sketch", "I'm in love with a fairytale, even tho it hurts, but I don't care if I lose my mind, I'm already cursed.","Hentai", "Hello There", "What is this?, I hate this feeling", "I think Sketch would make a great Game Theory episode","Zero Two is kinda Hot", "MUSIC MAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAN", 'Does anyone actually read these','Oh you dont know what Karlson is?','Oh you dont know what Sketch is?','Once we die, we’ll only be a statistic. It won’t matter what we were called. ~ Zero Two'];
 
-var project = "";
-
 var base64 = [];
 var assetsBlockDropdown = [["UploadAsset","OPTIONNAME"]];
 var assetsBase64 = [];
+
+var project = "";
 
 function tooltip () {
 var t = [];
@@ -1783,7 +1743,7 @@ const workspace2 = Blockly.inject("blocklyDiv2", {
             "colourPrimary": "#7F7F7F"
          },
                                                  "variable_blocks": {
-            "colourPrimary": "#CD5E94"
+            "colourPrimary": window.Blockly.VARIABLES_CATEGORY_HUE
          },
                                                  "procedure_blocks": {
             "colourPrimary": window.Blockly.FUNCTIONS_CATEGORY_HUE
@@ -1874,7 +1834,7 @@ const workspace = Blockly.inject("blocklyDiv", {
             "colourPrimary": "#7F7F7F"
          },
                                                  "variable_blocks": {
-            "colourPrimary": "#CD5E94"
+            "colourPrimary": window.Blockly.VARIABLES_CATEGORY_HUE
          },
                                                  "procedure_blocks": {
             "colourPrimary": window.Blockly.FUNCTIONS_CATEGORY_HUE
@@ -4222,7 +4182,7 @@ Blockly.Blocks['custom_events'] = {
         .appendField("by");
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour(330);
+    this.setColour(window.Blockly.VARIABLES_CATEGORY_HUE);
  this.setTooltip("Change a variable by the given value");
  this.setHelpUrl("");
 this.errors = [
@@ -4776,28 +4736,6 @@ Blockly.Blocks['switch2'] = {
   }
 };
 
-Blockly.Blocks['load_asset'] = {
-  init: function() {
-    this.appendDummyInput()
-        .appendField(new Blockly.FieldDropdown(this.getAssets), "NAME");
-    this.setOutput(true, null);
-    this.setColour(window.Blockly.OTHER_CATEGORY_HUE);
- this.setTooltip("Load an asset");
- this.setHelpUrl("https://app.gitbook.com/s/AR1GoZvc2Hq3eaRFIOdL/other#loading-assets");
-  },onchange: function (e) {
-  if(e.type == 'change') {
-  if(e.newValue == 'OPTIONNAME') {
-  as.click();
-  console.log('y');
-window.sessionStorage.removeItem('o');
-}
-  }
-  },
-    getAssets: function () {
-        return assetsBlockDropdown
-    }
-};
-
 Blockly.Blocks['create_listener'] = {
   init: function() {
     this.appendDummyInput()
@@ -4879,7 +4817,7 @@ updateConnections: function(newValue) {
   } else if (newValue == "ddb") {
   var opti = [["Change", "change"]]
   } else if ( newValue == "tf2") {
-  var opti = [["TextChange", "input"]]
+  var opti = [["TextChange", "input"],['Focus','focusin'],['UnFocus','focusout']]
   } else if ( newValue == "s"|| newValue == "pb") { 
   var opti = [["Change", "change"]]
   } else if (newValue == "cb" || newValue == "rb") {
@@ -5907,19 +5845,6 @@ Blockly.Blocks['function_var'] = {
     this.setColour(window.Blockly.FUNCTIONS_CATEGORY_HUE);
  this.setTooltip("Runs the blocks in the do section before returning a value, usefull if you need to run blocks before returning a value to a function");
  this.setHelpUrl("https://app.gitbook.com/s/AR1GoZvc2Hq3eaRFIOdL/functions#defining-functions-with-a-return-value-and-blocks");
-  }
-};
-
-Blockly.Blocks['comment'] = {
-  init: function() {
-    this.appendDummyInput()
-        .appendField("comment")
-        .appendField(new FieldTextBox('This is a comment'), 'NAME')
-    this.setPreviousStatement(true, null);
-    this.setNextStatement(true, null);
-    this.setColour(window.Blockly.OTHER_CATEGORY_HUE);
- this.setTooltip("Adds a comment to your project");
- this.setHelpUrl("https://app.gitbook.com/s/AR1GoZvc2Hq3eaRFIOdL/other#commenting-on-blocks");
   }
 };
 
@@ -7347,7 +7272,7 @@ Blockly.Blocks['typeof'] = {
         .appendField("typeOf")
         .appendField(this.fieldVar_, 'VAR');
     this.setOutput(true, null);
-    this.setColour(330);
+    this.setColour(window.Blockly.VARIABLES_CATEGORY_HUE);
  this.setTooltip("Returns the type of a variable e.g. String,  Array, Object, Boolean or Number");
  this.setHelpUrl("");
   this.errors = [
@@ -7436,64 +7361,6 @@ Blockly.Blocks['istestting'] = {
  this.setTooltip("Returns true if the project is run in testing mode");
  this.setHelpUrl("");
   }
-};
-
-Blockly.Blocks['trans_etc'] = {
-  init: function() {
-    this.appendDummyInput()
-        .appendField(new Blockly.FieldDropdown([["Overflow","o"], ["Transform","t"], ["Position","p"], ["ImageFilter","if"], ["BackgroundImageRepeat","bir"], ["BackgroundImagePosition","bip"], ['BorderStyle', 'bs'],['TransformStyle','ts'], ['TextAlign','ta'],['Visible','v'], ['Width','w'],['Height','h'],['FontFamily','ff'], ['BackgroundImageSize', 'bis']],this.validate), "NAME")
-        .appendField(".");
-    this.appendDummyInput('dd')
-        .appendField(new Blockly.FieldDropdown([["option","OPTIONNAME"], ["option","OPTIONNAME"], ["option","OPTIONNAME"]]), "ee");
-    this.appendValueInput("NAME")
-    .setCheck("Number");
-    this.setInputsInline(true);
-    this.setOutput(true, null);
-    this.setColour(window.Blockly.OTHER_CATEGORY_HUE);
- this.setTooltip("Allows you to select a property for the property setters");
- this.setHelpUrl("");
-  },
-  validate: function(newValue) {
-  this.getSourceBlock().updateConnections(newValue);
-  return newValue;
-},
-updateConnections: function(newValue) {
-  this.removeInput('dd', /* no error */ true);
-  this.removeInput('NAME', /* no error */ true);
-  if(newValue == 'o') {
-  var pp = [['Hidden', 'hidden'], ['Visible','visible'],['Scroll', 'scroll'],['Auto', 'auto']]
-  } else if(newValue == 't') {
-  var pp = [['TranslateX', 'translateX'],['TranslateY', 'translateY'], ['TranslateZ', 'translateZ'],['ScaleX', 'scaleX'], ['ScaleY', 'scaleY'], ['ScaleZ', 'scaleZ'] ,['RotateX','rotateX'], ['RotateY', 'rotateY'], ['RotateZ', 'rotateZ'], ['SkewX','skewX'],['SkewY','skewY']]
-  } else if (newValue == 'p') {
-  var pp = [['Absolute','absolute'],['Relative','relative'],['Fixed','fixed'],['Sticky','sticky']]
-  } else if(newValue == 'if') {
-  var pp = [['GrayScale', 'grayscale'], ['Blur', 'blur'],['Saturation','saturate']]
-  } else if(newValue == 'bir') {
-  var pp = [['Repeat', 'repeat'], ['No-Repeat', 'no-repeat']]
-  } else if (newValue == 'bip') {
-  var pp = [['Auto', 'auto'],['Center', 'center']]
-  } else if(newValue == 'bs') {
-  var pp = [['Hidden', 'hidden'],['Dotted','dotted'],['Dashed','dashed'], ['Solid','solid'],['Ridge','ridge'],['Inset','inset'], ['Outset','outset']]
-  } else if(newValue == 'ts') {
-  var pp = [['Flat','flat'],['Preserve3D','preserve3D']]
-  } else if(newValue == 'ta') {
-  var pp = [['Left','left'],['Right','right'],['Center','center'],['Justify','justify']]
-  } else if(newValue == 'v') {
-  var pp = [['Visible','block'],['Invisible','none']]
-  } else if(newValue == 'w' || newValue == 'h') {
-  var pp = [['Fill Parent', '100%'],['Fit Content', 'max-content']]
-  } else if( newValue =='ff') {
-  var pp = [['Serif','serif'],['Sans-Serif','sans-serif'],['Monospace','monospace'], ['Cursive','cursive'],['Fantasy','fantasy']]
-  } else if(newValue == 'bis') {
-  var pp = [['Contain','contain'], ['Cover','cover'],['Auto','auto']]
-  }
-  this.appendDummyInput('dd')
-        .appendField(new Blockly.FieldDropdown(pp), "ee");
-  if(newValue == 't' || newValue == 'if') {
-  this.appendValueInput("NAME")
-  .setCheck("Number");
-  }
-}
 };
 
 Blockly.Blocks['writeclipboard'] = {
